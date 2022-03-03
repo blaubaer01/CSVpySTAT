@@ -20,7 +20,8 @@ from scipy.stats import shapiro
 
 import numpy as np
 from outliers import smirnov_grubbs as grubbs
-
+from tableview import file_in_html
+from charts import boxplot_single
 
 
 import CSVpySTAT_support
@@ -571,8 +572,11 @@ class Toplevel1:
             
         def plot_df():
             print('plotvalues')
-            
+            global df
             plotfunction = self.TCombobox7.get()
+            messwert = self.TCombobox4.get()
+            ut = self.Entry54.get()
+            lt = self.Entry55.get()
             
             print(plotfunction)
             
@@ -580,7 +584,8 @@ class Toplevel1:
                 besch_stat()
             elif plotfunction =='Time Series Plot':
                 trend()
-            
+            elif plotfunction =='Boxplot':
+                boxplot_single(df, messwert, lt, ut)
             
 
 
@@ -593,16 +598,23 @@ class Toplevel1:
             global df
             filename = 'stat_df.csv'
             print('Table Statistics')
-            print(df.describe(include="all"))
+            
+            
+            stat = df.describe()
+            
+            
             self.Scrolledtext1.insert(END, 30*'#')
             self.Scrolledtext1.insert(END, '\n')
-            self.Scrolledtext1.insert(END, df.describe())
+            self.Scrolledtext1.insert(END, stat)
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')            
             
-            df_stats = df.describe()
+            df_stats = df.describe(include='all')
             df_stats.to_csv(filename, sep=';', decimal=',', header =True)
-
+            print(tabulate(df_stats, headers='keys', tablefmt='psql'))
+            
+            df2=pd.read_csv(filename,sep=';' ,decimal=',', header=0, engine='python')
+            file_in_html(df2)
 
         ####truncate values
         def truncate(n, decimals=0):
@@ -1153,14 +1165,14 @@ class Toplevel1:
         self.TCombobox7 = ttk.Combobox(self.TNotebook1_t3)
         self.TCombobox7.place(relx=0.13, rely=0.6, relheight=0.072
                 , relwidth=0.175)
-        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Box Plot', 'Violin Plot', 'Individual Plot']
+        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Boxplot', 'Violin Plot', 'Individual Plot']
         self.TCombobox7.configure(values=self.value_list10)
         self.TCombobox7.configure(takefocus="")
 
         
 
         self.Button2 = tk.Button(self.TNotebook1_t3)
-        self.Button2.place(relx=0.52, rely=0.85, height=33, width=113)
+        self.Button2.place(relx=0.52, rely=0.6, height=33, width=113)
         self.Button2.configure(borderwidth="2")
         self.Button2.configure(compound='left')
         self.Button2.configure(command = plot_df)
@@ -1193,30 +1205,30 @@ class Toplevel1:
         self.TCombobox8.configure(takefocus="")
         
         self.Label53 = tk.Label(self.TNotebook1_t3)
-        self.Label53.place(relx=0.333, rely=0.3, height=21, width=150)
+        self.Label53.place(relx=0.7, rely=0.034, height=21, width=150)
         self.Label53.configure(anchor='w')
         self.Label53.configure(compound='left')
         self.Label53.configure(text='''Tolerances:''')
         
         self.Label54 = tk.Label(self.TNotebook1_t3)
-        self.Label54.place(relx=0.333, rely=0.45, height=21, width=118)
+        self.Label54.place(relx=0.7, rely=0.172, height=21, width=118)
         self.Label54.configure(anchor='w')
         self.Label54.configure(compound='left')
         self.Label54.configure(text='''Upper Tolerance:''')
 
         self.Entry54 = tk.Entry(self.TNotebook1_t3)
-        self.Entry54.place(relx=0.451, rely=0.45, height=23, relwidth=0.1)
+        self.Entry54.place(relx=0.85, rely=0.172, height=23, relwidth=0.1)
         self.Entry54.configure(background="white")
         self.Entry54.configure(font="TkFixedFont")
         
         self.Label55 = tk.Label(self.TNotebook1_t3)
-        self.Label55.place(relx=0.333, rely=0.60, height=21, width=118)
+        self.Label55.place(relx=0.7, rely=0.3, height=21, width=118)
         self.Label55.configure(anchor='w')
         self.Label55.configure(compound='left')
         self.Label55.configure(text='''Lower Tolerance:''')
 
         self.Entry55 = tk.Entry(self.TNotebook1_t3)
-        self.Entry55.place(relx=0.451, rely=0.60, height=23, relwidth=0.1)
+        self.Entry55.place(relx=0.85, rely=0.3, height=23, relwidth=0.1)
         self.Entry55.configure(background="white")
         self.Entry55.configure(font="TkFixedFont")
         
