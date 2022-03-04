@@ -22,8 +22,8 @@ import numpy as np
 from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
-from charts import boxplot1f, violin1f, strip1f, scatterplot
-
+from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
+from charts import regression1f, boxplot2f
 import CSVpySTAT_support
 
 
@@ -558,7 +558,7 @@ class Toplevel1:
             ut = self.Entry54.get()
             lt = self.Entry55.get()
             spdt = self.TCombobox5.get()
-            factor2 = self.TCombobox6.get()
+            factorx = self.TCombobox6.get()
             
             print(plotfunction)
             
@@ -577,7 +577,7 @@ class Toplevel1:
                 elif plotfunction =='Stripplot':
                     stripplot_single(df, messwert, lt, ut)
             else:
-                if factor2 =='':
+                if factorx =='':
                     if plotfunction =='Time Series Plot':
                         trend(df, messwert, lt, ut, spdt)
                     if plotfunction =='Boxplot':
@@ -588,7 +588,13 @@ class Toplevel1:
                         strip1f(df, messwert, lt, ut,spdt)
                     if plotfunction =='Scatterplot':
                         scatterplot(df,messwert, lt,ut, spdt)
-
+                    if plotfunction =='Regressionplot':
+                        regression_single(df, messwert, lt, ut, spdt)
+                else:
+                    if plotfunction=='Regressionplot':
+                        regression1f(df, messwert, lt, ut, spdt, factorx)
+                    if plotfunction=='Boxplot':
+                        boxplot2f(df, messwert, lt, ut, spdt, factorx)
 
     
 ##################################################
@@ -967,7 +973,7 @@ class Toplevel1:
         self.TCombobox7 = ttk.Combobox(self.TNotebook1_t3)
         self.TCombobox7.place(relx=0.13, rely=0.6, relheight=0.072
                 , relwidth=0.175)
-        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Scatterplot']
+        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Scatterplot','Regressionplot']
         self.TCombobox7.configure(values=self.value_list10)
         self.TCombobox7.configure(takefocus="")
 

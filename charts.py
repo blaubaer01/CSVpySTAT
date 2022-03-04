@@ -131,6 +131,61 @@ def boxplot1f(df, messwert, lt, ut, spdt):
         plt.show()
 
 
+def boxplot2f(df, messwert, lt, ut, spdt, factorx):
+    print('Boxplot two factors \n')
+    sns.set(style="whitegrid")
+    y = messwert
+    x = spdt
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.boxplot(x=x, y=y, hue=factox, data=df, palette="Set3")
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+            
+        sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
     
 def violin_single(df, messwert, lt, ut):
     print('Simple Violinplot \n')
@@ -614,6 +669,119 @@ def scatterplot(df,messwert, lt, ut, spdt):
         plt.show()
     
     
+def regression_single(df,messwert, lt, ut, spdt):
     
+    sns.set(color_codes=True)        
+    
+    print('Scatter Plot with Regression line linear \n')
 
+    x = messwert
+    y = spdt
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.regplot(x=x, y=y, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+        sns.regplot(x=x, y=y, data=df)    
+        
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.regplot(x=x, y=y, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.regplot(x=x, y=y, data=df)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
+def regression1f(df,messwert, lt, ut, spdt, factorx):
+    
+    sns.set(color_codes=True)        
+    
+    print('Scatter Plot with Regression line linear \n')
+
+    x = messwert
+    y = spdt
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.lmplot(x=x, y=y, hue=factorx, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+        sns.lmplot(x=x, y=y, hue=factorx, data=df)    
+        
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.lmplot(x=x, y=y, hue=factorx, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.lmplot(x=x, y=y, hue=factorx, data=df)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
     
