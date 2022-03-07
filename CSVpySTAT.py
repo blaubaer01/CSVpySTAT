@@ -23,26 +23,9 @@ from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
-from charts import regression1f, boxplot2f
+from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
 import CSVpySTAT_support
 
-
-############################statistic variables
-#########################################################################################
-# n   0 1     2      3      4      5      6      7      8      9      10
-A2 = [0,0, 1.880, 1.023, 0.729, 0.577, 0.483, 0.419, 0.373, 0.337, 0.308]
-D3 = [0,0, 0,     0,     0,     0,     0,     0.076, 0.136, 0.184, 0.223]
-D4 = [0,0, 3.267, 2.575, 2.282, 2.115, 2.004, 1.924, 1.864, 1.816, 1.777]
-# n   0 1      2      3      4      5      6      7      8      9     10     11     12     13     14     15       20     25
-c4 = [0,0,0.7979,0.8862,0.9213,0.9400,0.9515,0.9594,0.9650,0.9693,0.9727,0.9754,0.9776,0.9794,0.9810,0.9823]#,0.9869,0.9896]
-B3 = [0,0,     0,     0,     0,     0, 0.030, 0.118, 0.185, 0.239, 0.284, 0.321, 0.354, 0.382, 0.406, 0.428]#, 0.510, 0.565]
-B4 = [0,0, 3.267, 2.568, 2.266, 2.089, 1.970, 1.882, 1.815, 1.761, 1.716, 1.679, 1.646, 1.618, 1.594, 1.572]#, 1.490, 1.435]
-B5 = [0,0,     0,     0,     0,     0, 0.029, 0.113, 0.179, 0.232, 0.276, 0.313, 0.346, 0.374, 0.399, 0.421]#, 0.504, 0.559]
-B6 = [0,0, 2.606, 2.276, 2.088, 1.964, 1.874, 1.806, 1.751, 1.707, 1.669, 1.637, 1.610, 1.585, 1.563, 1.544]#, 1.470, 1.420]
-A3 = [0,0, 2.659, 1.954, 1.628, 1.427, 1.287, 1.182, 1.099, 1.032, 0.975, 0.927, 0.886, 0.850, 0.817, 0.789]#, 0.680, 0.606]
-#########################################################################################
-        
-######################################################################        
     
 
 
@@ -208,13 +191,21 @@ class Toplevel1:
             self.TCombobox9.configure(values=list(df.columns))
             self.TCombobox11.configure(values=list(df.columns))
             self.TCombobox14.configure(values=list(df.columns))
-            
+            self.TCombobox62.configure(values=list(df.columns))
 
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox4.configure(values=list(values.columns))
             self.TCombobox5.configure(values=list(df.columns))
             cat1=df.select_dtypes(include=['object', 'datetime'])
             self.TCombobox6.configure(values=list(cat1.columns))
+            
+            values=df.select_dtypes(include=['float', 'int'])
+            self.TCombobox72.configure(values=list(values.columns))
+            values=df.select_dtypes(include=['float', 'int'])
+            self.TCombobox73.configure(values=list(values.columns))
+            
+            
+            
             
             return (df)
         
@@ -566,16 +557,14 @@ class Toplevel1:
                 
                 
             if spdt =='':
-                if plotfunction =='Descriptive Statistics':
-                    besch_stat(df, messwert)
-                elif plotfunction =='Time Series Plot':
-                    trend(df, messwert, lt, ut, spdt)
-                elif plotfunction =='Boxplot':
+                if plotfunction =='Boxplot':
                     boxplot_single(df, messwert, lt, ut)
                 elif plotfunction =='Violinplot':
                     violin_single(df, messwert, lt, ut)
                 elif plotfunction =='Stripplot':
                     stripplot_single(df, messwert, lt, ut)
+                elif plotfunction =='Swarmplot':
+                    swarmplot_single(df, messwert, lt, ut)
             else:
                 if factorx =='':
                     if plotfunction =='Time Series Plot':
@@ -590,11 +579,19 @@ class Toplevel1:
                         scatterplot(df,messwert, lt,ut, spdt)
                     if plotfunction =='Regressionplot':
                         regression_single(df, messwert, lt, ut, spdt)
+                    if plotfunction =='Swarmplot':
+                        swarmplot1f(df, messwert, lt, ut, spdt)
                 else:
                     if plotfunction=='Regressionplot':
                         regression1f(df, messwert, lt, ut, spdt, factorx)
                     if plotfunction=='Boxplot':
                         boxplot2f(df, messwert, lt, ut, spdt, factorx)
+                    if plotfunction =='Violinplot':
+                        violin2f(df, messwert, lt, ut,spdt, factorx)
+                    if plotfunction =='Swarmplot':
+                        swarmplot2f(df, messwert, lt, ut,spdt, factorx)
+                    if plotfunction =='Stripplot':
+                        strip2f(df, messwert, lt, ut,spdt, factorx)
 
     
 ##################################################
@@ -683,7 +680,7 @@ class Toplevel1:
         
         self.TNotebook1_t3 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t3, padding=4)
-        self.TNotebook1.tab(2, text='''Statistics''', compound="left"
+        self.TNotebook1.tab(2, text='''Graph''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t4 = tk.Frame(self.TNotebook1)
@@ -697,6 +694,16 @@ class Toplevel1:
                 ,underline='''-1''', )
         self.TNotebook1_t5.grid_columnconfigure(0, weight = 1)
         self.TNotebook1_t5.grid_rowconfigure(0, weight = 1)
+        
+        self.TNotebook1_t6 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t6, padding=4)
+        self.TNotebook1.tab(5, text='''Statistics''', compound="left"
+                ,underline='''-1''', )
+        
+        self.TNotebook1_t7 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t7, padding=4)
+        self.TNotebook1.tab(6, text='''Table Functions''', compound="left"
+                ,underline='''-1''', )
         
         ##tab5
         self.frame1 = tk.Frame(self.TNotebook1_t5)
@@ -929,7 +936,7 @@ class Toplevel1:
         self.Label51.place(relx=0.02, rely=0.034, height=21, width=150)
         self.Label51.configure(anchor='w')
         self.Label51.configure(compound='left')
-        self.Label51.configure(text='''Statistics 1 Column:''')
+        self.Label51.configure(text='''Plot Functions:''')
         
         self.Label5 = tk.Label(self.TNotebook1_t3)
         self.Label5.place(relx=0.02, rely=0.172, height=21, width=112)
@@ -973,7 +980,7 @@ class Toplevel1:
         self.TCombobox7 = ttk.Combobox(self.TNotebook1_t3)
         self.TCombobox7.place(relx=0.13, rely=0.6, relheight=0.072
                 , relwidth=0.175)
-        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Scatterplot','Regressionplot']
+        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot', 'Scatterplot','Regressionplot']
         self.TCombobox7.configure(values=self.value_list10)
         self.TCombobox7.configure(takefocus="")
 
@@ -1157,7 +1164,130 @@ class Toplevel1:
         self.Button12.configure(compound='left')
         self.Button12.configure(command=save_CSV)
         self.Button12.configure(text='''save file''')
+        
+        
+        ##Tab6
+        
+        self.Label61 = tk.Label(self.TNotebook1_t6)
+        self.Label61.place(relx=0.02, rely=0.034, height=21, width=200)
+        self.Label61.configure(anchor='w')
+        self.Label61.configure(compound='left')
+        self.Label61.configure(text='''Statistic one Column:''')
+        
+        self.Label62 = tk.Label(self.TNotebook1_t6)
+        self.Label62.place(relx=0.02, rely=0.172, height=21, width=112)
+        self.Label62.configure(anchor='w')
+        self.Label62.configure(compound='left')
+        self.Label62.configure(text='''Value Column:''')
 
+        self.TCombobox62 = ttk.Combobox(self.TNotebook1_t6)
+        self.TCombobox62.place(relx=0.131, rely=0.172, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox62.configure(takefocus="")
+
+        self.Label63 = tk.Label(self.TNotebook1_t6)
+        self.Label63.place(relx=0.02, rely=0.3, height=21, width=100)
+        self.Label63.configure(anchor='w')
+        self.Label63.configure(compound='left')
+        self.Label63.configure(text='''Easy Statistics:''')
+
+        self.TCombobox63 = ttk.Combobox(self.TNotebook1_t6)
+        self.TCombobox63.place(relx=0.131, rely=0.3, relheight=0.072
+                , relwidth=0.175)
+        self.value_list63 = ['Descriptive Statistics','Time Series Plot', 'X-Bar Chart', 'Xbar/R-Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
+        self.TCombobox63.configure(values=self.value_list63)
+        self.TCombobox63.configure(takefocus="")
+
+        self.Label64 = tk.Label(self.TNotebook1_t6)
+        self.Label64.place(relx=0.02, rely=0.45, height=21, width=110)
+        self.Label64.configure(anchor='w')
+        self.Label64.configure(compound='left')
+        self.Label64.configure(text='''Tolerances:''')
+
+        self.Label65 = tk.Label(self.TNotebook1_t6)
+        self.Label65.place(relx=0.02, rely=0.60, height=21, width=70)
+        self.Label65.configure(anchor='w')
+        self.Label65.configure(compound='left')
+        self.Label65.configure(text='''Lower Tol:''')
+        
+        self.Entry65 = tk.Entry(self.TNotebook1_t6)
+        self.Entry65.place(relx=0.1, rely=0.6, height=23, relwidth=0.05)
+        self.Entry65.configure(background="white")
+        self.Entry65.configure(font="TkFixedFont")
+
+        self.Label66 = tk.Label(self.TNotebook1_t6)
+        self.Label66.place(relx=0.17, rely=0.60, height=21, width=70)
+        self.Label66.configure(anchor='w')
+        self.Label66.configure(compound='left')
+        self.Label66.configure(text='''Upper Tol:''')
+        
+        self.Entry66 = tk.Entry(self.TNotebook1_t6)
+        self.Entry66.place(relx=0.25, rely=0.6, height=23, relwidth=0.05)
+        self.Entry66.configure(background="white")
+        self.Entry66.configure(font="TkFixedFont")
+        
+        self.Label67 = tk.Label(self.TNotebook1_t6)
+        self.Label67.place(relx=0.02, rely=0.75, height=21, width=100)
+        self.Label67.configure(anchor='w')
+        self.Label67.configure(compound='left')
+        self.Label67.configure(text='''Sample Size:''')
+
+        self.TCombobox67 = ttk.Combobox(self.TNotebook1_t6)
+        self.TCombobox67.place(relx=0.131, rely=0.75, relheight=0.072
+                , relwidth=0.1)
+        self.value_list67 = ['2', '3','4', '5', '6', '7', '8', '9', '10']
+        self.TCombobox67.configure(values=self.value_list67)
+        self.TCombobox67.configure(takefocus="")
+        
+
+        self.Button66 = tk.Button(self.TNotebook1_t6)
+        self.Button66.place(relx=0.2, rely=0.85, height=33, width=113)
+        self.Button66.configure(borderwidth="2")
+        self.Button66.configure(compound='left')
+        self.Button66.configure(command = plot_df)
+        self.Button66.configure(text='''Plot''')
+        
+        #Linear Regression
+        self.Label71 = tk.Label(self.TNotebook1_t6)
+        self.Label71.place(relx=0.35, rely=0.034, height=21, width=200)
+        self.Label71.configure(anchor='w')
+        self.Label71.configure(compound='left')
+        self.Label71.configure(text='''Linear Regression:''')
+        
+        self.Label72 = tk.Label(self.TNotebook1_t6)
+        self.Label72.place(relx=0.35, rely=0.172, height=21, width=112)
+        self.Label72.configure(anchor='w')
+        self.Label72.configure(compound='left')
+        self.Label72.configure(text='''y Value Column:''')
+
+        self.TCombobox72 = ttk.Combobox(self.TNotebook1_t6)
+        self.TCombobox72.place(relx=0.47, rely=0.172, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox72.configure(takefocus="")
+
+        self.Label73 = tk.Label(self.TNotebook1_t6)
+        self.Label73.place(relx=0.35, rely=0.3, height=21, width=100)
+        self.Label73.configure(anchor='w')
+        self.Label73.configure(compound='left')
+        self.Label73.configure(text='''x Value Column:''')
+
+        self.TCombobox73 = ttk.Combobox(self.TNotebook1_t6)
+        self.TCombobox73.place(relx=0.47, rely=0.3, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox73.configure(takefocus="")
+        
+        self.Button74 = tk.Button(self.TNotebook1_t6)
+        self.Button74.place(relx=0.53, rely=0.5, height=33, width=113)
+        self.Button74.configure(borderwidth="2")
+        self.Button74.configure(compound='left')
+        self.Button74.configure(command = plot_df)
+        self.Button74.configure(text='''Plot''')
+        
+        
+        
+        
+        
+########################################################################
 
         self.Scrolledtext1 = ScrolledText(self.top)
         self.Scrolledtext1.place(relx=0.019, rely=0.494, relheight=0.467
