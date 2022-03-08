@@ -24,6 +24,9 @@ from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
+from stat_charts import qq_plot, histogram, normality_test
+
+
 import CSVpySTAT_support
 
     
@@ -593,7 +596,30 @@ class Toplevel1:
                     if plotfunction =='Stripplot':
                         strip2f(df, messwert, lt, ut,spdt, factorx)
 
-    
+        def plot_stat():
+            global df
+            
+            print('plotstatistic')
+            global df
+            plotfunction = self.TCombobox63.get()
+            messwert = self.TCombobox62.get()
+            ut = self.Entry66.get()
+            lt = self.Entry65.get()
+            samplesize = self.TCombobox67.get()
+            
+            #self.value_list63 = ['Descriptive Statistics', 'X-Bar Chart', 'Xbar/R-Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
+            
+            print(plotfunction)
+            
+            if plotfunction=='Descriptive Statistics':
+                besch_stat(df, messwert)
+            if plotfunction =='QQ-Plot':
+                qq_plot(df, messwert)
+            if plotfunction =='Histogram':
+                histogram(df, messwert)
+            if plotfunction =='Test of normal Distribution':
+                normality_test(df,messwert)
+            
 ##################################################
 ##statistics
 ###########################################################################
@@ -703,6 +729,11 @@ class Toplevel1:
         self.TNotebook1_t7 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t7, padding=4)
         self.TNotebook1.tab(6, text='''Table Functions''', compound="left"
+                ,underline='''-1''', )
+        
+        self.TNotebook1_t8 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t8, padding=4)
+        self.TNotebook1.tab(7, text='''Pivot''', compound="left"
                 ,underline='''-1''', )
         
         ##tab5
@@ -980,7 +1011,7 @@ class Toplevel1:
         self.TCombobox7 = ttk.Combobox(self.TNotebook1_t3)
         self.TCombobox7.place(relx=0.13, rely=0.6, relheight=0.072
                 , relwidth=0.175)
-        self.value_list10 = ['Descriptive Statistics','Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot', 'Scatterplot','Regressionplot']
+        self.value_list10 = ['Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot', 'Scatterplot','Regressionplot']
         self.TCombobox7.configure(values=self.value_list10)
         self.TCombobox7.configure(takefocus="")
 
@@ -1194,7 +1225,7 @@ class Toplevel1:
         self.TCombobox63 = ttk.Combobox(self.TNotebook1_t6)
         self.TCombobox63.place(relx=0.131, rely=0.3, relheight=0.072
                 , relwidth=0.175)
-        self.value_list63 = ['Descriptive Statistics','Time Series Plot', 'X-Bar Chart', 'Xbar/R-Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
+        self.value_list63 = ['Descriptive Statistics', 'X-Bar Chart', 'Xbar/R-Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
         self.TCombobox63.configure(values=self.value_list63)
         self.TCombobox63.configure(takefocus="")
 
@@ -1244,7 +1275,7 @@ class Toplevel1:
         self.Button66.place(relx=0.2, rely=0.85, height=33, width=113)
         self.Button66.configure(borderwidth="2")
         self.Button66.configure(compound='left')
-        self.Button66.configure(command = plot_df)
+        self.Button66.configure(command = plot_stat)
         self.Button66.configure(text='''Plot''')
         
         #Linear Regression
