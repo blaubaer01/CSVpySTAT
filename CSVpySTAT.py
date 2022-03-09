@@ -24,7 +24,7 @@ from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
-from stat_charts import qq_plot, histogram, normality_test
+from stat_charts import qq_plot, histogram, normality_test, CPA
 
 
 import CSVpySTAT_support
@@ -619,6 +619,9 @@ class Toplevel1:
                 histogram(df, messwert)
             if plotfunction =='Test of normal Distribution':
                 normality_test(df,messwert)
+            if plotfunction =='Capability Analysis':
+                CPA(df, messwert, lt, ut)
+            
             
 ##################################################
 ##statistics
