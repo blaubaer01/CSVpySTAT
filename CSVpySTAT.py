@@ -24,7 +24,7 @@ from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
-from stat_charts import qq_plot, histogram, normality_test, CPA
+from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s
 
 
 import CSVpySTAT_support
@@ -621,7 +621,11 @@ class Toplevel1:
                 normality_test(df,messwert)
             if plotfunction =='Capability Analysis':
                 CPA(df, messwert, lt, ut)
-            
+            if plotfunction =='X-bar Chart':
+                urwertkarte(df, messwert, lt, ut)
+            if plotfunction =='Xbar/s-Chart':
+                xquer_s(df, messwert, lt, ut, samplesize)
+  
             
 ##################################################
 ##statistics
@@ -1228,7 +1232,7 @@ class Toplevel1:
         self.TCombobox63 = ttk.Combobox(self.TNotebook1_t6)
         self.TCombobox63.place(relx=0.131, rely=0.3, relheight=0.072
                 , relwidth=0.175)
-        self.value_list63 = ['Descriptive Statistics', 'X-Bar Chart', 'Xbar/R-Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
+        self.value_list63 = ['Descriptive Statistics', 'X-bar Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
         self.TCombobox63.configure(values=self.value_list63)
         self.TCombobox63.configure(takefocus="")
 
