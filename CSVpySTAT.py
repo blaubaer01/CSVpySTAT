@@ -24,7 +24,7 @@ from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
-from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s
+from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG
 
 
 import CSVpySTAT_support
@@ -72,15 +72,17 @@ class Toplevel1:
     
     
             log = 'open file name: ' + filename + '\n'
-            
+            fline = f.readline()
+            fline2 = f.readline()
     
     
             print('Preview to the first 2 lines: \n')
-            print('first line:', f.readline())
-            print('second line:', f.readline())
+            print('first line:', fline)
+            
+            print('second line:', fline2)
             
             
-            eintrag = log + '\n' +  'Preview to the first 2 lines: \n' + 'first line:\n' + f.readline() + '\n' + 'second line:' + '\n' + f.readline()
+            eintrag = log + '\n' +  'Preview to the first 2 lines: \n' + 'first line:\n' + fline + '\n' + 'second line:' + '\n' + fline2
             
             
             self.Scrolledtext1.insert('1.0', eintrag)
@@ -148,6 +150,7 @@ class Toplevel1:
             seperator = self.TCombobox1.get()
             comma = self.TCombobox2.get()
             head = self.TCombobox3.get()
+            datatableno = var1.get()
             
             if seperator =='':
                 seperator =','
@@ -165,27 +168,33 @@ class Toplevel1:
             
             
             df=pd.read_csv(fn,sep=seperator ,decimal=comma, header=hd,encoding='iso-8859-1', engine='python')
-            data=pd.read_csv(fn,sep=seperator ,decimal=comma, header=hd,encoding='iso-8859-1', engine='python')
+            #data=pd.read_csv(fn,sep=seperator ,decimal=comma, header=hd,encoding='iso-8859-1', engine='python')
             #print(df)
             
             ##Tabelle + Formate einblenden
             self.Scrolledtext2.insert(END, df)
             self.Scrolledtext2.insert(END, df.dtypes)
             
-            ##Tabelle darstellen            
-            self.frame1.grid_columnconfigure(0, weight = 1)
-            self.frame1.grid_rowconfigure(0, weight = 1)
-            self.sheet = Sheet(self.frame1,
-                               data=pd.read_csv(fn,sep=seperator ,decimal=comma, header=hd,encoding='iso-8859-1',  engine='python').values.tolist())
-
-            if head =='yes':
-                self.sheet.headers(data.columns)
             
+            if datatableno ==1:
+                print('no tableview')
+            else:
                 
-            self.sheet.enable_bindings()
-            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
-            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
-            
+                
+                ##Tabelle darstellen            
+                self.frame1.grid_columnconfigure(0, weight = 1)
+                self.frame1.grid_rowconfigure(0, weight = 1)
+                self.sheet = Sheet(self.frame1,
+                                   data=df.values.tolist())
+
+                if head =='yes':
+                    self.sheet.headers(df.columns)
+                
+                    
+                self.sheet.enable_bindings()
+                self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+                self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+                
             self.Scrolledtext1.insert(END, 30*'#')
             self.Scrolledtext1.insert(END, '\nCSV Data loaded')
             self.Scrolledtext1.insert(END, '\n')
@@ -625,6 +634,13 @@ class Toplevel1:
                 urwertkarte(df, messwert, lt, ut)
             if plotfunction =='Xbar/s-Chart':
                 xquer_s(df, messwert, lt, ut, samplesize)
+        
+        def plot_L_Reg():
+            global df
+            yv = self.TCombobox72.get()
+            xv = self.TCombobox73.get()
+            LREG(df, yv, xv)
+            
   
             
 ##################################################
@@ -826,6 +842,19 @@ class Toplevel1:
         self.value_list3 = ['yes','no']
         self.TCombobox3.configure(values=self.value_list3)
         self.TCombobox3.configure(takefocus="")
+        
+        
+        var1 = tk.IntVar()
+        self.Checkbutton1 = tk.Checkbutton(self.TNotebook1_t1)
+        self.Checkbutton1.place(relx=0.07, rely=0.700, relheight=0.047
+                , relwidth=0.3)
+        self.Checkbutton1.configure(activebackground="#f9f9f9")
+        self.Checkbutton1.configure(justify='left')
+        self.Checkbutton1.configure(text='''load Data without tableview''')
+        self.Checkbutton1.configure(variable=var1, onvalue=1)
+        #self.Checkbutton1.configure(variable=Plot_Cosmino_Data_V2_support.che62)
+        
+        
         
         ##tab2        
         self.Label10 = tk.Label(self.TNotebook1_t2)
@@ -1318,7 +1347,7 @@ class Toplevel1:
         self.Button74.place(relx=0.53, rely=0.5, height=33, width=113)
         self.Button74.configure(borderwidth="2")
         self.Button74.configure(compound='left')
-        self.Button74.configure(command = plot_df)
+        self.Button74.configure(command = plot_L_Reg)
         self.Button74.configure(text='''Plot''')
         
         
