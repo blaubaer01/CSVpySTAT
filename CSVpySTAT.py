@@ -24,7 +24,7 @@ from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
-from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG
+from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
 
 
 import CSVpySTAT_support
@@ -216,7 +216,10 @@ class Toplevel1:
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox73.configure(values=list(values.columns))
             
-            
+                        
+            tabi=df.select_dtypes(include=['object'])
+            self.TCombobox85.configure(values=list(tabi.columns))
+            self.TCombobox86.configure(values=list(tabi.columns))            
             
             
             return (df)
@@ -634,6 +637,8 @@ class Toplevel1:
                 urwertkarte(df, messwert, lt, ut)
             if plotfunction =='Xbar/s-Chart':
                 xquer_s(df, messwert, lt, ut, samplesize)
+            if plotfunction =='Outlier-Test':
+                outliert(df, messwert)
         
         def plot_L_Reg():
             global df
@@ -676,9 +681,80 @@ class Toplevel1:
 
 ###########################################################################        
 
+        def seq_nr():
+            global df
+            print('build sequence nr')
+            seq_count = len(df)
+            print(seq_count)
+            seq_count=int(seq_count)
+            
+            
+            name_col = self.Entry83.get()
+            
+            seq_nr_from = self.Entry82.get()
+                       
+            if name_col !='':
+                name_col=name_col
+            else:
+                name_col='seq #'
+            
+            if seq_nr_from !='':
+                seq_nr_from = int(seq_nr_from)
+            else:
+                seq_nr_from = 1
+                
+            
+            
+            df[name_col] = range(seq_nr_from, seq_count+seq_nr_from)
+            
+            
+            print(df)
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+        
+        
+        def combine_column():
+            print('Combine factor columns:')
+            print('#'*50)    
+            
+            global df
+            col1 = self.TCombobox85.get()
+            col2 = self.TCombobox86.get()
+            name_col = self.Entry87.get()
+            
+            if name_col !='':
+                name_col =name_col
+            else:
+                name_col =col1 + "_" + col2
+            
+            
+            
+            df[name_col] = df[col1] + "_" + df[col2]
+            
+            
+            print(df)
 
-
-
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
 
 
         '''This class configures and populates the toplevel window.
@@ -856,80 +932,95 @@ class Toplevel1:
         
         
         
-        ##tab2        
+        ##tab2- Format Table
+        ##change format
+        self.Label110 = tk.Label(self.TNotebook1_t2)
+        self.Label110.place(relx=0.02, rely=0.034, height=21, width=150)
+        self.Label110.configure(anchor='w')
+        self.Label110.configure(compound='left')
+        self.Label110.configure(text='''Change Format:''')
+        
+        
+
         self.Label10 = tk.Label(self.TNotebook1_t2)
-        self.Label10.place(relx=0.02, rely=0.034, height=21, width=74)
+        self.Label10.place(relx=0.02, rely=0.15, height=21, width=74)
         self.Label10.configure(anchor='w')
         self.Label10.configure(compound='left')
         self.Label10.configure(text='''Column:''')
 
         self.TCombobox9 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox9.place(relx=0.175, rely=0.034, relheight=0.072
+        self.TCombobox9.place(relx=0.175, rely=0.15, relheight=0.072
                 , relwidth=0.175)
         self.TCombobox9.configure(takefocus="")
 
         self.Button5 = tk.Button(self.TNotebook1_t2)
-        self.Button5.place(relx=0.25, rely=0.138, height=25, width=25)
+        self.Button5.place(relx=0.25, rely=0.3, height=25, width=25)
         self.Button5.configure(borderwidth="2")
         self.Button5.configure(compound='left')
         self.Button5.configure(command=current_format)
         self.Button5.configure(text='''...''')
         
         
-    
         self.Label11 = tk.Label(self.TNotebook1_t2)
-        self.Label11.place(relx=0.02, rely=0.138, height=21, width=115)
+        self.Label11.place(relx=0.02, rely=0.3, height=21, width=115)
         self.Label11.configure(anchor='w')
         self.Label11.configure(compound='left')
         self.Label11.configure(text='''Current Format:''')
 
         self.Label12 = tk.Label(self.TNotebook1_t2)
-        self.Label12.place(relx=0.175, rely=0.138, height=21, width=80)
+        self.Label12.place(relx=0.175, rely=0.3, height=21, width=80)
         self.Label12.configure(anchor='w')
         self.Label12.configure(compound='left')
         self.Label12.configure(text='''Format''')
 
         self.Label13 = tk.Label(self.TNotebook1_t2)
-        self.Label13.place(relx=0.02, rely=0.241, height=21, width=139)
+        self.Label13.place(relx=0.02, rely=0.45, height=21, width=139)
         self.Label13.configure(anchor='w')
         self.Label13.configure(compound='left')
         self.Label13.configure(text='''choose new Format:''')
 
         self.TCombobox10 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox10.place(relx=0.175, rely=0.241, relheight=0.072
+        self.TCombobox10.place(relx=0.175, rely=0.45, relheight=0.072
                 , relwidth=0.174)
         self.value_list4 = ['int','float','object','string', 'datetime']
         self.TCombobox10.configure(values=self.value_list4)
         self.TCombobox10.configure(takefocus="")
 
         self.Button4 = tk.Button(self.TNotebook1_t2)
-        self.Button4.place(relx=0.175, rely=0.345, height=33, width=123)
+        self.Button4.place(relx=0.175, rely=0.6, height=33, width=123)
         self.Button4.configure(borderwidth="2")
         self.Button4.configure(compound='left')
         self.Button4.configure(text='''set new format''')
         self.Button4.configure(command = change_format)
         
+        ##set filter into column
+        
+        self.Label140 = tk.Label(self.TNotebook1_t2)
+        self.Label140.place(relx=0.4, rely=0.034, height=21, width=139)
+        self.Label140.configure(anchor='w')
+        self.Label140.configure(compound='left')
+        self.Label140.configure(text='''Set filters:''')
         
         self.Label14 = tk.Label(self.TNotebook1_t2)
-        self.Label14.place(relx=0.4, rely=0.034, height=21, width=139)
+        self.Label14.place(relx=0.4, rely=0.150, height=21, width=139)
         self.Label14.configure(anchor='w')
         self.Label14.configure(compound='left')
         self.Label14.configure(text='''Filter Column:''')
         
         self.TCombobox11 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox11.place(relx=0.50, rely=0.034, relheight=0.072
+        self.TCombobox11.place(relx=0.50, rely=0.150, relheight=0.072
                 , relwidth=0.175)
         self.TCombobox11.configure(takefocus="")
         
         
         self.Label15 = tk.Label(self.TNotebook1_t2)
-        self.Label15.place(relx=0.4, rely=0.15, height=21, width=139)
+        self.Label15.place(relx=0.4, rely=0.3, height=21, width=139)
         self.Label15.configure(anchor='w')
         self.Label15.configure(compound='left')
         self.Label15.configure(text='''Criterium:''')
         
         self.TCombobox12 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox12.place(relx=0.50, rely=0.15, relheight=0.072
+        self.TCombobox12.place(relx=0.50, rely=0.3, relheight=0.072
                 , relwidth=0.175)
         self.value_list5 = ['==', '>=', '<=', '!=']
         self.TCombobox12.configure(values=self.value_list5)
@@ -937,13 +1028,13 @@ class Toplevel1:
         
         
         self.Label16 = tk.Label(self.TNotebook1_t2)
-        self.Label16.place(relx=0.4, rely=0.25, height=21, width=60)
+        self.Label16.place(relx=0.4, rely=0.45, height=21, width=60)
         self.Label16.configure(anchor='w')
         self.Label16.configure(compound='left')
         self.Label16.configure(text='''Content:''')
         
         self.Button8 = tk.Button(self.TNotebook1_t2)
-        self.Button8.place(relx=0.64, rely=0.25, height=33, width=30)
+        self.Button8.place(relx=0.64, rely=0.45, height=33, width=30)
         self.Button8.configure(borderwidth="2")
         self.Button8.configure(compound='left')
         self.Button8.configure(text='''...''')
@@ -951,46 +1042,54 @@ class Toplevel1:
         
         
         self.TCombobox13 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox13.place(relx=0.50, rely=0.25, relheight=0.072
+        self.TCombobox13.place(relx=0.50, rely=0.45, relheight=0.072
                 , relwidth=0.12)
         self.TCombobox13.configure(takefocus="")
         
         self.Button6 = tk.Button(self.TNotebook1_t2)
-        self.Button6.place(relx=0.5, rely=0.345, height=33, width=123)
+        self.Button6.place(relx=0.5, rely=0.6, height=33, width=123)
         self.Button6.configure(borderwidth="2")
         self.Button6.configure(compound='left')
         self.Button6.configure(text='''set new filter''')
         self.Button6.configure(command = set_filter)
         
+        ## Sort table by column
+        
+        self.Label170 = tk.Label(self.TNotebook1_t2)
+        self.Label170.place(relx=0.7, rely=0.034, height=21, width=139)
+        self.Label170.configure(anchor='w')
+        self.Label170.configure(compound='left')
+        self.Label170.configure(text='''Sort table by Column:''')
+        
         
         self.Label17 = tk.Label(self.TNotebook1_t2)
-        self.Label17.place(relx=0.7, rely=0.034, height=21, width=139)
+        self.Label17.place(relx=0.7, rely=0.15, height=21, width=139)
         self.Label17.configure(anchor='w')
         self.Label17.configure(compound='left')
         self.Label17.configure(text='''Sort Column:''')
         
         self.TCombobox14 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox14.place(relx=0.80, rely=0.034, relheight=0.072
+        self.TCombobox14.place(relx=0.80, rely=0.15, relheight=0.072
                 , relwidth=0.175)
         
         self.TCombobox14.configure(takefocus="")
         
         
         self.Label18 = tk.Label(self.TNotebook1_t2)
-        self.Label18.place(relx=0.7, rely=0.15, height=21, width=139)
+        self.Label18.place(relx=0.7, rely=0.3, height=21, width=139)
         self.Label18.configure(anchor='w')
         self.Label18.configure(compound='left')
         self.Label18.configure(text='''direction''')
         
         self.TCombobox15 = ttk.Combobox(self.TNotebook1_t2)
-        self.TCombobox15.place(relx=0.80, rely=0.15, relheight=0.072
+        self.TCombobox15.place(relx=0.80, rely=0.3, relheight=0.072
                 , relwidth=0.175)
         self.value_list6 = ['AZ', 'ZA']
         self.TCombobox15.configure(values=self.value_list6)
         self.TCombobox15.configure(takefocus="")
         
         self.Button7 = tk.Button(self.TNotebook1_t2)
-        self.Button7.place(relx=0.8, rely=0.345, height=33, width=123)
+        self.Button7.place(relx=0.8, rely=0.45, height=33, width=123)
         self.Button7.configure(borderwidth="2")
         self.Button7.configure(compound='left')
         self.Button7.configure(text='''sort''')
@@ -1261,7 +1360,7 @@ class Toplevel1:
         self.TCombobox63 = ttk.Combobox(self.TNotebook1_t6)
         self.TCombobox63.place(relx=0.131, rely=0.3, relheight=0.072
                 , relwidth=0.175)
-        self.value_list63 = ['Descriptive Statistics', 'X-bar Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution']
+        self.value_list63 = ['Descriptive Statistics', 'X-bar Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution', 'Outlier-Test']
         self.TCombobox63.configure(values=self.value_list63)
         self.TCombobox63.configure(takefocus="")
 
@@ -1350,9 +1449,94 @@ class Toplevel1:
         self.Button74.configure(command = plot_L_Reg)
         self.Button74.configure(text='''Plot''')
         
+        ##tab7 -Tablefunctions
+        
+        ##sequence nr
+        self.Label81 = tk.Label(self.TNotebook1_t7)
+        self.Label81.place(relx=0.02, rely=0.034, height=21, width=250)
+        self.Label81.configure(anchor='w')
+        self.Label81.configure(compound='left')
+        self.Label81.configure(text='''create sequence number column:''')
+        
+        self.Label82 = tk.Label(self.TNotebook1_t7)
+        self.Label82.place(relx=0.02, rely=0.15, height=21, width=200)
+        self.Label82.configure(anchor='w')
+        self.Label82.configure(compound='left')
+        self.Label82.configure(text='''start number:''')
+        
+        self.Entry82 = tk.Entry(self.TNotebook1_t7)
+        self.Entry82.place(relx=0.133, rely=0.150, height=23, relwidth=0.1)
+        self.Entry82.configure(background="white")
+        self.Entry82.configure(font="TkFixedFont")
+        
+        self.Label83 = tk.Label(self.TNotebook1_t7)
+        self.Label83.place(relx=0.02, rely=0.3, height=21, width=200)
+        self.Label83.configure(anchor='w')
+        self.Label83.configure(compound='left')
+        self.Label83.configure(text='''column name:''')
+        
+        self.Entry83 = tk.Entry(self.TNotebook1_t7)
+        self.Entry83.place(relx=0.133, rely=0.3, height=23, relwidth=0.1)
+        self.Entry83.configure(background="white")
+        self.Entry83.configure(font="TkFixedFont")
         
         
         
+        self.Button81 = tk.Button(self.TNotebook1_t7)
+        self.Button81.place(relx=0.02, rely=0.45, height=33, width=113)
+        self.Button81.configure(borderwidth="2")
+        self.Button81.configure(compound='left')
+        self.Button81.configure(command = seq_nr)
+        self.Button81.configure(text='''Build # Column''')
+        
+        ##combine column
+        self.Label84 = tk.Label(self.TNotebook1_t7)
+        self.Label84.place(relx=0.30, rely=0.034, height=21, width=250)
+        self.Label84.configure(anchor='w')
+        self.Label84.configure(compound='left')
+        self.Label84.configure(text='''combine column:''')
+        
+        self.Label85 = tk.Label(self.TNotebook1_t7)
+        self.Label85.place(relx=0.30, rely=0.15, height=21, width=112)
+        self.Label85.configure(anchor='w')
+        self.Label85.configure(compound='left')
+        self.Label85.configure(text='''first Column:''')
+
+        self.TCombobox85= ttk.Combobox(self.TNotebook1_t7)
+        self.TCombobox85.place(relx=0.42, rely=0.15, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox85.configure(takefocus="")
+
+        self.Label86 = tk.Label(self.TNotebook1_t7)
+        self.Label86.place(relx=0.30, rely=0.3, height=21, width=112)
+        self.Label86.configure(anchor='w')
+        self.Label86.configure(compound='left')
+        self.Label86.configure(text='''second Column:''')
+
+        self.TCombobox86= ttk.Combobox(self.TNotebook1_t7)
+        self.TCombobox86.place(relx=0.42, rely=0.30, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox86.configure(takefocus="")        
+        
+        self.Label87 = tk.Label(self.TNotebook1_t7)
+        self.Label87.place(relx=0.3, rely=0.45, height=21, width=200)
+        self.Label87.configure(anchor='w')
+        self.Label87.configure(compound='left')
+        self.Label87.configure(text='''column name:''')
+        
+        self.Entry87 = tk.Entry(self.TNotebook1_t7)
+        self.Entry87.place(relx=0.42, rely=0.45, height=23, relwidth=0.1)
+        self.Entry87.configure(background="white")
+        self.Entry87.configure(font="TkFixedFont")
+
+        self.Button89 = tk.Button(self.TNotebook1_t7)
+        self.Button89.place(relx=0.3, rely=0.6, height=33, width=113)
+        self.Button89.configure(borderwidth="2")
+        self.Button89.configure(compound='left')
+        self.Button89.configure(command = combine_column)
+        self.Button89.configure(text='''Build # Column''')
+        
+
         
 ########################################################################
 

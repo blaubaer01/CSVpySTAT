@@ -11,6 +11,8 @@ import scipy as spy
 from scipy.stats import shapiro
 import pandas as pd
 import statsmodels.api as sm
+from outliers import smirnov_grubbs as grubbs
+
 
 ############################statistic variables
 #########################################################################################
@@ -822,4 +824,28 @@ def LREG(df, yv, xv):
     plt.axis('off')
     
     plt.show()
+
+
+def outliert(df, messwert):
     
+    sns.set(color_codes=True)
+    print('Test of Outliers \n')
+    
+    y=df[messwert]
+    y_val = messwert
+    
+    print('Value could be outlier:',grubbs.max_test_outliers(y, alpha=0.05))
+    
+       
+    
+    eintrag = 'Grubbs-Outlier Test' + '\nValue could be outlier:' + str(grubbs.max_test_outliers(y, alpha=0.05))
+    
+    plt.figure(figsize=(6,2))
+    plt.subplot(211)
+    sns.boxplot(x=y)
+    plt.subplot(212)
+    plt.text(0.1,0.5,eintrag, 
+                     ha='left', va='center',
+                     fontsize=12)
+    plt.axis('off')
+    plt.show()    
