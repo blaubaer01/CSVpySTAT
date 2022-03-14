@@ -220,7 +220,7 @@ class Toplevel1:
             tabi=df.select_dtypes(include=['object'])
             self.TCombobox85.configure(values=list(tabi.columns))
             self.TCombobox86.configure(values=list(tabi.columns))            
-            
+            self.TCombobox91.configure(values=list(tabi.columns))
             
             return (df)
         
@@ -438,7 +438,7 @@ class Toplevel1:
             self.sheet = Sheet(self.frame1,
                                data=df.values.tolist())
             
-            
+            self.sheet.headers(df.columns)
                 
             self.sheet.enable_bindings()
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
@@ -471,7 +471,7 @@ class Toplevel1:
             self.sheet = Sheet(self.frame1,
                                data=df.values.tolist())
             
-            
+            self.sheet.headers(df.columns)
                 
             self.sheet.enable_bindings()
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
@@ -756,6 +756,32 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
 
+
+        def split_column():
+            global df
+            print('split column')
+            
+            
+            column_name = self.TCombobox91.get()
+            delimeter_name = self.Entry92.get()
+            
+            df[[column_name,column_name + str(2)]] = df[column_name].str.split(delimeter_name,expand=True)
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+
+            
+            
+            
 
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -1534,8 +1560,53 @@ class Toplevel1:
         self.Button89.configure(borderwidth="2")
         self.Button89.configure(compound='left')
         self.Button89.configure(command = combine_column)
-        self.Button89.configure(text='''Build # Column''')
+        self.Button89.configure(text='''Build Column''')
         
+        ## split column
+
+        self.Label90 = tk.Label(self.TNotebook1_t7)
+        self.Label90.place(relx=0.65, rely=0.034, height=21, width=250)
+        self.Label90.configure(anchor='w')
+        self.Label90.configure(compound='left')
+        self.Label90.configure(text='''split column:''')
+        
+        self.Label91 = tk.Label(self.TNotebook1_t7)
+        self.Label91.place(relx=0.65, rely=0.15, height=21, width=112)
+        self.Label91.configure(anchor='w')
+        self.Label91.configure(compound='left')
+        self.Label91.configure(text='''Column:''')
+
+        self.TCombobox91= ttk.Combobox(self.TNotebook1_t7)
+        self.TCombobox91.place(relx=0.75, rely=0.15, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox91.configure(takefocus="")
+
+        self.Label92 = tk.Label(self.TNotebook1_t7)
+        self.Label92.place(relx=0.65, rely=0.3, height=21, width=200)
+        self.Label92.configure(anchor='w')
+        self.Label92.configure(compound='left')
+        self.Label92.configure(text='''Sepeator:''')
+        
+        self.Entry92 = tk.Entry(self.TNotebook1_t7)
+        self.Entry92.place(relx=0.75, rely=0.3, height=23, relwidth=0.1)
+        self.Entry92.configure(background="white")
+        self.Entry92.configure(font="TkFixedFont")
+
+        self.Button92 = tk.Button(self.TNotebook1_t7)
+        self.Button92.place(relx=0.65, rely=0.6, height=33, width=113)
+        self.Button92.configure(borderwidth="2")
+        self.Button92.configure(compound='left')
+        self.Button92.configure(command = split_column)
+        self.Button92.configure(text='''Split Column''')
+
+
+
+
+
+
+
+
+
 
         
 ########################################################################
