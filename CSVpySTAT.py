@@ -25,7 +25,7 @@ from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_s
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
 from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
-
+from stat_charts import contingency_table
 
 import CSVpySTAT_support
 
@@ -221,6 +221,11 @@ class Toplevel1:
             self.TCombobox85.configure(values=list(tabi.columns))
             self.TCombobox86.configure(values=list(tabi.columns))            
             self.TCombobox91.configure(values=list(tabi.columns))
+            
+            ta=df.select_dtypes(exclude=['float'])
+            self.TCombobox102.configure(values=list(ta.columns))
+            self.TCombobox103.configure(values=list(ta.columns))            
+            
             
             return (df)
         
@@ -779,7 +784,50 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
 
+        def crosstable():
+            global df
+            print('crosstable')
             
+            table1 = self.TCombobox102.get()
+            table2 = self.TCombobox103.get()
+            tableoption = self.TCombobox104.get()
+            
+            
+            
+            if tableoption =='cross sum table':
+                ctcalc = pd.crosstab(index=df[table1], columns=df[table2])
+                print(tabulate(ctcalc, headers='keys', tablefmt='psql'))
+                
+                
+                ctcalc.to_csv('crosstable.csv', sep=';', decimal=',', header =True)
+                
+                df2=pd.read_csv('crosstable.csv',sep=';' ,decimal=',', header=0, engine='python')
+                file_in_html(df2)
+            elif tableoption =='cross sum table with total':
+                ctv=pd.crosstab(index=df[table1], columns=df[table2], margins=True)
+                print(tabulate(ctv, headers='keys', tablefmt='psql'))
+                ctv.to_csv('crosstable.csv', sep=';', decimal=',', header =True)
+                
+                df2=pd.read_csv('crosstable.csv',sep=';' ,decimal=',', header=0, engine='python')
+                file_in_html(df2)
+            elif tableoption =='cross percent table':
+                ct = pd.crosstab(index=df[table1], columns=df[table2], margins=False).applymap(lambda r: r/len(df))
+                print(tabulate(ct, headers='keys', tablefmt='psql'))
+                ct.to_csv('crosstable.csv', sep=';', decimal=',', header =True)
+                
+                df2=pd.read_csv('crosstable.csv',sep=';' ,decimal=',', header=0, engine='python')
+                file_in_html(df2)
+            elif tableoption =='cross percent table with total':
+                ct = pd.crosstab(index=df[table1], columns=df[table2], margins=True).applymap(lambda r: r/len(df))
+                print(tabulate(ct, headers='keys', tablefmt='psql'))
+                ct.to_csv('crosstable.csv', sep=';', decimal=',', header =True)
+                
+                df2=pd.read_csv('crosstable.csv',sep=';' ,decimal=',', header=0, engine='python')
+                file_in_html(df2)
+            elif tableoption =='contingency table':
+                contingency_table(df, table1, table2)
+                
+   
             
             
 
@@ -858,16 +906,24 @@ class Toplevel1:
         
         self.TNotebook1_t8 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t8, padding=4)
-        self.TNotebook1.tab(7, text='''Pivot''', compound="left"
+        self.TNotebook1.tab(7, text='''Crosstable''', compound="left"
                 ,underline='''-1''', )
         
-        ##tab5
+        self.TNotebook1_t9 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t9, padding=4)
+        self.TNotebook1.tab(8, text='''Modify''', compound="left"
+                ,underline='''-1''', )
+        
+        
+        
+        
+        ##tab5 - Datatable
         self.frame1 = tk.Frame(self.TNotebook1_t5)
         self.frame1.place(relx=0.0, rely=0.06, height=23, width=79)
         self.frame1.grid_columnconfigure(0, weight = 1)
         self.frame1.grid_rowconfigure(0, weight = 1)
         
-        ###tab1
+        ###tab1 -Read File
         self.Entry1 = tk.Entry(self.TNotebook1_t1)
         self.Entry1.place(relx=0.133, rely=0.069, height=23, relwidth=0.182)
         self.Entry1.configure(background="white")
@@ -1599,10 +1655,55 @@ class Toplevel1:
         self.Button92.configure(command = split_column)
         self.Button92.configure(text='''Split Column''')
 
+        #tab 8 - Crosstable + Contingency Table
+        
+        self.Label101 = tk.Label(self.TNotebook1_t8)
+        self.Label101.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label101.configure(anchor='w')
+        self.Label101.configure(compound='left')
+        self.Label101.configure(text='''crosstable:''')
+        
+        self.Label102 = tk.Label(self.TNotebook1_t8)
+        self.Label102.place(relx=0.03, rely=0.15, height=21, width=112)
+        self.Label102.configure(anchor='w')
+        self.Label102.configure(compound='left')
+        self.Label102.configure(text='''Column 1:''')
 
+        self.TCombobox102= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox102.place(relx=0.12, rely=0.15, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox102.configure(takefocus="")
+        
+        self.Label103 = tk.Label(self.TNotebook1_t8)
+        self.Label103.place(relx=0.03, rely=0.3, height=21, width=112)
+        self.Label103.configure(anchor='w')
+        self.Label103.configure(compound='left')
+        self.Label103.configure(text='''Column 2:''')
 
+        self.TCombobox103= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox103.place(relx=0.12, rely=0.3, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox103.configure(takefocus="")
+        
+        self.Label104 = tk.Label(self.TNotebook1_t8)
+        self.Label104.place(relx=0.03, rely=0.45, height=21, width=112)
+        self.Label104.configure(anchor='w')
+        self.Label104.configure(compound='left')
+        self.Label104.configure(text='''Option:''')
 
+        self.TCombobox104= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox104.place(relx=0.12, rely=0.45, relheight=0.072
+                , relwidth=0.200)
+        self.value_list104 = ['cross sum table', 'cross sum table with total','cross percent table', 'cross percent table with total', 'contingency table']
+        self.TCombobox104.configure(values=self.value_list104)
+        self.TCombobox104.configure(takefocus="")
 
+        self.Button100 = tk.Button(self.TNotebook1_t8)
+        self.Button100.place(relx=0.12, rely=0.6, height=33, width=113)
+        self.Button100.configure(borderwidth="2")
+        self.Button100.configure(compound='left')
+        self.Button100.configure(command = crosstable)
+        self.Button100.configure(text='''Build Crosstable''')
 
 
 

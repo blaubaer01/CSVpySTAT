@@ -12,6 +12,8 @@ from scipy.stats import shapiro
 import pandas as pd
 import statsmodels.api as sm
 from outliers import smirnov_grubbs as grubbs
+from tabulate import tabulate
+from scipy.stats import chi2_contingency
 
 
 ############################statistic variables
@@ -849,3 +851,69 @@ def outliert(df, messwert):
                      fontsize=12)
     plt.axis('off')
     plt.show()    
+
+def contingency_table(df, table1, table2):
+    print('contingency table')
+    
+    print(table1,table2)
+    
+    ctcalc = pd.crosstab(index=df[table1], columns=df[table2])
+    ctv=pd.crosstab(index=df[table1], columns=df[table2], margins=True)
+    
+    
+    ct = pd.crosstab(index=df[table1], columns=df[table2], margins=True).applymap(lambda r: r/len(df))
+    
+   
+    
+    print(tabulate(ctv, headers='keys', tablefmt='psql'))
+    print(tabulate(ct, headers='keys', tablefmt='psql'))
+    
+    view1 = tabulate(ctv, headers='keys', tablefmt='psql')
+    view2 = tabulate(ct, headers='keys', tablefmt='psql')
+    
+    print('\n')
+    print(chi2_contingency(ctcalc))
+    
+    
+    #The random variables A and B are stochastically independent of each other
+    
+    #The random variables A and B are not stochastically independent of each other
+    
+    chi2, p, degfree, table = chi2_contingency(ctcalc)
+    
+    
+    
+    if p < 0.05:
+        erg = 'H1: The variables A and B are not stochastically \nindependent of each other'
+    else:
+        erg = 'H0: The variables A and B are stochastically \nindependent of each other'
+    
+    
+    
+    chi2 = truncate(chi2, 3)
+    
+    p = truncate(p, 5)
+    
+    eintrag = 'Chi²: ' + str(chi2) + '\np-Value: ' + str(p) + '\n' + erg
+    
+    plt.figure(figsize=(4, 1))
+    
+    plt.subplot(121).set_ylim([0,2]) # äquivalent zu: plt.subplot(2, 2, 1)
+    
+    sns.heatmap(ctv,
+            cmap='coolwarm',
+            annot=True,
+            annot_kws={'size':8},
+            cbar=False,
+            xticklabels=1, 
+            yticklabels=1,
+            square=False)
+    
+    plt.subplot(122)
+    plt.text(0.1,0.5,eintrag, 
+                    ha='left', va='center',
+                    fontsize=12)
+    plt.axis('off')
+    plt.show()
+
+    
