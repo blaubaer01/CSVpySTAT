@@ -883,7 +883,7 @@ class Toplevel1:
         top.minsize(1, 1)
         top.maxsize(1351, 738)
         top.resizable(1,  1)
-        top.title("CSVpySTAT by Ricky Helfgen")
+        top.title("CSVpySTAT v0.1")
         top.configure(highlightcolor="black")
 
         self.top = top
@@ -904,27 +904,34 @@ class Toplevel1:
         self.TNotebook1.tab(0, text='''CSV Load''', compound="left"
                 ,underline='''-1''', )
         
+        self.TNotebook1_t5 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t5, padding=4)
+        self.TNotebook1.tab(1, text='''Datatable''', compound="left"
+                ,underline='''-1''', )
+        self.TNotebook1_t5.grid_columnconfigure(0, weight = 1)
+        self.TNotebook1_t5.grid_rowconfigure(0, weight = 1)
+        
+        
+        
         self.TNotebook1_t2 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t2, padding=4)
-        self.TNotebook1.tab(1, text='''Format table''', compound="left"
-                ,underline='''-1''', )
-        
-        self.TNotebook1_t3 = tk.Frame(self.TNotebook1)
-        self.TNotebook1.add(self.TNotebook1_t3, padding=4)
-        self.TNotebook1.tab(2, text='''Graph''', compound="left"
+        self.TNotebook1.tab(2, text='''Format table''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t4 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t4, padding=4)
         self.TNotebook1.tab(3, text='''join/append''', compound="left"
                 ,underline='''-1''', )
+
+
+
         
-        self.TNotebook1_t5 = tk.Frame(self.TNotebook1)
-        self.TNotebook1.add(self.TNotebook1_t5, padding=4)
-        self.TNotebook1.tab(4, text='''Datatable''', compound="left"
+        self.TNotebook1_t3 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t3, padding=4)
+        self.TNotebook1.tab(4, text='''Graph''', compound="left"
                 ,underline='''-1''', )
-        self.TNotebook1_t5.grid_columnconfigure(0, weight = 1)
-        self.TNotebook1_t5.grid_rowconfigure(0, weight = 1)
+        
+                
         
         self.TNotebook1_t6 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t6, padding=4)
@@ -951,6 +958,10 @@ class Toplevel1:
         self.TNotebook1.tab(9, text='''Save CSV''', compound="left"
                 ,underline='''-1''', )
         
+        self.TNotebook1_t11 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t11, padding=4)
+        self.TNotebook1.tab(10, text='''Info''', compound="left"
+                ,underline='''-1''', )
         
         
         
@@ -1760,7 +1771,7 @@ class Toplevel1:
         self.Label302.configure(text='''Current File name:''')
         
         self.Label302 = tk.Label(self.TNotebook1_t10)
-        self.Label302.place(relx=0.15, rely=0.15, height=21, width=350)
+        self.Label302.place(relx=0.15, rely=0.15, height=21, width=450)
         self.Label302.configure(anchor='w')
         self.Label302.configure(compound='left')
         self.Label302.configure(text='''no file loaded''')
@@ -1777,9 +1788,28 @@ class Toplevel1:
         self.Button304.configure(borderwidth="2")
         self.Button304.configure(compound='left')
         self.Button304.configure(command = save_CSV)
-        self.Button304.configure(text='''Save to...''')
+        self.Button304.configure(text='''Save as...''')
+        
+        ##Tab11
+        
+        self.Scrolledtext3 = ScrolledText(self.TNotebook1_t11)
+        self.Scrolledtext3.place(relx=0.012, rely=0.034, relheight=0.934
+                , relwidth=0.98)
+        self.Scrolledtext3.configure(background="white")
+        self.Scrolledtext3.configure(font="TkTextFont")
+        self.Scrolledtext3.configure(insertborderwidth="3")
+        self.Scrolledtext3.configure(selectbackground="blue")
+        self.Scrolledtext3.configure(selectforeground="white")
+        self.Scrolledtext3.configure(wrap="none")
+        f = open('Info.txt', "r", errors='ignore')
+    
+        self.Scrolledtext3.insert(END, f.read())
+            
         
 ########################################################################
+    
+
+
 
         self.Scrolledtext1 = ScrolledText(self.top)
         self.Scrolledtext1.place(relx=0.019, rely=0.494, relheight=0.467
