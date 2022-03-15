@@ -207,7 +207,8 @@ class Toplevel1:
             self.TCombobox11.configure(values=list(df.columns))
             self.TCombobox14.configure(values=list(df.columns))
             self.TCombobox62.configure(values=list(df.columns))
-
+            self.TCombobox208.configure(values=list(df.columns))
+            
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox4.configure(values=list(values.columns))
             self.TCombobox5.configure(values=list(df.columns))
@@ -227,7 +228,8 @@ class Toplevel1:
             
             ta=df.select_dtypes(exclude=['float'])
             self.TCombobox102.configure(values=list(ta.columns))
-            self.TCombobox103.configure(values=list(ta.columns))            
+            self.TCombobox103.configure(values=list(ta.columns)) 
+            
             
             
             return (df)
@@ -859,8 +861,30 @@ class Toplevel1:
             elif tableoption =='contingency table':
                 contingency_table(df, table1, table2)
                 
-   
+        def delete_rows():
+            global df
+            print('Delete Rows')
+        
+            delete_option = self.TCombobox202.get()
+            cont = self.Entry203.get()
             
+            self.value_list202 = ['nan rows', 'empty rows','NA rows', 'zero rows', 'rows with special characters']
+            if delete_option == 'nan rows':
+                df = df.dropna()
+            if delete_option == 'empty rows':
+                df.replace(' ', np.nan, inplace=True)
+                df= df.dropna()
+            if delete_option == 'NA rows':
+                df.replace('NA', np.nan, inplace=True)
+                df= df.dropna()
+            if delete_option == 'zero rows':
+                df.replace('0', np.nan, inplace=True)
+                df= df.dropna()
+                
+                
+        def replace_into_column():
+            global df
+            print('replace into columns')
             
 
         '''This class configures and populates the toplevel window.
@@ -950,17 +974,26 @@ class Toplevel1:
         
         self.TNotebook1_t9 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t9, padding=4)
-        self.TNotebook1.tab(8, text='''Modify''', compound="left"
+        self.TNotebook1.tab(8, text='''Modify DF''', compound="left"
                 ,underline='''-1''', )
+        
+        self.TNotebook1_t12 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t12, padding=4)
+        self.TNotebook1.tab(9, text='''Modify date''', compound="left"
+                ,underline='''-1''', )
+        
         
         self.TNotebook1_t10 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t10, padding=4)
-        self.TNotebook1.tab(9, text='''Save CSV''', compound="left"
+        self.TNotebook1.tab(10, text='''Save CSV''', compound="left"
                 ,underline='''-1''', )
+        
+        
+        
         
         self.TNotebook1_t11 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t11, padding=4)
-        self.TNotebook1.tab(10, text='''Info''', compound="left"
+        self.TNotebook1.tab(11, text='''Info''', compound="left"
                 ,underline='''-1''', )
         
         
@@ -1753,7 +1786,99 @@ class Toplevel1:
         self.Button100.configure(command = crosstable)
         self.Button100.configure(text='''Build Crosstable''')
 
-        ##tab 9
+        ##tab 9 Modify
+        
+        #delete
+        self.Label201 = tk.Label(self.TNotebook1_t9)
+        self.Label201.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label201.configure(anchor='w')
+        self.Label201.configure(compound='left')
+        self.Label201.configure(text='''Delete into the hole Dataframe:''')
+        
+        self.Label202 = tk.Label(self.TNotebook1_t9)
+        self.Label202.place(relx=0.03, rely=0.15, height=21, width=150)
+        self.Label202.configure(anchor='w')
+        self.Label202.configure(compound='left')
+        self.Label202.configure(text='''Delete Option:''')
+        
+        self.TCombobox202= ttk.Combobox(self.TNotebook1_t9)
+        self.TCombobox202.place(relx=0.20, rely=0.15, relheight=0.072
+                , relwidth=0.200)
+        self.value_list202 = ['nan rows', 'empty rows','NA rows', 'zero rows', 'rows with special characters']
+        self.TCombobox202.configure(values=self.value_list202)
+        self.TCombobox202.configure(takefocus="")
+        
+        self.Label203 = tk.Label(self.TNotebook1_t9)
+        self.Label203.place(relx=0.03, rely=0.3, height=21, width=150)
+        self.Label203.configure(anchor='w')
+        self.Label203.configure(compound='left')
+        self.Label203.configure(text='''special characteristic:''')
+        
+        self.Entry203 = tk.Entry(self.TNotebook1_t9)
+        self.Entry203.place(relx=0.20, rely=0.3, height=23, relwidth=0.1)
+        self.Entry203.configure(background="white")
+        self.Entry203.configure(font="TkFixedFont")
+        
+        
+        
+        self.Button204 = tk.Button(self.TNotebook1_t9)
+        self.Button204.place(relx=0.20, rely=0.45, height=33, width=113)
+        self.Button204.configure(borderwidth="2")
+        self.Button204.configure(compound='left')
+        self.Button204.configure(command = delete_rows)
+        self.Button204.configure(text='''Delete''')
+        
+        #replace
+        
+        self.Label205 = tk.Label(self.TNotebook1_t9)
+        self.Label205.place(relx=0.5, rely=0.034, height=21, width=250)
+        self.Label205.configure(anchor='w')
+        self.Label205.configure(compound='left')
+        self.Label205.configure(text='''Replace into Column:''')
+        
+        self.Label206 = tk.Label(self.TNotebook1_t9)
+        self.Label206.place(relx=0.5, rely=0.15, height=21, width=150)
+        self.Label206.configure(anchor='w')
+        self.Label206.configure(compound='left')
+        self.Label206.configure(text='''Replace Option:''')
+        
+        self.TCombobox206= ttk.Combobox(self.TNotebook1_t9)
+        self.TCombobox206.place(relx=0.7, rely=0.15, relheight=0.072
+                , relwidth=0.200)
+        self.value_list206 = ['content', 'value','float to point comma', 'point to float comma', 'character']
+        self.TCombobox206.configure(values=self.value_list206)
+        self.TCombobox206.configure(takefocus="")
+        
+        self.Label207 = tk.Label(self.TNotebook1_t9)
+        self.Label207.place(relx=0.5, rely=0.3, height=21, width=150)
+        self.Label207.configure(anchor='w')
+        self.Label207.configure(compound='left')
+        self.Label207.configure(text='''special characteristic:''')
+        
+        self.Entry207 = tk.Entry(self.TNotebook1_t9)
+        self.Entry207.place(relx=0.70, rely=0.3, height=23, relwidth=0.1)
+        self.Entry207.configure(background="white")
+        self.Entry207.configure(font="TkFixedFont")
+        
+        self.Label208 = tk.Label(self.TNotebook1_t9)
+        self.Label208.place(relx=0.5, rely=0.45, height=21, width=150)
+        self.Label208.configure(anchor='w')
+        self.Label208.configure(compound='left')
+        self.Label208.configure(text='''Column:''')
+        
+        self.TCombobox208= ttk.Combobox(self.TNotebook1_t9)
+        self.TCombobox208.place(relx=0.7, rely=0.45, relheight=0.072
+                , relwidth=0.200)
+        self.TCombobox208.configure(takefocus="")
+        
+        
+        self.Button209 = tk.Button(self.TNotebook1_t9)
+        self.Button209.place(relx=0.70, rely=0.60, height=33, width=113)
+        self.Button209.configure(borderwidth="2")
+        self.Button209.configure(compound='left')
+        self.Button209.configure(command = replace_into_column)
+        self.Button209.configure(text='''Replace''')
+        
         
         
         ##tab10 - Save CSV
