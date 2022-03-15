@@ -66,6 +66,7 @@ class Toplevel1:
         
             self.Entry1.delete(0, END)
             self.Entry1.insert(1,filename)
+            self.Label302.configure(text=filename)
             
             f = open(filename, "r", errors='ignore')
     
@@ -173,6 +174,8 @@ class Toplevel1:
             
             ##Tabelle + Formate einblenden
             self.Scrolledtext2.insert(END, df)
+            
+            self.Scrolledtext2.insert(END, '\n')
             self.Scrolledtext2.insert(END, df.dtypes)
             
             
@@ -517,6 +520,14 @@ class Toplevel1:
             print('Save File')
             global df
             
+            liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
+            
+            
+            df2 = pd.DataFrame (liste)
+            df2.columns = df.columns
+            #print(df2)
+            
+            
             filetypes = (
                 ('text files', '*.csv'),
                 ('All files', '*.*')
@@ -527,7 +538,28 @@ class Toplevel1:
                 filetypes=filetypes)
             
             
-            df.to_csv(filename, sep=';', decimal=',', header =True)
+            df2.to_csv(filename, sep=';', decimal=',', header =True)
+        
+        def save_current_CSV_name():
+            print('Save File')
+            
+            filename = self.Entry1.get()
+            global df
+            
+            liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
+            
+            
+            df2 = pd.DataFrame (liste)
+            df2.columns = df.columns
+            #print(df2)
+            
+            
+            
+            df2.to_csv(filename, sep=';', decimal=',', header =True)
+            
+        
+        
+        
         
         def append_CSV():
             print('Append Dataframe')
@@ -912,6 +944,11 @@ class Toplevel1:
         self.TNotebook1_t9 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t9, padding=4)
         self.TNotebook1.tab(8, text='''Modify''', compound="left"
+                ,underline='''-1''', )
+        
+        self.TNotebook1_t10 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t10, padding=4)
+        self.TNotebook1.tab(9, text='''Save CSV''', compound="left"
                 ,underline='''-1''', )
         
         
@@ -1705,10 +1742,42 @@ class Toplevel1:
         self.Button100.configure(command = crosstable)
         self.Button100.configure(text='''Build Crosstable''')
 
+        ##tab 9
+        
+        
+        ##tab10 - Save CSV
+        
+        self.Label301 = tk.Label(self.TNotebook1_t10)
+        self.Label301.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label301.configure(anchor='w')
+        self.Label301.configure(compound='left')
+        self.Label301.configure(text='''Save CSV File''')
+        
+        self.Label302 = tk.Label(self.TNotebook1_t10)
+        self.Label302.place(relx=0.03, rely=0.15, height=21, width=112)
+        self.Label302.configure(anchor='w')
+        self.Label302.configure(compound='left')
+        self.Label302.configure(text='''Current File name:''')
+        
+        self.Label302 = tk.Label(self.TNotebook1_t10)
+        self.Label302.place(relx=0.15, rely=0.15, height=21, width=350)
+        self.Label302.configure(anchor='w')
+        self.Label302.configure(compound='left')
+        self.Label302.configure(text='''no file loaded''')
 
-
-
-
+        self.Button303 = tk.Button(self.TNotebook1_t10)
+        self.Button303.place(relx=0.12, rely=0.3, height=33, width=113)
+        self.Button303.configure(borderwidth="2")
+        self.Button303.configure(compound='left')
+        self.Button303.configure(command = save_current_CSV_name)
+        self.Button303.configure(text='''Save''')
+        
+        self.Button304 = tk.Button(self.TNotebook1_t10)
+        self.Button304.place(relx=0.12, rely=0.45, height=33, width=113)
+        self.Button304.configure(borderwidth="2")
+        self.Button304.configure(compound='left')
+        self.Button304.configure(command = save_CSV)
+        self.Button304.configure(text='''Save to...''')
         
 ########################################################################
 
