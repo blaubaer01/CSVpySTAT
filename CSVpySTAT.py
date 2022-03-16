@@ -893,6 +893,9 @@ class Toplevel1:
                 elif delete_option == 'zero rows':
                     df.replace('0', np.nan, inplace=True)
                     df= df.dropna()
+                elif delete_option =='rows with special characters':
+                    df.replace(cont, np.nan, inplace=True)
+                    df= df.dropna()
             
             elif delete_where =='into column':
                 if delete_option == 'nan rows':
@@ -906,7 +909,9 @@ class Toplevel1:
                 elif delete_option == 'zero rows':
                     df[col_del].replace('0', np.nan, inplace=True)
                     df= df.dropna(subset=[col_del])
-                
+                elif delete_option =='rows with special characters':
+                    df[col_del].replace(cont, np.nan, inplace=True)
+                    df= df.dropna(subset=[col_del])
             
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
@@ -925,7 +930,44 @@ class Toplevel1:
             global df
             print('replace into columns')
             
-
+            replace_where = self.TCombobox208.get()
+            print(replace_where)
+            
+            replace_option = self.TCombobox206.get()
+            print(replace_option)
+            
+            repl_what = self.Entry207.get()
+            print(repl_what)
+            repl_with = self.Entry217.get()            
+            print(repl_with)
+            #self.value_list206 = ['value','character','float to point comma', 'point to float comma']
+            
+            if replace_option =='character':
+                df[replace_where].replace(repl_what, repl_with, inplace=True)
+            elif replace_option =='value':
+                df[replace_where].replace(float(repl_what), float(repl_with), inplace=True)     
+            elif replace_option =='float to point comma':
+                df[replace_where]=df[replace_where].str.replace(',','.').astype(float)
+            #elif replace_option =='point to float comma':
+            #    df[replace_where]=df[replace_where].str.replace('.',',').astype(float)
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+            
+            
+            
+            
+            
+            
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -1910,7 +1952,7 @@ class Toplevel1:
         self.TCombobox206= ttk.Combobox(self.TNotebook1_t9)
         self.TCombobox206.place(relx=0.7, rely=0.15, relheight=0.072
                 , relwidth=0.200)
-        self.value_list206 = ['content', 'value','float to point comma', 'point to float comma', 'character']
+        self.value_list206 = ['value','character', 'float to point comma']
         self.TCombobox206.configure(values=self.value_list206)
         self.TCombobox206.configure(takefocus="")
         
@@ -1918,27 +1960,40 @@ class Toplevel1:
         self.Label207.place(relx=0.5, rely=0.3, height=21, width=150)
         self.Label207.configure(anchor='w')
         self.Label207.configure(compound='left')
-        self.Label207.configure(text='''special characteristic:''')
+        self.Label207.configure(text='''replace:''')
         
         self.Entry207 = tk.Entry(self.TNotebook1_t9)
         self.Entry207.place(relx=0.70, rely=0.3, height=23, relwidth=0.1)
         self.Entry207.configure(background="white")
         self.Entry207.configure(font="TkFixedFont")
         
+        self.Label217 = tk.Label(self.TNotebook1_t9)
+        self.Label217.place(relx=0.5, rely=0.45, height=21, width=150)
+        self.Label217.configure(anchor='w')
+        self.Label217.configure(compound='left')
+        self.Label217.configure(text='''with:''')
+        
+        self.Entry217 = tk.Entry(self.TNotebook1_t9)
+        self.Entry217.place(relx=0.70, rely=0.45, height=23, relwidth=0.1)
+        self.Entry217.configure(background="white")
+        self.Entry217.configure(font="TkFixedFont")
+        
+        
+        
         self.Label208 = tk.Label(self.TNotebook1_t9)
-        self.Label208.place(relx=0.5, rely=0.45, height=21, width=150)
+        self.Label208.place(relx=0.5, rely=0.6, height=21, width=150)
         self.Label208.configure(anchor='w')
         self.Label208.configure(compound='left')
         self.Label208.configure(text='''Column:''')
         
         self.TCombobox208= ttk.Combobox(self.TNotebook1_t9)
-        self.TCombobox208.place(relx=0.7, rely=0.45, relheight=0.072
+        self.TCombobox208.place(relx=0.7, rely=0.6, relheight=0.072
                 , relwidth=0.200)
         self.TCombobox208.configure(takefocus="")
         
         
         self.Button209 = tk.Button(self.TNotebook1_t9)
-        self.Button209.place(relx=0.70, rely=0.60, height=33, width=113)
+        self.Button209.place(relx=0.70, rely=0.75, height=33, width=113)
         self.Button209.configure(borderwidth="2")
         self.Button209.configure(compound='left')
         self.Button209.configure(command = replace_into_column)
