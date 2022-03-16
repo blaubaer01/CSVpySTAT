@@ -541,7 +541,7 @@ def urwertkarte(df, messwert, lt, ut):
         
         plt.axhline(y=ut3s,linewidth=1, color='orange')
         plt.axhline(y=lt3s,linewidth=1, color='orange')
-        plt.title("Urwertkarte: " + messwert)
+        plt.title("Single Value Chart: " + messwert)
         
         plt.show()
         
@@ -555,7 +555,7 @@ def urwertkarte(df, messwert, lt, ut):
         plt.axhline(y=ut3s,linewidth=1, color='orange')
         plt.axhline(y=lt3s,linewidth=1, color='orange')
         plt.axhline(y=lt,linewidth=2, color='red')
-        plt.title("Urwertkarte: " + messwert)    
+        plt.title("Single Value Chart: " + messwert)    
         plt.show()
             
     elif toleranz=='einseitig oben':
@@ -566,7 +566,7 @@ def urwertkarte(df, messwert, lt, ut):
         plt.axhline(y=ut3s,linewidth=1, color='orange')
         plt.axhline(y=lt3s,linewidth=1, color='orange')
         plt.axhline(y=ut,linewidth=2, color='red')
-        plt.title("Urwertkarte: " + messwert)
+        plt.title("Single Value Chart: " + messwert)
         plt.show()
     
         
@@ -579,7 +579,7 @@ def urwertkarte(df, messwert, lt, ut):
         plt.axhline(y=lt3s,linewidth=1, color='orange')
         plt.axhline(y=lt,linewidth=2, color='red')
         plt.axhline(y=ut,linewidth=2, color='red')
-        plt.title("Urwertkarte: " + messwert)
+        plt.title("Single Value Chart: " + messwert)
         plt.show()
 
     elif toleranz=='':
@@ -592,7 +592,7 @@ def urwertkarte(df, messwert, lt, ut):
         plt.axhline(y=lt,linewidth=2, color='red')
         plt.axhline(y=ut,linewidth=2, color='red')
         
-        plt.title("Urwertkarte: " + messwert)
+        plt.title("Single Value Chart: " + messwert)
         plt.show()
 
 

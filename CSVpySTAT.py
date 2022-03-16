@@ -208,6 +208,7 @@ class Toplevel1:
             self.TCombobox14.configure(values=list(df.columns))
             self.TCombobox62.configure(values=list(df.columns))
             self.TCombobox208.configure(values=list(df.columns))
+            self.TCombobox222.configure(values=list(df.columns))
             
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox4.configure(values=list(values.columns))
@@ -523,10 +524,11 @@ class Toplevel1:
             global df
             
             liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
+            headercol = self.sheet.headers(newheaders = None, index = None, reset_col_positions = False, show_headers_if_not_sheet = True)
             
             
             df2 = pd.DataFrame (liste)
-            df2.columns = df.columns
+            df2.columns = headercol
             #print(df2)
             
             
@@ -550,15 +552,17 @@ class Toplevel1:
             
             liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
             
+            headercol = self.sheet.headers(newheaders = None, index = None, reset_col_positions = False, show_headers_if_not_sheet = True)
+            
+
+            
             
             df2 = pd.DataFrame (liste)
-            df2.columns = df.columns
-            #print(df2)
-            
+            df2.columns = headercol
             
             
             df2.to_csv(filename, sep=';', decimal=',', header =True)
-            
+            read_csv()
         
         
         
@@ -672,7 +676,7 @@ class Toplevel1:
                 normality_test(df,messwert)
             if plotfunction =='Capability Analysis':
                 CPA(df, messwert, lt, ut)
-            if plotfunction =='X-bar Chart':
+            if plotfunction =='Single Value Chart':
                 urwertkarte(df, messwert, lt, ut)
             if plotfunction =='Xbar/s-Chart':
                 xquer_s(df, messwert, lt, ut, samplesize)
@@ -865,21 +869,56 @@ class Toplevel1:
             global df
             print('Delete Rows')
         
+            delete_where = self.TCombobox212.get()
+            
             delete_option = self.TCombobox202.get()
+            
+            col_del = self.TCombobox222.get()
+            
             cont = self.Entry203.get()
             
-            self.value_list202 = ['nan rows', 'empty rows','NA rows', 'zero rows', 'rows with special characters']
-            if delete_option == 'nan rows':
-                df = df.dropna()
-            if delete_option == 'empty rows':
-                df.replace(' ', np.nan, inplace=True)
-                df= df.dropna()
-            if delete_option == 'NA rows':
-                df.replace('NA', np.nan, inplace=True)
-                df= df.dropna()
-            if delete_option == 'zero rows':
-                df.replace('0', np.nan, inplace=True)
-                df= df.dropna()
+            
+            #self.value_list202 = ['nan rows', 'empty rows','NA rows', 'zero rows', 'rows with special characters']
+            
+            
+            if delete_where =='Whole Dataframe':
+                if delete_option == 'nan rows':
+                    df = df.dropna()
+                elif delete_option == 'empty rows':
+                    df.replace(' ', np.nan, inplace=True)
+                    df= df.dropna()
+                elif delete_option == 'NA rows':
+                    df.replace('NA', np.nan, inplace=True)
+                    df= df.dropna()
+                elif delete_option == 'zero rows':
+                    df.replace('0', np.nan, inplace=True)
+                    df= df.dropna()
+            
+            elif delete_where =='into column':
+                if delete_option == 'nan rows':
+                    df= df.dropna(subset=[col_del])
+                elif delete_option == 'empty rows':
+                    df[col_del].replace(' ', np.nan, inplace=True)
+                    df= df.dropna(subset=[col_del])
+                elif delete_option == 'NA rows':
+                    df[col_del].replace('NA', np.nan, inplace=True)
+                    df= df.dropna(subset=[col_del])
+                elif delete_option == 'zero rows':
+                    df[col_del].replace('0', np.nan, inplace=True)
+                    df= df.dropna(subset=[col_del])
+                
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
                 
                 
         def replace_into_column():
@@ -1523,7 +1562,7 @@ class Toplevel1:
         self.TCombobox63 = ttk.Combobox(self.TNotebook1_t6)
         self.TCombobox63.place(relx=0.131, rely=0.3, relheight=0.072
                 , relwidth=0.175)
-        self.value_list63 = ['Descriptive Statistics', 'X-bar Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution', 'Outlier-Test']
+        self.value_list63 = ['Descriptive Statistics', 'Single Value Chart', 'Xbar/s-Chart', 'Capability Analysis', 'Histogram', 'QQ-Plot', 'Test of normal Distribution', 'Outlier-Test']
         self.TCombobox63.configure(values=self.value_list63)
         self.TCombobox63.configure(takefocus="")
 
@@ -1793,36 +1832,62 @@ class Toplevel1:
         self.Label201.place(relx=0.03, rely=0.034, height=21, width=250)
         self.Label201.configure(anchor='w')
         self.Label201.configure(compound='left')
-        self.Label201.configure(text='''Delete into the hole Dataframe:''')
+        self.Label201.configure(text='''Delete:''')
+        
+        self.Label212 = tk.Label(self.TNotebook1_t9)
+        self.Label212.place(relx=0.03, rely=0.15, height=21, width=150)
+        self.Label212.configure(anchor='w')
+        self.Label212.configure(compound='left')
+        self.Label212.configure(text='''Delete Option:''')
+        
+        self.TCombobox212= ttk.Combobox(self.TNotebook1_t9)
+        self.TCombobox212.place(relx=0.20, rely=0.15, relheight=0.072
+                , relwidth=0.200)
+        self.value_list212 = ['whole dataframe', 'into column']
+        self.TCombobox212.configure(values=self.value_list212)
+        self.TCombobox212.configure(takefocus="")
         
         self.Label202 = tk.Label(self.TNotebook1_t9)
-        self.Label202.place(relx=0.03, rely=0.15, height=21, width=150)
+        self.Label202.place(relx=0.03, rely=0.3, height=21, width=150)
         self.Label202.configure(anchor='w')
         self.Label202.configure(compound='left')
         self.Label202.configure(text='''Delete Option:''')
         
         self.TCombobox202= ttk.Combobox(self.TNotebook1_t9)
-        self.TCombobox202.place(relx=0.20, rely=0.15, relheight=0.072
+        self.TCombobox202.place(relx=0.20, rely=0.3, relheight=0.072
                 , relwidth=0.200)
         self.value_list202 = ['nan rows', 'empty rows','NA rows', 'zero rows', 'rows with special characters']
         self.TCombobox202.configure(values=self.value_list202)
         self.TCombobox202.configure(takefocus="")
         
+        self.Label222 = tk.Label(self.TNotebook1_t9)
+        self.Label222.place(relx=0.03, rely=0.45, height=21, width=150)
+        self.Label222.configure(anchor='w')
+        self.Label222.configure(compound='left')
+        self.Label222.configure(text='''Column:''')
+        
+        self.TCombobox222= ttk.Combobox(self.TNotebook1_t9)
+        self.TCombobox222.place(relx=0.20, rely=0.45, relheight=0.072
+                , relwidth=0.200)
+        self.TCombobox222.configure(takefocus="")
+        
+        
+        
         self.Label203 = tk.Label(self.TNotebook1_t9)
-        self.Label203.place(relx=0.03, rely=0.3, height=21, width=150)
+        self.Label203.place(relx=0.03, rely=0.6, height=21, width=150)
         self.Label203.configure(anchor='w')
         self.Label203.configure(compound='left')
         self.Label203.configure(text='''special characteristic:''')
         
         self.Entry203 = tk.Entry(self.TNotebook1_t9)
-        self.Entry203.place(relx=0.20, rely=0.3, height=23, relwidth=0.1)
+        self.Entry203.place(relx=0.20, rely=0.6, height=23, relwidth=0.1)
         self.Entry203.configure(background="white")
         self.Entry203.configure(font="TkFixedFont")
         
         
         
         self.Button204 = tk.Button(self.TNotebook1_t9)
-        self.Button204.place(relx=0.20, rely=0.45, height=33, width=113)
+        self.Button204.place(relx=0.20, rely=0.75, height=33, width=113)
         self.Button204.configure(borderwidth="2")
         self.Button204.configure(compound='left')
         self.Button204.configure(command = delete_rows)
