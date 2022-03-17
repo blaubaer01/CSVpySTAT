@@ -226,6 +226,7 @@ class Toplevel1:
             self.TCombobox85.configure(values=list(tabi.columns))
             self.TCombobox86.configure(values=list(tabi.columns))            
             self.TCombobox91.configure(values=list(tabi.columns))
+            self.TCombobox412.configure(values=list(tabi.columns))
             
             ta=df.select_dtypes(exclude=['float'])
             self.TCombobox102.configure(values=list(ta.columns))
@@ -964,7 +965,75 @@ class Toplevel1:
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
             
+        def show_fr():
+            global df
+            print('column first row')
             
+            col = self.TCombobox412.get()
+            
+            fr_val = df[col][1]
+
+            self.Label414.configure(text=fr_val)  
+        
+        
+        def convert_date():
+            global df
+            print('create convert date column')
+            
+            col_name = self.TCombobox412.get()
+            
+            current_format = self.TCombobox402.get()
+            
+            
+            new_col_name = self.Entry403.get()
+            
+            if new_col_name !='':
+                new_col_name = new_col_name
+            else:
+                new_col_name ='Datetime'
+            
+            self.value_list402 = ['yyyy-mm-dd hh:mm:ss', 'yyyy/mm/dd hh:mm:ss','dd-mm-yyyy hh:mm:ss', 'yyyy-mm-ddThh:mm:ss', 'dd.mm.yyyy hh:mm:ss', 'dd.mm.yyyy hh:mm', 'dd.mm.yyyy hh', 'dd.mm.yyyy']
+            
+            if current_format =='yyyy/mm/dd hh:mm:ss':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%Y/%m/%d %H:%M:%S')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            
+            elif current_format =='yyyy-mm-dd hh:mm:ss':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%Y-%m-%d %H:%M:%S')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            
+            elif current_format =='dd-mm-yyyy hh:mm:ss':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%d-%m-%Y %H:%M:%S')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            
+            elif current_format =='yyyy-mm-ddThh:mm:ss':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%Y-%m-%dT%H:%M:%S')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            
+            elif current_format =='dd.mm.yyyy hh:mm:ss':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%d.%m.%Y %H:%M:%S')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            elif current_format =='dd.mm.yyyy hh:mm':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%d.%m.%Y %H:%M')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            elif current_format =='dd.mm.yyyy hh':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%d.%m.%Y %H')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            elif current_format =='dd.mm.yyyy':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%d.%m.%Y')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
             
             
@@ -2000,8 +2069,78 @@ class Toplevel1:
         self.Button209.configure(text='''Replace''')
         
         
+        ##tab12 - modify date
         
-        ##tab10 - Save CSV
+        self.Label401 = tk.Label(self.TNotebook1_t12)
+        self.Label401.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label401.configure(anchor='w')
+        self.Label401.configure(compound='left')
+        self.Label401.configure(text='''Convert datetime Column:''')
+        
+        self.Label412 = tk.Label(self.TNotebook1_t12)
+        self.Label412.place(relx=0.03, rely=0.15, height=21, width=150)
+        self.Label412.configure(anchor='w')
+        self.Label412.configure(compound='left')
+        self.Label412.configure(text='''Column:''')
+        
+        self.TCombobox412= ttk.Combobox(self.TNotebook1_t12)
+        self.TCombobox412.place(relx=0.20, rely=0.15, relheight=0.072
+                , relwidth=0.200)
+        self.TCombobox412.configure(takefocus="")
+        
+        self.Label413 = tk.Label(self.TNotebook1_t12)
+        self.Label413.place(relx=0.03, rely=0.3, height=21, width=150)
+        self.Label413.configure(anchor='w')
+        self.Label413.configure(compound='left')
+        self.Label413.configure(text='''Format of Column:''')
+        
+        self.Label414 = tk.Label(self.TNotebook1_t12)
+        self.Label414.place(relx=0.2, rely=0.3, height=21, width=150)
+        self.Label414.configure(anchor='w')
+        self.Label414.configure(compound='left')
+        self.Label414.configure(text='''?''')
+        
+        self.Button404 = tk.Button(self.TNotebook1_t12)
+        self.Button404.place(relx=0.40, rely=0.3, height=33, width=20)
+        self.Button404.configure(borderwidth="2")
+        self.Button404.configure(compound='left')
+        self.Button404.configure(command = show_fr)
+        self.Button404.configure(text='''...''')
+        
+        self.Label402 = tk.Label(self.TNotebook1_t12)
+        self.Label402.place(relx=0.03, rely=0.45, height=21, width=150)
+        self.Label402.configure(anchor='w')
+        self.Label402.configure(compound='left')
+        self.Label402.configure(text='''Current Date Fromat:''')
+        
+        self.TCombobox402= ttk.Combobox(self.TNotebook1_t12)
+        self.TCombobox402.place(relx=0.20, rely=0.45, relheight=0.072
+                , relwidth=0.200)
+        self.value_list402 = ['yyyy-mm-dd hh:mm:ss', 'yyyy/mm/dd hh:mm:ss','dd-mm-yyyy hh:mm:ss', 'yyyy-mm-ddThh:mm:ss', 'dd.mm.yyyy hh:mm:ss', 'dd.mm.yyyy hh:mm', 'dd.mm.yyyy hh', 'dd.mm.yyyy']
+        self.TCombobox402.configure(values=self.value_list402)
+        self.TCombobox402.configure(takefocus="")
+        
+        self.Label403 = tk.Label(self.TNotebook1_t12)
+        self.Label403.place(relx=0.03, rely=0.6, height=21, width=150)
+        self.Label403.configure(anchor='w')
+        self.Label403.configure(compound='left')
+        self.Label403.configure(text='''New Column Name:''')
+        
+        self.Entry403 = tk.Entry(self.TNotebook1_t12)
+        self.Entry403.place(relx=0.20, rely=0.6, height=23, relwidth=0.2)
+        self.Entry403.configure(background="white")
+        self.Entry403.configure(font="TkFixedFont")
+        
+        self.Button404 = tk.Button(self.TNotebook1_t12)
+        self.Button404.place(relx=0.20, rely=0.75, height=33, width=200)
+        self.Button404.configure(borderwidth="2")
+        self.Button404.configure(compound='left')
+        self.Button404.configure(command = convert_date)
+        self.Button404.configure(text='''Build Date Column''')
+        
+        
+        
+        ##tab11 - Save CSV
         
         self.Label301 = tk.Label(self.TNotebook1_t10)
         self.Label301.place(relx=0.03, rely=0.034, height=21, width=250)
@@ -2035,7 +2174,7 @@ class Toplevel1:
         self.Button304.configure(command = save_CSV)
         self.Button304.configure(text='''Save as...''')
         
-        ##Tab11
+        ##Tab12 - Info
         
         self.Scrolledtext3 = ScrolledText(self.TNotebook1_t11)
         self.Scrolledtext3.place(relx=0.012, rely=0.034, relheight=0.934
