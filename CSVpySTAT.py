@@ -94,6 +94,40 @@ class Toplevel1:
             
             return filename
         
+        def read_table():
+            global df
+        ##Tabellen neu einlesen                                                                
+            self.TCombobox9.configure(values=list(df.columns))
+            self.TCombobox11.configure(values=list(df.columns))
+            self.TCombobox14.configure(values=list(df.columns))
+            self.TCombobox62.configure(values=list(df.columns))
+            self.TCombobox208.configure(values=list(df.columns))
+            self.TCombobox222.configure(values=list(df.columns))
+            
+            values=df.select_dtypes(include=['float', 'int'])
+            self.TCombobox4.configure(values=list(values.columns))
+            self.TCombobox5.configure(values=list(df.columns))
+            cat1=df.select_dtypes(include=['object', 'datetime'])
+            self.TCombobox6.configure(values=list(cat1.columns))
+            
+            values=df.select_dtypes(include=['float', 'int'])
+            self.TCombobox72.configure(values=list(values.columns))
+            values=df.select_dtypes(include=['float', 'int'])
+            self.TCombobox73.configure(values=list(values.columns))
+            
+                        
+            tabi=df.select_dtypes(include=['object', 'datetime'])
+            self.TCombobox85.configure(values=list(tabi.columns))
+            self.TCombobox86.configure(values=list(tabi.columns))            
+            self.TCombobox91.configure(values=list(tabi.columns))
+            self.TCombobox412.configure(values=list(tabi.columns))
+            self.TCombobox512.configure(values=list(tabi.columns))
+            
+            ta=df.select_dtypes(exclude=['float'])
+            self.TCombobox102.configure(values=list(ta.columns))
+            self.TCombobox103.configure(values=list(ta.columns)) 
+        
+        
         
         def file2_open():
             filetypes = (
@@ -203,6 +237,8 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             
+                                     
+            ##Tabellen neu einlesen                                                                
             self.TCombobox9.configure(values=list(df.columns))
             self.TCombobox11.configure(values=list(df.columns))
             self.TCombobox14.configure(values=list(df.columns))
@@ -222,11 +258,12 @@ class Toplevel1:
             self.TCombobox73.configure(values=list(values.columns))
             
                         
-            tabi=df.select_dtypes(include=['object'])
+            tabi=df.select_dtypes(include=['object', 'datetime'])
             self.TCombobox85.configure(values=list(tabi.columns))
             self.TCombobox86.configure(values=list(tabi.columns))            
             self.TCombobox91.configure(values=list(tabi.columns))
             self.TCombobox412.configure(values=list(tabi.columns))
+            self.TCombobox512.configure(values=list(tabi.columns))
             
             ta=df.select_dtypes(exclude=['float'])
             self.TCombobox102.configure(values=list(ta.columns))
@@ -305,6 +342,7 @@ class Toplevel1:
             
             print(df[curr_format].dtypes)
             print(df.dtypes)
+            read_table()
             return df
             
             
@@ -518,7 +556,8 @@ class Toplevel1:
             self.sheet.enable_bindings()
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
-        
+            
+            read_table()
         
         def save_CSV():
             print('Save File')
@@ -584,7 +623,7 @@ class Toplevel1:
             else:
                 df = df.append(df2)
         
-        
+            read_table()
         
             print(df)
     
@@ -799,7 +838,8 @@ class Toplevel1:
             self.sheet.enable_bindings()
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
-
+            
+            read_table()
 
         def split_column():
             global df
@@ -823,6 +863,8 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
 
+            read_table()
+            
         def crosstable():
             global df
             print('crosstable')
@@ -925,7 +967,8 @@ class Toplevel1:
             self.sheet.enable_bindings()
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
-                
+            
+            read_table()
                 
         def replace_into_column():
             global df
@@ -992,7 +1035,7 @@ class Toplevel1:
             else:
                 new_col_name ='Datetime'
             
-            self.value_list402 = ['yyyy-mm-dd hh:mm:ss', 'yyyy/mm/dd hh:mm:ss','dd-mm-yyyy hh:mm:ss', 'yyyy-mm-ddThh:mm:ss', 'dd.mm.yyyy hh:mm:ss', 'dd.mm.yyyy hh:mm', 'dd.mm.yyyy hh', 'dd.mm.yyyy']
+            #self.value_list402 = ['yyyy-mm-dd hh:mm:ss', 'yyyy/mm/dd hh:mm:ss','dd-mm-yyyy hh:mm:ss', 'yyyy-mm-ddThh:mm:ss', 'dd.mm.yyyy hh:mm:ss', 'dd.mm.yyyy hh:mm', 'dd.mm.yyyy hh', 'dd.mm.yyyy']
             
             if current_format =='yyyy/mm/dd hh:mm:ss':
                 df[new_col_name] = pd.to_datetime(df[col_name], format='%Y/%m/%d %H:%M:%S')
@@ -1035,8 +1078,78 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
+            read_table()
+        
+        
+        def create_cal_info():
+            global df
+            print('create calendar info')
+            
+            col_name = self.TCombobox512.get()
+            
+            cal_info = self.TCombobox502.get()
             
             
+            new_col_name = self.Entry503.get()
+            
+            if new_col_name !='':
+                new_col_name = new_col_name
+            else:
+                new_col_name =cal_info
+            
+            #self.value_list502 = ['month', 'day','week', 'year', 'minutes', 'second', 'day name', 'month name', 'day of the year', 'day of the week']
+            
+            if cal_info =='month':
+                df[new_col_name] = df[col_name].dt.month
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='day':
+                df[new_col_name] = df[col_name].dt.day
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='week':
+                df[new_col_name] = df[col_name].dt.isocalendar().week
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='year':
+                df[new_col_name] = df[col_name].dt.year
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='hour':
+                df[new_col_name] = df[col_name].dt.hour
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='minutes':
+                df[new_col_name] = df[col_name].dt.minute
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='second':
+                df[new_col_name] = df[col_name].dt.second
+                df[new_col_name] = df[new_col_name].astype('int')
+        
+            elif cal_info=='day name':
+                df[new_col_name] = df[col_name].dt.day_name()
+                df[new_col_name] = df[new_col_name].astype('str')
+            elif cal_info=='month name':
+                df[new_col_name] = df[col_name].dt.month_name()
+                df[new_col_name] = df[new_col_name].astype('str')
+            elif cal_info=='day of the year':
+                df[new_col_name] = df[col_name].dt.dayofyear
+                df[new_col_name] = df[new_col_name].astype('int')
+            elif cal_info=='day of the week':
+                df[new_col_name] = df[col_name].dt.dayofweek
+                df[new_col_name] = df[new_col_name].astype('int')
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+            
+            read_table()
+        
+        
+        
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -2137,6 +2250,58 @@ class Toplevel1:
         self.Button404.configure(compound='left')
         self.Button404.configure(command = convert_date)
         self.Button404.configure(text='''Build Date Column''')
+        
+        #get calendar info
+        
+        self.Label501 = tk.Label(self.TNotebook1_t12)
+        self.Label501.place(relx=0.5, rely=0.034, height=21, width=250)
+        self.Label501.configure(anchor='w')
+        self.Label501.configure(compound='left')
+        self.Label501.configure(text='''Get Calendar Info:''')
+        
+        self.Label512 = tk.Label(self.TNotebook1_t12)
+        self.Label512.place(relx=0.5, rely=0.15, height=21, width=150)
+        self.Label512.configure(anchor='w')
+        self.Label512.configure(compound='left')
+        self.Label512.configure(text='''Column:''')
+        
+        self.TCombobox512= ttk.Combobox(self.TNotebook1_t12)
+        self.TCombobox512.place(relx=0.7, rely=0.15, relheight=0.072
+                , relwidth=0.200)
+        self.TCombobox512.configure(takefocus="")
+        
+        
+        
+        self.Label502 = tk.Label(self.TNotebook1_t12)
+        self.Label502.place(relx=0.5, rely=0.45, height=21, width=150)
+        self.Label502.configure(anchor='w')
+        self.Label502.configure(compound='left')
+        self.Label502.configure(text='''Needet Calendar Info:''')
+        
+        self.TCombobox502= ttk.Combobox(self.TNotebook1_t12)
+        self.TCombobox502.place(relx=0.7, rely=0.45, relheight=0.072
+                , relwidth=0.200)
+        self.value_list502 = ['month', 'day','week', 'year', 'minutes', 'second', 'day name', 'month name', 'day of the year', 'day of the week']
+        self.TCombobox502.configure(values=self.value_list502)
+        self.TCombobox502.configure(takefocus="")
+        
+        self.Label503 = tk.Label(self.TNotebook1_t12)
+        self.Label503.place(relx=0.5, rely=0.6, height=21, width=150)
+        self.Label503.configure(anchor='w')
+        self.Label503.configure(compound='left')
+        self.Label503.configure(text='''New Column Name:''')
+        
+        self.Entry503 = tk.Entry(self.TNotebook1_t12)
+        self.Entry503.place(relx=0.7, rely=0.6, height=23, relwidth=0.2)
+        self.Entry503.configure(background="white")
+        self.Entry503.configure(font="TkFixedFont")
+        
+        self.Button504 = tk.Button(self.TNotebook1_t12)
+        self.Button504.place(relx=0.7, rely=0.75, height=33, width=200)
+        self.Button504.configure(borderwidth="2")
+        self.Button504.configure(compound='left')
+        self.Button504.configure(command = create_cal_info)
+        self.Button504.configure(text='''Build Calendar Info Column''')
         
         
         
