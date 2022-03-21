@@ -21,6 +21,7 @@ from scipy.stats import shapiro
 import numpy as np
 from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
+from mpl_toolkits.mplot3d import axes3d, Axes3D #<-- Note the capitalization!
 
 
 
@@ -1091,4 +1092,24 @@ def regression1f(df,messwert, lt, ut, spdt, factorx):
         
         plt.axhline(y=lt,linewidth=2, color='red')    
         plt.show()
+
+def scatter3d(df, messwert,spdt , factorx, factorz):
     
+    y = messwert
+    x = spdt
+    z = factorz
+    
+    
+    
+    y = df[messwert]
+    y_val =y
+    x = df[spdt]
+    x_val = spdt
+    z = df[factorz]
+    z_val = factorz
+    
+    
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    ax.scatter(x, y, z)
+    plt.show()    

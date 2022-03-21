@@ -23,7 +23,7 @@ from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
 from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
 from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
-from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f
+from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f, scatter3d
 from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
 from stat_charts import contingency_table
 
@@ -203,8 +203,6 @@ class Toplevel1:
             
             
             df=pd.read_csv(fn,sep=seperator ,decimal=comma, header=hd,encoding='iso-8859-1', engine='python')
-            #data=pd.read_csv(fn,sep=seperator ,decimal=comma, header=hd,encoding='iso-8859-1', engine='python')
-            #print(df)
             
             ##Tabelle + Formate einblenden
             self.Scrolledtext2.insert(END, df)
@@ -248,6 +246,7 @@ class Toplevel1:
             
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox4.configure(values=list(values.columns))
+            self.TCombobox8.configure(values=list(values.columns))
             self.TCombobox5.configure(values=list(df.columns))
             cat1=df.select_dtypes(include=['object', 'datetime'])
             self.TCombobox6.configure(values=list(cat1.columns))
@@ -648,13 +647,29 @@ class Toplevel1:
             lt = self.Entry55.get()
             spdt = self.TCombobox5.get()
             factorx = self.TCombobox6.get()
-            
+            factorz = self.TCombobox8.get()
             print(plotfunction)
             
                     
+            if spdt !='':
+                w1 = 'a'
+            else:
+                w1=''
+            if factorx !='':
+                w2 = 'b'
+            else:
+                w2=''
+            if factorz !='':
+                w3 = 'c'
+            else:
+                w3=''
                 
                 
-            if spdt =='':
+                
+            wert = w1+w2+w3
+            print(wert)
+            
+            if wert == '':
                 if plotfunction =='Boxplot':
                     boxplot_single(df, messwert, lt, ut)
                 elif plotfunction =='Violinplot':
@@ -663,33 +678,37 @@ class Toplevel1:
                     stripplot_single(df, messwert, lt, ut)
                 elif plotfunction =='Swarmplot':
                     swarmplot_single(df, messwert, lt, ut)
-            else:
-                if factorx =='':
-                    if plotfunction =='Time Series Plot':
-                        trend(df, messwert, lt, ut, spdt)
-                    if plotfunction =='Boxplot':
-                        boxplot1f(df, messwert, lt, ut,spdt)
-                    if plotfunction =='Violinplot':
-                        violin1f(df, messwert, lt, ut,spdt)
-                    if plotfunction =='Stripplot':
-                        strip1f(df, messwert, lt, ut,spdt)
-                    if plotfunction =='Scatterplot':
-                        scatterplot(df,messwert, lt,ut, spdt)
-                    if plotfunction =='Regressionplot':
-                        regression_single(df, messwert, lt, ut, spdt)
-                    if plotfunction =='Swarmplot':
-                        swarmplot1f(df, messwert, lt, ut, spdt)
-                else:
-                    if plotfunction=='Regressionplot':
-                        regression1f(df, messwert, lt, ut, spdt, factorx)
-                    if plotfunction=='Boxplot':
-                        boxplot2f(df, messwert, lt, ut, spdt, factorx)
-                    if plotfunction =='Violinplot':
-                        violin2f(df, messwert, lt, ut,spdt, factorx)
-                    if plotfunction =='Swarmplot':
-                        swarmplot2f(df, messwert, lt, ut,spdt, factorx)
-                    if plotfunction =='Stripplot':
-                        strip2f(df, messwert, lt, ut,spdt, factorx)
+            elif wert == 'a':
+                if plotfunction =='Time Series Plot':
+                    trend(df, messwert, lt, ut, spdt)
+                if plotfunction =='Boxplot':
+                    boxplot1f(df, messwert, lt, ut,spdt)
+                if plotfunction =='Violinplot':
+                    violin1f(df, messwert, lt, ut,spdt)
+                if plotfunction =='Stripplot':
+                    strip1f(df, messwert, lt, ut,spdt)
+                if plotfunction =='Scatterplot':
+                    scatterplot(df,messwert, lt,ut, spdt)
+                if plotfunction =='Regressionplot':
+                    regression_single(df, messwert, lt, ut, spdt)
+                if plotfunction =='Swarmplot':
+                    swarmplot1f(df, messwert, lt, ut, spdt)        
+            elif wert =='ab':
+                if plotfunction=='Regressionplot':
+                    regression1f(df, messwert, lt, ut, spdt, factorx)
+                if plotfunction=='Boxplot':
+                    boxplot2f(df, messwert, lt, ut, spdt, factorx)
+                if plotfunction =='Violinplot':
+                    violin2f(df, messwert, lt, ut,spdt, factorx)
+                if plotfunction =='Swarmplot':
+                    swarmplot2f(df, messwert, lt, ut,spdt, factorx)
+                if plotfunction =='Stripplot':
+                    strip2f(df, messwert, lt, ut,spdt, factorx)
+            elif wert =='ac':
+                if plotfunction =='Scatterplot':
+                    scatter3d(df,messwert, spdt, factorx, factorz)
+
+                        
 
         def plot_stat():
             global df
