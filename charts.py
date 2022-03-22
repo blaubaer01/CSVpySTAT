@@ -1112,4 +1112,198 @@ def scatter3d(df, messwert,spdt , factorx, factorz):
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.scatter(x, y, z)
-    plt.show()    
+    plt.show()  
+
+
+def barplot1f(df, messwert, lt, ut, spdt):
+    print('Barplot one factor \n')
+    sns.set(style="whitegrid")
+    y = messwert
+    x = spdt
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+            
+        sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
+def barplot2f(df, messwert, lt, ut, spdt, factorx):
+    print('Barplot two factors \n')
+    sns.set(style="whitegrid")
+    y = messwert
+    x = spdt
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+            
+        sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
+
+def countplot(df, spdt, lt, ut):
+    print('Countplot \n')
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    y = spdt
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.countplot(x=y, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+            
+        sns.countplot(x=y, data=df)
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.countplot(x=y, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.countplot(x=y, data=df)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
+###pie charts
+def pieplot(df, spdt):
+    print('Pie-Chart \n')
+    
+    y = spdt
+    
+    ###########################################################################
+    ###session-datei
+    
+    fname = 'Pi-chart with Group'
+    fvalue = 'Value: ' + y
+    
+    
+    
+    
+    
+    
+    ###########################################################################    
+    # Plot
+    ax = df[y].value_counts().plot(kind='pie',
+                                    figsize=(14,8),
+                                    title=y, autopct='%1.1f%%')
+    #ax.set_xlabel(list_columns[int(nummer_spalte)])
+    ax.set_ylabel("Frequency")
+    
+    
+    plt.show()

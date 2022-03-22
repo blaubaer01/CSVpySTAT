@@ -21,8 +21,8 @@ from scipy.stats import shapiro
 import numpy as np
 from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
-from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single
-from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single
+from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single, countplot, pieplot
+from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single, barplot1f, barplot2f
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f, scatter3d
 from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
 from stat_charts import contingency_table
@@ -678,21 +678,30 @@ class Toplevel1:
                     stripplot_single(df, messwert, lt, ut)
                 elif plotfunction =='Swarmplot':
                     swarmplot_single(df, messwert, lt, ut)
+                
+                
             elif wert == 'a':
                 if plotfunction =='Time Series Plot':
                     trend(df, messwert, lt, ut, spdt)
-                if plotfunction =='Boxplot':
+                elif plotfunction =='Boxplot':
                     boxplot1f(df, messwert, lt, ut,spdt)
-                if plotfunction =='Violinplot':
+                elif plotfunction =='Violinplot':
                     violin1f(df, messwert, lt, ut,spdt)
-                if plotfunction =='Stripplot':
+                elif plotfunction =='Stripplot':
                     strip1f(df, messwert, lt, ut,spdt)
-                if plotfunction =='Scatterplot':
+                elif plotfunction =='Scatterplot':
                     scatterplot(df,messwert, lt,ut, spdt)
-                if plotfunction =='Regressionplot':
+                elif plotfunction =='Regressionplot':
                     regression_single(df, messwert, lt, ut, spdt)
-                if plotfunction =='Swarmplot':
-                    swarmplot1f(df, messwert, lt, ut, spdt)        
+                elif plotfunction =='Swarmplot':
+                    swarmplot1f(df, messwert, lt, ut, spdt) 
+                elif plotfunction =='Barplot':
+                    barplot1f(df, messwert, lt, ut, spdt)
+                elif plotfunction =='Countplot':
+                    countplot(df, spdt, lt, ut)
+                elif plotfunction =='Pieplot': 
+                    pieplot(df, spdt)
+            
             elif wert =='ab':
                 if plotfunction=='Regressionplot':
                     regression1f(df, messwert, lt, ut, spdt, factorx)
@@ -704,6 +713,9 @@ class Toplevel1:
                     swarmplot2f(df, messwert, lt, ut,spdt, factorx)
                 if plotfunction =='Stripplot':
                     strip2f(df, messwert, lt, ut,spdt, factorx)
+                if plotfunction =='Barplot':
+                    barplot2f(df, messwert, lt, ut,spdt, factorx)    
+                    
             elif wert =='ac':
                 if plotfunction =='Scatterplot':
                     scatter3d(df,messwert, spdt, factorx, factorz)
@@ -1591,7 +1603,7 @@ class Toplevel1:
         self.TCombobox7 = ttk.Combobox(self.TNotebook1_t3)
         self.TCombobox7.place(relx=0.13, rely=0.6, relheight=0.072
                 , relwidth=0.175)
-        self.value_list10 = ['Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot', 'Scatterplot','Regressionplot']
+        self.value_list10 = ['Countplot', 'Barplot', 'Pieplot', 'Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot', 'Scatterplot','Regressionplot']
         self.TCombobox7.configure(values=self.value_list10)
         self.TCombobox7.configure(takefocus="")
 
