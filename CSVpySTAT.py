@@ -1497,7 +1497,7 @@ class Toplevel1:
         
         self.TCombobox12 = ttk.Combobox(self.TNotebook1_t2)
         self.TCombobox12.place(relx=0.50, rely=0.3, relheight=0.072
-                , relwidth=0.175)
+                , relwidth=0.08 )
         self.value_list5 = ['==', '>=', '<=', '!=']
         self.TCombobox12.configure(values=self.value_list5)
         self.TCombobox12.configure(takefocus="")
@@ -1510,7 +1510,7 @@ class Toplevel1:
         self.Label16.configure(text='''Content:''')
         
         self.Button8 = tk.Button(self.TNotebook1_t2)
-        self.Button8.place(relx=0.64, rely=0.45, height=33, width=30)
+        self.Button8.place(relx=0.65, rely=0.3, height=33, width=30)
         self.Button8.configure(borderwidth="2")
         self.Button8.configure(compound='left')
         self.Button8.configure(text='''...''')
@@ -1519,7 +1519,7 @@ class Toplevel1:
         
         self.TCombobox13 = ttk.Combobox(self.TNotebook1_t2)
         self.TCombobox13.place(relx=0.50, rely=0.45, relheight=0.072
-                , relwidth=0.12)
+                , relwidth=0.175)
         self.TCombobox13.configure(takefocus="")
         
         self.Button6 = tk.Button(self.TNotebook1_t2)
@@ -1559,7 +1559,7 @@ class Toplevel1:
         
         self.TCombobox15 = ttk.Combobox(self.TNotebook1_t2)
         self.TCombobox15.place(relx=0.80, rely=0.3, relheight=0.072
-                , relwidth=0.175)
+                , relwidth=0.09)
         self.value_list6 = ['AZ', 'ZA']
         self.TCombobox15.configure(values=self.value_list6)
         self.TCombobox15.configure(takefocus="")
