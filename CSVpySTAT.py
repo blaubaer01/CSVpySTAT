@@ -103,12 +103,15 @@ class Toplevel1:
             self.TCombobox62.configure(values=list(df.columns))
             self.TCombobox208.configure(values=list(df.columns))
             self.TCombobox222.configure(values=list(df.columns))
+            self.TCombobox6.configure(values=list(df.columns))
+            self.TCombobox85.configure(values=list(df.columns))
+            self.TCombobox86.configure(values=list(df.columns))
             
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox4.configure(values=list(values.columns))
             self.TCombobox5.configure(values=list(df.columns))
             cat1=df.select_dtypes(include=['object', 'datetime'])
-            self.TCombobox6.configure(values=list(cat1.columns))
+            #self.TCombobox6.configure(values=list(cat1.columns))
             
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox72.configure(values=list(values.columns))
@@ -117,8 +120,8 @@ class Toplevel1:
             
                         
             tabi=df.select_dtypes(include=['object', 'datetime'])
-            self.TCombobox85.configure(values=list(tabi.columns))
-            self.TCombobox86.configure(values=list(tabi.columns))            
+            #self.TCombobox85.configure(values=list(tabi.columns))
+            #self.TCombobox86.configure(values=list(tabi.columns))            
             self.TCombobox91.configure(values=list(tabi.columns))
             self.TCombobox412.configure(values=list(tabi.columns))
             self.TCombobox512.configure(values=list(tabi.columns))
@@ -243,13 +246,17 @@ class Toplevel1:
             self.TCombobox62.configure(values=list(df.columns))
             self.TCombobox208.configure(values=list(df.columns))
             self.TCombobox222.configure(values=list(df.columns))
+            self.TCombobox6.configure(values=list(df.columns))
+            self.TCombobox85.configure(values=list(df.columns))
+            self.TCombobox86.configure(values=list(df.columns))
+            
             
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox4.configure(values=list(values.columns))
             self.TCombobox8.configure(values=list(values.columns))
             self.TCombobox5.configure(values=list(df.columns))
             cat1=df.select_dtypes(include=['object', 'datetime'])
-            self.TCombobox6.configure(values=list(cat1.columns))
+            #self.TCombobox6.configure(values=list(cat1.columns))
             
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox72.configure(values=list(values.columns))
@@ -258,8 +265,8 @@ class Toplevel1:
             
                         
             tabi=df.select_dtypes(include=['object', 'datetime'])
-            self.TCombobox85.configure(values=list(tabi.columns))
-            self.TCombobox86.configure(values=list(tabi.columns))            
+            #self.TCombobox85.configure(values=list(tabi.columns))
+            #self.TCombobox86.configure(values=list(tabi.columns))            
             self.TCombobox91.configure(values=list(tabi.columns))
             self.TCombobox412.configure(values=list(tabi.columns))
             self.TCombobox512.configure(values=list(tabi.columns))
@@ -405,6 +412,7 @@ class Toplevel1:
                 self.value_list5 = ['==','!=']
                 self.TCombobox12.configure(values=self.value_list5)
             
+            read_table()
             
             
         def set_filter():
@@ -841,6 +849,8 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
         
+            read_table()    
+        
         
         def combine_column():
             print('Combine factor columns:')
@@ -851,6 +861,9 @@ class Toplevel1:
             col2 = self.TCombobox86.get()
             name_col = self.Entry87.get()
             
+            df[col1 + '(2)'] = df[col1].astype(str)
+            df[col2 + '(2)'] = df[col2].astype(str)
+            
             if name_col !='':
                 name_col =name_col
             else:
@@ -858,7 +871,7 @@ class Toplevel1:
             
             
             
-            df[name_col] = df[col1] + "_" + df[col2]
+            df[name_col] = df[col1 +'(2)'] + '_' + df[col2 +'(2)']
             
             
             print(df)
@@ -1043,6 +1056,7 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
+            read_table()
             
         def show_fr():
             global df
