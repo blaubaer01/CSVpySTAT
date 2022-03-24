@@ -1337,7 +1337,7 @@ class Toplevel1:
         self.Button1.configure(text='''...''')
 
         self.Button5 = tk.Button(self.TNotebook1_t1)
-        self.Button5.place(relx=0.270, rely=0.800, height=23, width=100)
+        self.Button5.place(relx=0.270, rely=0.85, height=23, width=100)
         self.Button5.configure(borderwidth="2")
         self.Button5.configure(compound='left')
         self.Button5.configure(command=read_csv)
@@ -1352,7 +1352,7 @@ class Toplevel1:
 
         self.TCombobox1 = ttk.Combobox(self.TNotebook1_t1)
         self.TCombobox1.place(relx=0.137, rely=0.241, relheight=0.072
-                , relwidth=0.125)
+                , relwidth=0.08)
         self.value_list1 = [',',';','space','tab']
         self.TCombobox1.configure(values=self.value_list1)
         self.TCombobox1.configure(takefocus="")
@@ -1365,7 +1365,7 @@ class Toplevel1:
 
         self.TCombobox2 = ttk.Combobox(self.TNotebook1_t1)
         self.TCombobox2.place(relx=0.137, rely=0.414, relheight=0.072
-                , relwidth=0.174)
+                , relwidth=0.06)
         #self.TCombobox2.configure(textvariable=self.combobox)
         self.value_list2 = ['.',',']
         self.TCombobox2.configure(values=self.value_list2)
@@ -1389,7 +1389,7 @@ class Toplevel1:
 
         self.TCombobox3 = ttk.Combobox(self.TNotebook1_t1)
         self.TCombobox3.place(relx=0.137, rely=0.572, relheight=0.072
-                , relwidth=0.075)
+                , relwidth=0.06)
         #self.TCombobox3.configure(textvariable=self.combobox)
         self.value_list3 = ['yes','no']
         self.TCombobox3.configure(values=self.value_list3)
@@ -1398,7 +1398,7 @@ class Toplevel1:
         
         var1 = tk.IntVar()
         self.Checkbutton1 = tk.Checkbutton(self.TNotebook1_t1)
-        self.Checkbutton1.place(relx=0.07, rely=0.700, relheight=0.047
+        self.Checkbutton1.place(relx=0.08, rely=0.700, relheight=0.047
                 , relwidth=0.3)
         self.Checkbutton1.configure(activebackground="#f9f9f9")
         self.Checkbutton1.configure(justify='left')
@@ -1691,26 +1691,32 @@ class Toplevel1:
         
         #tab4
         
+        self.Label1909 = tk.Label(self.TNotebook1_t4)
+        self.Label1909.place(relx=0.02, rely=0.03, height=21, width=125)
+        self.Label1909.configure(anchor='w')
+        self.Label1909.configure(compound='left')
+        self.Label1909.configure(text='''Read second File:''')
+        
         self.Entry2 = tk.Entry(self.TNotebook1_t4)
-        self.Entry2.place(relx=0.133, rely=0.069, height=23, relwidth=0.182)
+        self.Entry2.place(relx=0.133, rely=0.15, height=23, relwidth=0.182)
         self.Entry2.configure(background="white")
         self.Entry2.configure(font="TkFixedFont")
 
         self.Label19 = tk.Label(self.TNotebook1_t4)
-        self.Label19.place(relx=0.02, rely=0.069, height=21, width=79)
+        self.Label19.place(relx=0.02, rely=0.15, height=21, width=79)
         self.Label19.configure(anchor='w')
         self.Label19.configure(compound='left')
         self.Label19.configure(text='''Filename:''')
 
         self.Button8 = tk.Button(self.TNotebook1_t4)
-        self.Button8.place(relx=0.333, rely=0.069, height=23, width=43)
+        self.Button8.place(relx=0.333, rely=0.15, height=23, width=43)
         self.Button8.configure(borderwidth="2")
         self.Button8.configure(compound='left')
         self.Button8.configure(command=file2_open)
         self.Button8.configure(text='''...''')
 
         self.Button9 = tk.Button(self.TNotebook1_t4)
-        self.Button9.place(relx=0.250, rely=0.700, height=23, width=130)
+        self.Button9.place(relx=0.250, rely=0.75, height=23, width=130)
         self.Button9.configure(borderwidth="2")
         self.Button9.configure(compound='left')
         self.Button9.configure(command=read2_csv)
@@ -1718,68 +1724,74 @@ class Toplevel1:
         
 
         self.Label20 = tk.Label(self.TNotebook1_t4)
-        self.Label20.place(relx=0.02, rely=0.241, height=21, width=89)
+        self.Label20.place(relx=0.02, rely=0.3, height=21, width=89)
         self.Label20.configure(anchor='w')
         self.Label20.configure(compound='left')
         self.Label20.configure(text='''Delimeter:''')
 
         self.TCombobox16 = ttk.Combobox(self.TNotebook1_t4)
-        self.TCombobox16.place(relx=0.137, rely=0.241, relheight=0.072
-                , relwidth=0.125)
+        self.TCombobox16.place(relx=0.137, rely=0.3, relheight=0.072
+                , relwidth=0.06)
         self.value_list6 = [',',';','space','tab']
         self.TCombobox16.configure(values=self.value_list6)
         self.TCombobox16.configure(takefocus="")
 
         self.Label21 = tk.Label(self.TNotebook1_t4)
-        self.Label21.place(relx=0.02, rely=0.414, height=21, width=63)
+        self.Label21.place(relx=0.02, rely=0.45, height=21, width=63)
         self.Label21.configure(anchor='w')
         self.Label21.configure(compound='left')
         self.Label21.configure(text='''Coma:''')
 
         self.TCombobox17 = ttk.Combobox(self.TNotebook1_t4)
-        self.TCombobox17.place(relx=0.137, rely=0.414, relheight=0.072
-                , relwidth=0.174)
+        self.TCombobox17.place(relx=0.137, rely=0.45, relheight=0.072
+                , relwidth=0.06)
         #self.TCombobox2.configure(textvariable=self.combobox)
         self.value_list7 = ['.',',']
         self.TCombobox17.configure(values=self.value_list7)
         self.TCombobox17.configure(takefocus="")
 
         self.Label22 = tk.Label(self.TNotebook1_t4)
-        self.Label22.place(relx=0.02, rely=0.586, height=21, width=70)
+        self.Label22.place(relx=0.02, rely=0.6, height=21, width=70)
         self.Label22.configure(anchor='w')
         self.Label22.configure(compound='left')
         self.Label22.configure(text='''Header:''')
 
         self.TCombobox18 = ttk.Combobox(self.TNotebook1_t4)
-        self.TCombobox18.place(relx=0.137, rely=0.572, relheight=0.072
-                , relwidth=0.075)
+        self.TCombobox18.place(relx=0.137, rely=0.6, relheight=0.072
+                , relwidth=0.06)
         #self.TCombobox3.configure(textvariable=self.combobox)
         self.value_list8 = ['yes','no']
         self.TCombobox18.configure(values=self.value_list8)
         self.TCombobox18.configure(takefocus="")
 
+        ## merge
         
+        self.Label1919 = tk.Label(self.TNotebook1_t4)
+        self.Label1919.place(relx=0.4, rely=0.03, height=21, width=125)
+        self.Label1919.configure(anchor='w')
+        self.Label1919.configure(compound='left')
+        self.Label1919.configure(text='''Join File:''')
         
         self.Label24 = tk.Label(self.TNotebook1_t4)
-        self.Label24.place(relx=0.4, rely=0.2, height=21, width=125)
+        self.Label24.place(relx=0.4, rely=0.15, height=21, width=125)
         self.Label24.configure(anchor='w')
         self.Label24.configure(compound='left')
         self.Label24.configure(text='''Key Column:''')
 
         self.TCombobox20 = ttk.Combobox(self.TNotebook1_t4)
-        self.TCombobox20.place(relx=0.53, rely=0.2, relheight=0.072
+        self.TCombobox20.place(relx=0.53, rely=0.15, relheight=0.072
                 , relwidth=0.17)
         #self.TCombobox3.configure(textvariable=self.combobox)
         self.TCombobox20.configure(takefocus="")
 
         self.Label25 = tk.Label(self.TNotebook1_t4)
-        self.Label25.place(relx=0.4, rely=0.32, height=21, width=125)
+        self.Label25.place(relx=0.4, rely=0.3, height=21, width=125)
         self.Label25.configure(anchor='w')
         self.Label25.configure(compound='left')
         self.Label25.configure(text='''How to join:''')
 
         self.TCombobox21 = ttk.Combobox(self.TNotebook1_t4)
-        self.TCombobox21.place(relx=0.53, rely=0.32, relheight=0.072
+        self.TCombobox21.place(relx=0.53, rely=0.3, relheight=0.072
                 , relwidth=0.10)
         self.value_list9 = ['inner','left outer', 'right outer', 'full outer']
         self.TCombobox21.configure(values=self.value_list9)
@@ -1787,21 +1799,28 @@ class Toplevel1:
         self.TCombobox21.configure(takefocus="")
         
         self.Button10 = tk.Button(self.TNotebook1_t4)
-        self.Button10.place(relx=0.58, rely=0.700, height=23, width=130)
+        self.Button10.place(relx=0.58, rely=0.85, height=23, width=130)
         self.Button10.configure(borderwidth="2")
         self.Button10.configure(compound='left')
         self.Button10.configure(command=join_table)
         self.Button10.configure(text='''join table''')
         
         self.Button11 = tk.Button(self.TNotebook1_t4)
-        self.Button11.place(relx=0.8, rely=0.700, height=23, width=130)
+        self.Button11.place(relx=0.8, rely=0.85, height=23, width=130)
         self.Button11.configure(borderwidth="2")
         self.Button11.configure(compound='left')
         self.Button11.configure(command=append_CSV)
         self.Button11.configure(text='''append table''')
         
+        self.Label1929 = tk.Label(self.TNotebook1_t4)
+        self.Label1929.place(relx=0.8, rely=0.03, height=21, width=125)
+        self.Label1929.configure(anchor='w')
+        self.Label1929.configure(compound='left')
+        self.Label1929.configure(text='''Append File:''')
+        
+        
         self.Button12 = tk.Button(self.TNotebook1_t4)
-        self.Button12.place(relx=0.25, rely=0.8, height=23, width=130)
+        self.Button12.place(relx=0.25, rely=0.85, height=23, width=130)
         self.Button12.configure(borderwidth="2")
         self.Button12.configure(compound='left')
         self.Button12.configure(command=save_CSV)
