@@ -29,7 +29,7 @@ You have to change into the packagefolder.
 For example on Windows: cd c:temp\foldername or into linux cd /home/foldername
 
 After that type: 
-in Windows: python CSVpySTAT.py
+into Windows: python CSVpySTAT.py
 into Linux: python3 CSVpySTAT.py
 
-(Into Windows it can be enough to do doublecklick at the CSVpySTAT.py) 
+(Into Windows System it could be enough to do doublecklick at the CSVpySTAT.py File) 
