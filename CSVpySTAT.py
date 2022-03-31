@@ -1198,6 +1198,25 @@ class Toplevel1:
             
             read_table()
         
+        def table_correlation():
+            print('Table Correlation hole Columns')
+            filename='correl_df.csv'
+            correlation_df = df.corr()
+    
+    
+            count_column = len(correlation_df.columns)
+            print('columns', count_column)
+            if count_column > 13:
+                print(correlation_df)
+            else:
+                print(tabulate(correlation_df, headers='keys', tablefmt='psql'))
+            
+            
+            correlation_df.to_csv(filename, sep=';', decimal=',', header =True)
+            
+            df2=pd.read_csv(filename,sep=';' ,decimal=',', header=0, engine='python')
+            file_in_html(df2)
+
         
         
         '''This class configures and populates the toplevel window.
@@ -1641,6 +1660,13 @@ class Toplevel1:
         self.Button3.configure(compound='left')
         self.Button3.configure(command=table_statistics)
         self.Button3.configure(text='''Table Statitics''')
+        
+        self.Button300 = tk.Button(self.TNotebook1_t3)
+        self.Button300.place(relx=0.20, rely=0.85, height=33, width=200)
+        self.Button300.configure(borderwidth="2")
+        self.Button300.configure(compound='left')
+        self.Button300.configure(command=table_correlation)
+        self.Button300.configure(text='''Table Correlation Test''')
         
         
         self.Label52 = tk.Label(self.TNotebook1_t3)
