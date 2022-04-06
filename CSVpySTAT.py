@@ -75,15 +75,15 @@ class Toplevel1:
             log = 'open file name: ' + filename + '\n'
             fline = f.readline()
             fline2 = f.readline()
-    
-    
+            
+            print('#'*30 + '\n')
+            print('File - Information \n')
             print('Preview to the first 2 lines: \n')
             print('first line:', fline)
-            
             print('second line:', fline2)
             
             
-            eintrag = log + '\n' +  'Preview to the first 2 lines: \n' + 'first line:\n' + fline + '\n' + 'second line:' + '\n' + fline2
+            eintrag = log + '\n' + 'File Info \n' +  'Preview to the first 2 lines: \n' + 'first line:\n' + fline + '\n' + 'second line:' + '\n' + fline2
             
             
             self.Scrolledtext1.insert('1.0', eintrag)
@@ -151,14 +151,14 @@ class Toplevel1:
     
             log = 'open second file name: ' + filename + '\n'
             
-    
-    
+            print('#'*30)
+            print('File Information \n')
             print('Preview to the first 2 lines: \n')
             print('first line:', f.readline())
             print('second line:', f.readline())
             
             
-            eintrag = log + '\n' +  'Preview to the first 2 lines: \n' + 'first line:\n' + f.readline() + '\n' + 'second line:' + '\n' + f.readline()
+            eintrag = log + '\n' +  'File Info \nPreview to the first 2 lines: \n' + 'first line:\n' + f.readline() + '\n' + 'second line:' + '\n' + f.readline()
             
             
             self.Scrolledtext1.insert('1.0', eintrag)
@@ -232,7 +232,8 @@ class Toplevel1:
                 self.sheet.enable_bindings()
                 self.frame1.grid(row = 0, column = 0, sticky = "nswe")
                 self.sheet.grid(row = 0, column = 0, sticky = "nswe")
-                
+            
+            self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             self.Scrolledtext1.insert(END, '\nCSV Data loaded')
             self.Scrolledtext1.insert(END, '\n')
@@ -314,6 +315,13 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\nsecond CSV Data loaded')
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
+            
+            ##Tabelle + Formate einblenden
+            self.Scrolledtext1.insert(END, df2)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, df2.dtypes)
+            
             self.TCombobox20.configure(values=list(df2.columns))
             
             return (df2)
@@ -349,6 +357,16 @@ class Toplevel1:
             print(df[curr_format].dtypes)
             print(df.dtypes)
             read_table()
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nChange Format')
+            self.Scrolledtext1.insert(END, '\nColumn: ' + curr_format)
+            self.Scrolledtext1.insert(END, '\nCurrent Format: ' + str(format_col))
+            self.Scrolledtext1.insert(END, '\nNew Format: ' + str(new_format))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
             return df
             
             
@@ -411,6 +429,10 @@ class Toplevel1:
             if fileformat =='object':
                 self.value_list5 = ['==','!=']
                 self.TCombobox12.configure(values=self.value_list5)
+            
+            
+            
+            
             
             read_table()
             
@@ -485,9 +507,19 @@ class Toplevel1:
             
             print(df)
             
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nFilter by column')
+            self.Scrolledtext1.insert(END, '\nColumn: ' + filtercolumn)
+            self.Scrolledtext1.insert(END, '\nFilter Criteria: ' + str(filtercrit))
+            self.Scrolledtext1.insert(END, '\nFilter Content: ' + str(filtercontent))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
             ##Tabelle + Formate einblenden
-            self.Scrolledtext2.insert(END, df)
-            self.Scrolledtext2.insert(END, df.dtypes)
+            self.Scrolledtext1.insert(END, df)
             
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
@@ -517,6 +549,14 @@ class Toplevel1:
             df = df.sort_values(by=column_to_sort, ascending=a_t_f)
             
             print(df)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nSort by column')
+            self.Scrolledtext1.insert(END, '\nColumn: ' + column_to_sort)
+            self.Scrolledtext1.insert(END, '\nSort direction: ' + str(sort_direction))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
             
             ##Tabelle + Formate einblenden
             self.Scrolledtext2.insert(END, df)
@@ -551,6 +591,16 @@ class Toplevel1:
                 df = pd.merge(df, df2, how='outer', on=column_T2)
             
             print(df)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nJoin Dataframes')
+            self.Scrolledtext1.insert(END, '\nKey Column: ' + column_T2)
+            self.Scrolledtext1.insert(END, '\nJoin Criteria: ' + str(art_to_join))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
             
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
@@ -591,6 +641,14 @@ class Toplevel1:
             
             df2.to_csv(filename, sep=';', decimal=',', header =True)
         
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nSave Datafram')
+            self.Scrolledtext1.insert(END, '\nFilename: ' + filename)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+        
+        
         def save_current_CSV_name():
             print('Save File')
             
@@ -609,6 +667,14 @@ class Toplevel1:
             
             
             df2.to_csv(filename, sep=';', decimal=',', header =True)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nSave Dataframe')
+            self.Scrolledtext1.insert(END, '\nFilename: ' + filename)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
             read_csv()
         
         
@@ -633,7 +699,14 @@ class Toplevel1:
             read_table()
         
             print(df)
-    
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nAppend Second Dataframe')
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
             self.frame1.grid_rowconfigure(0, weight = 1)
@@ -734,7 +807,14 @@ class Toplevel1:
                     scatter3d(df,messwert, spdt, factorx, factorz)
 
                         
-
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nPlot: ' + plotfunction)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
+            
         def plot_stat():
             global df
             
@@ -766,12 +846,24 @@ class Toplevel1:
                 xquer_s(df, messwert, lt, ut, samplesize)
             if plotfunction =='Outlier-Test':
                 outliert(df, messwert)
+                
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nPlot: ' + plotfunction)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
         
         def plot_L_Reg():
             global df
             yv = self.TCombobox72.get()
             xv = self.TCombobox73.get()
             LREG(df, yv, xv)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nPlot: Linear Regression Plot')
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
             
   
             
@@ -800,7 +892,10 @@ class Toplevel1:
             
             df2=pd.read_csv(filename,sep=';' ,decimal=',', header=0, engine='python')
             file_in_html(df2)
-
+            
+            
+            
+            
         ####truncate values
         def truncate(n, decimals=0):
                 multiplier = 10 ** decimals
@@ -834,6 +929,11 @@ class Toplevel1:
             
             df[name_col] = range(seq_nr_from, seq_count+seq_nr_from)
             
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nCreate Column with sequence number')
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
             
             print(df)
             
@@ -875,7 +975,17 @@ class Toplevel1:
             
             
             print(df)
-
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nCombine Columns')
+            self.Scrolledtext1.insert(END, '\nColumn1:' + col1)
+            self.Scrolledtext1.insert(END, '\nColumn2:' + col2)
+            self.Scrolledtext1.insert(END, '\nNew Column Name:' + name_col)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
             self.frame1.grid_rowconfigure(0, weight = 1)
