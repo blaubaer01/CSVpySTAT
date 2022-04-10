@@ -1,12 +1,16 @@
-CSVpySTAT V0.1 by Ricky Helfgen
+CSVpySTAT V0.2 by Ricky Helfgen
 
-This is an open source project and is subject to the guidelines of GPL V3.
+
                                       
-Analyze CSV-Data files with the packages:
+Open, edit and analyze CSV-Data files with Python3 and the packages:
 
-python3, pandas, numpy, matplotlib, seaborn, statsmodels, os-sys, scipy, webbrownser, tabulate, tksheet, outlier_utils.
+pandas, numpy, matplotlib, seaborn, statsmodels, os-sys, scipy, webbrownser, tabulate, tksheet, outlier_utils.
+
+The Gui is build with the 'PAGE' Project under Linux.
 
 Thanks to all these programmers !
+
+This is an open source project and is subject to the guidelines of GPL V3.
 
 Download under: https://github.com/blaubaer01/CSVpySTAT
 

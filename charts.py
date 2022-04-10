@@ -135,12 +135,14 @@ def boxplot1f(df, messwert, lt, ut, spdt):
         sns.boxplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.boxplot(x=x, y=y, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -148,6 +150,7 @@ def boxplot1f(df, messwert, lt, ut, spdt):
             
         sns.boxplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -156,6 +159,7 @@ def boxplot1f(df, messwert, lt, ut, spdt):
         sns.boxplot(x=x, y=y, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -191,12 +195,14 @@ def boxplot2f(df, messwert, lt, ut, spdt, factorx):
         sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -204,6 +210,7 @@ def boxplot2f(df, messwert, lt, ut, spdt, factorx):
             
         sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -212,6 +219,7 @@ def boxplot2f(df, messwert, lt, ut, spdt, factorx):
         sns.boxplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
     
@@ -246,12 +254,14 @@ def violin_single(df, messwert, lt, ut):
         sns.violinplot(y=y, data = df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.violinplot(y=y, data = df)
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -259,6 +269,7 @@ def violin_single(df, messwert, lt, ut):
             
         sns.violinplot(y=y, data = df)
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -267,6 +278,7 @@ def violin_single(df, messwert, lt, ut):
         sns.violinplot(y=y, data = df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 def violin1f(df, messwert, lt, ut, spdt):
@@ -301,12 +313,14 @@ def violin1f(df, messwert, lt, ut, spdt):
         sns.violinplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.violinplot(x=x, y=y, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -314,6 +328,7 @@ def violin1f(df, messwert, lt, ut, spdt):
             
         sns.violinplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -322,6 +337,7 @@ def violin1f(df, messwert, lt, ut, spdt):
         sns.violinplot(x=x, y=y, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -357,12 +373,14 @@ def violin2f(df, messwert, lt, ut, spdt, factorx):
         sns.violinplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.violinplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -370,6 +388,7 @@ def violin2f(df, messwert, lt, ut, spdt, factorx):
             
         sns.violinplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -378,6 +397,7 @@ def violin2f(df, messwert, lt, ut, spdt, factorx):
         sns.violinplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -416,12 +436,14 @@ def stripplot_single(df, messwert, lt, ut):
         sns.stripplot(y=y, data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.stripplot(y=y, data=df)
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -429,6 +451,7 @@ def stripplot_single(df, messwert, lt, ut):
             
         sns.stripplot(y=y, data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -437,6 +460,7 @@ def stripplot_single(df, messwert, lt, ut):
         sns.stripplot(y=y, data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -472,12 +496,14 @@ def strip1f(df, messwert, lt, ut, spdt):
         sns.stripplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.stripplot(x=x, y=y, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -485,6 +511,7 @@ def strip1f(df, messwert, lt, ut, spdt):
             
         sns.stripplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -493,6 +520,7 @@ def strip1f(df, messwert, lt, ut, spdt):
         sns.stripplot(x=x, y=y, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -528,12 +556,14 @@ def strip2f(df, messwert, lt, ut, spdt, factorx):
         sns.stripplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.stripplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -541,6 +571,7 @@ def strip2f(df, messwert, lt, ut, spdt, factorx):
             
         sns.stripplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -549,6 +580,7 @@ def strip2f(df, messwert, lt, ut, spdt, factorx):
         sns.stripplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -583,12 +615,14 @@ def swarmplot_single(df, messwert, lt, ut):
         sns.swarmplot(y=y, data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.swarmplot(y=y, data=df)
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -596,6 +630,7 @@ def swarmplot_single(df, messwert, lt, ut):
             
         sns.swarmplot(y=y, data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -604,6 +639,7 @@ def swarmplot_single(df, messwert, lt, ut):
         sns.swarmplot(y=y, data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -639,12 +675,14 @@ def swarmplot1f(df, messwert, lt, ut, spdt):
         sns.swarmplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.swarmplot(x=x, y=y, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -652,6 +690,7 @@ def swarmplot1f(df, messwert, lt, ut, spdt):
             
         sns.swarmplot(x=x, y=y, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -660,6 +699,7 @@ def swarmplot1f(df, messwert, lt, ut, spdt):
         sns.swarmplot(x=x, y=y, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 def swarmplot2f(df, messwert, lt, ut, spdt, factorx):
@@ -694,12 +734,14 @@ def swarmplot2f(df, messwert, lt, ut, spdt, factorx):
         sns.swarmplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.swarmplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -707,6 +749,7 @@ def swarmplot2f(df, messwert, lt, ut, spdt, factorx):
             
         sns.swarmplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -715,6 +758,7 @@ def swarmplot2f(df, messwert, lt, ut, spdt, factorx):
         sns.swarmplot(x=x, y=y, hue=factorx, data=df, palette="Set3")
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -1147,12 +1191,14 @@ def barplot1f(df, messwert, lt, ut, spdt):
         sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -1160,6 +1206,7 @@ def barplot1f(df, messwert, lt, ut, spdt):
             
         sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -1168,6 +1215,7 @@ def barplot1f(df, messwert, lt, ut, spdt):
         sns.barplot(x=x, y=y, data=df, capsize=.2, estimator=sum)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 def barplot2f(df, messwert, lt, ut, spdt, factorx):
@@ -1202,12 +1250,14 @@ def barplot2f(df, messwert, lt, ut, spdt, factorx):
         sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -1215,6 +1265,7 @@ def barplot2f(df, messwert, lt, ut, spdt, factorx):
             
         sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -1223,6 +1274,7 @@ def barplot2f(df, messwert, lt, ut, spdt, factorx):
         sns.barplot(x=x, y=y, hue=factorx, data=df, capsize=.2, estimator=sum)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 
@@ -1257,12 +1309,14 @@ def countplot(df, spdt, lt, ut):
         sns.countplot(x=y, data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
         
     elif tolerance =='ohne':
         
             
         sns.countplot(x=y, data=df)
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig oben':
@@ -1270,6 +1324,7 @@ def countplot(df, spdt, lt, ut):
             
         sns.countplot(x=y, data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
+        plt.xticks(rotation=45)
         plt.show()
     
     elif tolerance =='einseitig unten':
@@ -1278,6 +1333,7 @@ def countplot(df, spdt, lt, ut):
         sns.countplot(x=y, data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.xticks(rotation=45)
         plt.show()
 
 ###pie charts
@@ -1327,6 +1383,8 @@ def pareto_plot(df, x=None, y=None, title=None, show_pct_y=False, pct_format='{0
     fig, ax1 = plt.subplots()
     ax1.bar(x, y)
     ax1.set_xlabel(xlabel)
+    ax1.set_xticklabels(x, rotation=45)
+    print(xlabel)
     ax1.set_ylabel(ylabel)
 
     ax2 = ax1.twinx()
@@ -1336,10 +1394,13 @@ def pareto_plot(df, x=None, y=None, title=None, show_pct_y=False, pct_format='{0
     
     vals = ax2.get_yticks()
     ax2.set_yticklabels(['{:,.2%}'.format(x) for x in vals])
-
+    
     # hide y-labels on right side
     if not show_pct_y:
         ax2.set_yticks([])
+        
+        
+        
     
     formatted_weights = [pct_format.format(x) for x in cumsum]
     for i, txt in enumerate(formatted_weights):
@@ -1348,7 +1409,9 @@ def pareto_plot(df, x=None, y=None, title=None, show_pct_y=False, pct_format='{0
     if title:
         plt.title(title)
     
+    # 
     plt.tight_layout()
+    
     plt.show()
 
     
@@ -1372,6 +1435,7 @@ def pareto(df, messwert, spdt):
     df[x]=df[x].astype(str)
     
     print(df)
+    
     pareto_plot(df, x=x, y=y, title='Pareto Chart')
 
     

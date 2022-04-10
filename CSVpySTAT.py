@@ -886,6 +886,15 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')            
             
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nDescriptive Statistics whoole Dataframe:')
+            self.Scrolledtext1.insert(END, '\nSave with file name: ' + filename + '\nInto root folder')
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')            
+            
+            
+            
             df_stats = df.describe(include='all')
             df_stats.to_csv(filename, sep=';', decimal=',', header =True)
             print(tabulate(df_stats, headers='keys', tablefmt='psql'))
@@ -1010,6 +1019,15 @@ class Toplevel1:
             
             df[[column_name,column_name + str(2)]] = df[column_name].str.split(delimeter_name,expand=True)
             
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nSplit Column: ' + column_name )
+            self.Scrolledtext1.insert(END, '\nNew Column1:' + column_name)
+            self.Scrolledtext1.insert(END, '\nNew Column2:' + column_name + str(2))
+            self.Scrolledtext1.insert(END, '\nDelimeter:' + delimeter_name)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
             self.frame1.grid_rowconfigure(0, weight = 1)
@@ -1115,6 +1133,21 @@ class Toplevel1:
                     df[col_del].replace(cont, np.nan, inplace=True)
                     df= df.dropna(subset=[col_del])
             
+            
+            
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nDelete:')
+            self.Scrolledtext1.insert(END, '\nDelete where:' + delete_where)
+            self.Scrolledtext1.insert(END, '\nDelete Option:' + delete_option)
+            self.Scrolledtext1.insert(END, '\nDelete into Column:' + col_del)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
+            
+            
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
             self.frame1.grid_rowconfigure(0, weight = 1)
@@ -1153,6 +1186,18 @@ class Toplevel1:
                 df[replace_where]=df[replace_where].str.replace(',','.').astype(float)
             #elif replace_option =='point to float comma':
             #    df[replace_where]=df[replace_where].str.replace('.',',').astype(float)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nReplace:')
+            self.Scrolledtext1.insert(END, '\nReplace where:' + replace_where)
+            self.Scrolledtext1.insert(END, '\nReplace Option:' + replace_option)
+            self.Scrolledtext1.insert(END, '\nReplace what:' + repl_what)
+            self.Scrolledtext1.insert(END, '\nReplace with:' + repl_with)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
             
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
@@ -1226,6 +1271,18 @@ class Toplevel1:
                 df[new_col_name] = pd.to_datetime(df[col_name], format='%d.%m.%Y')
                 df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
             
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nConvert Datetime Column:')
+            self.Scrolledtext1.insert(END, '\nCurrent String Column Name:' + col_name)
+            self.Scrolledtext1.insert(END, '\nCurrent Format:' + current_format)
+            self.Scrolledtext1.insert(END, '\nNew Column Name:' + new_col_name)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
+            
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
             self.frame1.grid_rowconfigure(0, weight = 1)
@@ -1294,6 +1351,16 @@ class Toplevel1:
                 df[new_col_name] = df[col_name].dt.dayofweek
                 df[new_col_name] = df[new_col_name].astype('int')
             
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nGet Datetime Information Column:')
+            self.Scrolledtext1.insert(END, '\nCurrent String Column Name:' + col_name)
+            self.Scrolledtext1.insert(END, '\nDatetime Information:' + cal_info)
+            self.Scrolledtext1.insert(END, '\nNew Column Name:' + new_col_name)
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
             ##Tabelle darstellen            
             self.frame1.grid_columnconfigure(0, weight = 1)
             self.frame1.grid_rowconfigure(0, weight = 1)
@@ -1327,7 +1394,16 @@ class Toplevel1:
             df2=pd.read_csv(filename,sep=';' ,decimal=',', header=0, engine='python')
             file_in_html(df2)
 
-        
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nCorrelation whoole Dataframe:')
+            self.Scrolledtext1.insert(END, '\nSave with file name: ' + filename + '\nInto root folder')
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')            
+
+
+
+
         
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -1349,7 +1425,7 @@ class Toplevel1:
         top.minsize(1, 1)
         top.maxsize(1351, 738)
         top.resizable(1,  1)
-        top.title("CSVpySTAT v0.1")
+        top.title("CSVpySTAT v0.2")
         top.configure(highlightcolor="black")
 
         self.top = top
@@ -1764,12 +1840,7 @@ class Toplevel1:
         self.Button2.configure(command = plot_df)
         self.Button2.configure(text='''Plot''')
 
-        self.Button3 = tk.Button(self.TNotebook1_t3)
-        self.Button3.place(relx=0.02, rely=0.85, height=33, width=153)
-        self.Button3.configure(borderwidth="2")
-        self.Button3.configure(compound='left')
-        self.Button3.configure(command=table_statistics)
-        self.Button3.configure(text='''Table Statitics''')
+        
         
         self.Button300 = tk.Button(self.TNotebook1_t3)
         self.Button300.place(relx=0.20, rely=0.85, height=33, width=200)
@@ -1964,6 +2035,20 @@ class Toplevel1:
         
         
         ##Tab6
+        
+        self.Button3 = tk.Button(self.TNotebook1_t6)
+        self.Button3.place(relx=0.70, rely=0.15, height=33, width=200)
+        self.Button3.configure(borderwidth="2")
+        self.Button3.configure(compound='left')
+        self.Button3.configure(command=table_statistics)
+        self.Button3.configure(text='''Whoole Table Statitics''')
+        
+        self.Button300 = tk.Button(self.TNotebook1_t6)
+        self.Button300.place(relx=0.70, rely=0.3, height=33, width=200)
+        self.Button300.configure(borderwidth="2")
+        self.Button300.configure(compound='left')
+        self.Button300.configure(command=table_correlation)
+        self.Button300.configure(text='''Whoole Table Correlation''')
         
         self.Label61 = tk.Label(self.TNotebook1_t6)
         self.Label61.place(relx=0.02, rely=0.034, height=21, width=200)
