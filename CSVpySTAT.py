@@ -1841,15 +1841,6 @@ class Toplevel1:
         self.Button2.configure(text='''Plot''')
 
         
-        
-        self.Button300 = tk.Button(self.TNotebook1_t3)
-        self.Button300.place(relx=0.20, rely=0.85, height=33, width=200)
-        self.Button300.configure(borderwidth="2")
-        self.Button300.configure(compound='left')
-        self.Button300.configure(command=table_correlation)
-        self.Button300.configure(text='''Table Correlation Test''')
-        
-        
         self.Label52 = tk.Label(self.TNotebook1_t3)
         self.Label52.place(relx=0.333, rely=0.034, height=21, width=150)
         self.Label52.configure(anchor='w')
