@@ -1101,9 +1101,10 @@ class Toplevel1:
             #self.value_list202 = ['nan rows', 'empty rows','NA rows', 'zero rows', 'rows with special characters']
             
             
-            if delete_where =='Whole Dataframe':
+            if delete_where =='whole dataframe':
                 if delete_option == 'nan rows':
                     df = df.dropna()
+                    
                 elif delete_option == 'empty rows':
                     df.replace(' ', np.nan, inplace=True)
                     df= df.dropna()
@@ -1113,6 +1114,7 @@ class Toplevel1:
                 elif delete_option == 'zero rows':
                     df.replace('0', np.nan, inplace=True)
                     df= df.dropna()
+                    
                 elif delete_option =='rows with special characters':
                     df.replace(cont, np.nan, inplace=True)
                     df= df.dropna()
@@ -1179,13 +1181,17 @@ class Toplevel1:
             #self.value_list206 = ['value','character','float to point comma', 'point to float comma']
             
             if replace_option =='character':
-                df[replace_where].replace(repl_what, repl_with, inplace=True)
+                
+                df[replace_where] = df[replace_where].str.replace(repl_what, repl_with)
+                
+                
             elif replace_option =='value':
                 df[replace_where].replace(float(repl_what), float(repl_with), inplace=True)     
             elif replace_option =='float to point comma':
                 df[replace_where]=df[replace_where].str.replace(',','.').astype(float)
-            #elif replace_option =='point to float comma':
-            #    df[replace_where]=df[replace_where].str.replace('.',',').astype(float)
+            elif replace_option =='point to float comma':
+                df[replace_where]=df[replace_where].astype(str)
+                df[replace_where]=df[replace_where].str.replace('.',',', regex=True).astype(str)
             
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
@@ -2415,7 +2421,7 @@ class Toplevel1:
         self.TCombobox206= ttk.Combobox(self.TNotebook1_t9)
         self.TCombobox206.place(relx=0.7, rely=0.15, relheight=0.072
                 , relwidth=0.200)
-        self.value_list206 = ['value','character', 'float to point comma']
+        self.value_list206 = ['value','character', 'float to point comma', 'point to float comma']
         self.TCombobox206.configure(values=self.value_list206)
         self.TCombobox206.configure(takefocus="")
         
