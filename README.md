@@ -1,4 +1,4 @@
-# CSVpySTAT
+# CSVpySTAT Gui to edit and analyze CSV-Files
 
 This Project is based on Python3.
 Additional Packages are needed:
