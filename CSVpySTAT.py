@@ -1408,7 +1408,47 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, 30*'#')            
 
 
-
+        def create_df():
+            global df
+            print('Create new DF')
+            
+            col_anz = self.Entry1302.get()
+            
+            if col_anz =='':
+                col_anz = 1
+            
+            row_anz = self.Entry1303.get()
+            
+            if row_anz =='':
+                row_anz = 1
+            
+            
+            df= pd.DataFrame(index=np.arange(int(row_anz)), columns=np.arange(int(col_anz)))
+            print (df)
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nCreate a new Dataframe:')
+            self.Scrolledtext1.insert(END, '\nNumbers of Columns' + str(col_anz))
+            self.Scrolledtext1.insert(END, '\nNumbers of Rows:' + str(row_anz))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+            
+            read_table()
+            
 
         
         '''This class configures and populates the toplevel window.
@@ -1442,93 +1482,102 @@ class Toplevel1:
         self.style.map('TNotebook.Tab', background=
             [('selected', _compcolor), ('active',_ana2color)])
         
+        
+        
         self.TNotebook1 = ttk.Notebook(self.top)
         self.TNotebook1.place(relx=0.019, rely=0.015, relheight=0.459
                 , relwidth=0.948)
         self.TNotebook1.configure(takefocus="")
         
+        ###Definition of Tabs
+        
+        
+        self.TNotebook1_t13 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t13, padding=4)
+        self.TNotebook1.tab(0, text='''New DF''', compound="left"
+                ,underline='''-1''', )
+        
+        
         self.TNotebook1_t1 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t1, padding=4)
-        self.TNotebook1.tab(0, text='''CSV Load''', compound="left"
+        self.TNotebook1.tab(1, text='''CSV Load''', compound="left"
                 ,underline='''-1''', )
+                
         
         self.TNotebook1_t5 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t5, padding=4)
-        self.TNotebook1.tab(1, text='''Datatable''', compound="left"
+        self.TNotebook1.tab(2, text='''Datatable''', compound="left"
                 ,underline='''-1''', )
         self.TNotebook1_t5.grid_columnconfigure(0, weight = 1)
         self.TNotebook1_t5.grid_rowconfigure(0, weight = 1)
-        
-        
+    
         
         self.TNotebook1_t2 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t2, padding=4)
-        self.TNotebook1.tab(2, text='''Format table''', compound="left"
+        self.TNotebook1.tab(3, text='''Format table''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t4 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t4, padding=4)
-        self.TNotebook1.tab(3, text='''join/append''', compound="left"
+        self.TNotebook1.tab(4, text='''join/append''', compound="left"
                 ,underline='''-1''', )
-
-
 
         
         self.TNotebook1_t3 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t3, padding=4)
-        self.TNotebook1.tab(4, text='''Graph''', compound="left"
+        self.TNotebook1.tab(5, text='''Graph''', compound="left"
                 ,underline='''-1''', )
-        
-                
+               
         
         self.TNotebook1_t6 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t6, padding=4)
-        self.TNotebook1.tab(5, text='''Statistics''', compound="left"
+        self.TNotebook1.tab(6, text='''Statistics''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t7 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t7, padding=4)
-        self.TNotebook1.tab(6, text='''Table Functions''', compound="left"
+        self.TNotebook1.tab(7, text='''Table Functions''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t8 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t8, padding=4)
-        self.TNotebook1.tab(7, text='''Crosstable''', compound="left"
+        self.TNotebook1.tab(8, text='''Crosstable''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t9 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t9, padding=4)
-        self.TNotebook1.tab(8, text='''Modify DF''', compound="left"
+        self.TNotebook1.tab(9, text='''Modify DF''', compound="left"
                 ,underline='''-1''', )
         
         self.TNotebook1_t12 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t12, padding=4)
-        self.TNotebook1.tab(9, text='''Modify date''', compound="left"
+        self.TNotebook1.tab(10, text='''Modify date''', compound="left"
                 ,underline='''-1''', )
         
         
         self.TNotebook1_t10 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t10, padding=4)
-        self.TNotebook1.tab(10, text='''Save CSV''', compound="left"
+        self.TNotebook1.tab(11, text='''Save CSV''', compound="left"
                 ,underline='''-1''', )
-        
-        
         
         
         self.TNotebook1_t11 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t11, padding=4)
-        self.TNotebook1.tab(11, text='''Info''', compound="left"
+        self.TNotebook1.tab(12, text='''Info''', compound="left"
                 ,underline='''-1''', )
         
         
+        ###############################################################
+        ##tab3 - Datatable (show the loaded dataframe into a grid)
         
-        ##tab5 - Datatable
         self.frame1 = tk.Frame(self.TNotebook1_t5)
         self.frame1.place(relx=0.0, rely=0.06, height=23, width=79)
         self.frame1.grid_columnconfigure(0, weight = 1)
         self.frame1.grid_rowconfigure(0, weight = 1)
         
-        ###tab1 -Read File
+        ##################################################################
+        ###tab2 -CSV Load
+        
         self.Entry1 = tk.Entry(self.TNotebook1_t1)
         self.Entry1.place(relx=0.133, rely=0.069, height=23, relwidth=0.182)
         self.Entry1.configure(background="white")
@@ -1577,7 +1626,6 @@ class Toplevel1:
         self.TCombobox2 = ttk.Combobox(self.TNotebook1_t1)
         self.TCombobox2.place(relx=0.137, rely=0.414, relheight=0.072
                 , relwidth=0.06)
-        #self.TCombobox2.configure(textvariable=self.combobox)
         self.value_list2 = ['.',',']
         self.TCombobox2.configure(values=self.value_list2)
         self.TCombobox2.configure(takefocus="")
@@ -1601,7 +1649,6 @@ class Toplevel1:
         self.TCombobox3 = ttk.Combobox(self.TNotebook1_t1)
         self.TCombobox3.place(relx=0.137, rely=0.572, relheight=0.072
                 , relwidth=0.06)
-        #self.TCombobox3.configure(textvariable=self.combobox)
         self.value_list3 = ['yes','no']
         self.TCombobox3.configure(values=self.value_list3)
         self.TCombobox3.configure(takefocus="")
@@ -1615,11 +1662,50 @@ class Toplevel1:
         self.Checkbutton1.configure(justify='left')
         self.Checkbutton1.configure(text='''load Data without tableview''')
         self.Checkbutton1.configure(variable=var1, onvalue=1)
-        #self.Checkbutton1.configure(variable=Plot_Cosmino_Data_V2_support.che62)
+        
+        
+        ##################################################################      
+        ###tab1 -New DF
+        
+        self.Label1301 = tk.Label(self.TNotebook1_t13)
+        self.Label1301.place(relx=0.02, rely=0.03, height=21, width=150)
+        self.Label1301.configure(anchor='w')
+        self.Label1301.configure(compound='left')
+        self.Label1301.configure(text='''New Dataframe:''')
+        
+        self.Label1302 = tk.Label(self.TNotebook1_t13)
+        self.Label1302.place(relx=0.02, rely=0.15, height=21, width=79)
+        self.Label1302.configure(anchor='w')
+        self.Label1302.configure(compound='left')
+        self.Label1302.configure(text='''Columns:''')
+        
+        self.Entry1302 = tk.Entry(self.TNotebook1_t13)
+        self.Entry1302.place(relx=0.133, rely=0.15, height=23, relwidth=0.08)
+        self.Entry1302.configure(background="white")
+        self.Entry1302.configure(font="TkFixedFont")
+
+        self.Label1303 = tk.Label(self.TNotebook1_t13)
+        self.Label1303.place(relx=0.02, rely=0.3, height=21, width=79)
+        self.Label1303.configure(anchor='w')
+        self.Label1303.configure(compound='left')
+        self.Label1303.configure(text='''Rows:''')
+        
+        self.Entry1303 = tk.Entry(self.TNotebook1_t13)
+        self.Entry1303.place(relx=0.133, rely=0.3, height=23, relwidth=0.08)
+        self.Entry1303.configure(background="white")
+        self.Entry1303.configure(font="TkFixedFont")
+
+        self.Button131 = tk.Button(self.TNotebook1_t13)
+        self.Button131.place(relx=0.13, rely=0.45, height=23, width=85)
+        self.Button131.configure(borderwidth="2")
+        self.Button131.configure(compound='left')
+        self.Button131.configure(command=create_df)
+        self.Button131.configure(text='''create DF''')
+
         
         
         
-        ##tab2- Format Table
+        ##tab4- Format table
         ##change format
         self.Label110 = tk.Label(self.TNotebook1_t2)
         self.Label110.place(relx=0.02, rely=0.034, height=21, width=150)
@@ -1783,7 +1869,8 @@ class Toplevel1:
         self.Button7.configure(command = sort_column)
         
         ###################################################
-        ##Tab3
+        
+        ##Tab6 - Graph
         
         self.Label51 = tk.Label(self.TNotebook1_t3)
         self.Label51.place(relx=0.02, rely=0.034, height=21, width=150)
@@ -1893,7 +1980,8 @@ class Toplevel1:
         self.Entry55.configure(background="white")
         self.Entry55.configure(font="TkFixedFont")
         
-        #tab4
+        #############################################################
+        #Tab5 join/append
         
         self.Label1909 = tk.Label(self.TNotebook1_t4)
         self.Label1909.place(relx=0.02, rely=0.03, height=21, width=125)
@@ -2030,8 +2118,8 @@ class Toplevel1:
         self.Button12.configure(command=save_CSV)
         self.Button12.configure(text='''save file''')
         
-        
-        ##Tab6
+        ####################################################################
+        ##Tab7 - Statistics
         
         self.Button3 = tk.Button(self.TNotebook1_t6)
         self.Button3.place(relx=0.70, rely=0.15, height=33, width=200)
@@ -2162,7 +2250,8 @@ class Toplevel1:
         self.Button74.configure(command = plot_L_Reg)
         self.Button74.configure(text='''Plot''')
         
-        ##tab7 -Tablefunctions
+        ####################################################################
+        ##tab8 -Table Functions
         
         ##sequence nr
         self.Label81 = tk.Label(self.TNotebook1_t7)
@@ -2285,8 +2374,9 @@ class Toplevel1:
         self.Button92.configure(compound='left')
         self.Button92.configure(command = split_column)
         self.Button92.configure(text='''Split Column''')
-
-        #tab 8 - Crosstable + Contingency Table
+        
+        ###################################################################
+        #tab 9 - Crosstable + Contingency Table
         
         self.Label101 = tk.Label(self.TNotebook1_t8)
         self.Label101.place(relx=0.03, rely=0.034, height=21, width=250)
@@ -2335,8 +2425,9 @@ class Toplevel1:
         self.Button100.configure(compound='left')
         self.Button100.configure(command = crosstable)
         self.Button100.configure(text='''Build Crosstable''')
-
-        ##tab 9 Modify
+        
+        ##################################################################
+        ##tab 10 Modify DF (dataframe)
         
         #delete
         self.Label201 = tk.Label(self.TNotebook1_t9)
@@ -2468,8 +2559,8 @@ class Toplevel1:
         self.Button209.configure(command = replace_into_column)
         self.Button209.configure(text='''Replace''')
         
-        
-        ##tab12 - modify date
+        ###################################################################
+        ##tab 11 - Modify date
         
         self.Label401 = tk.Label(self.TNotebook1_t12)
         self.Label401.place(relx=0.03, rely=0.034, height=21, width=250)
@@ -2591,8 +2682,8 @@ class Toplevel1:
         self.Button504.configure(text='''Build Calendar Info Column''')
         
         
-        
-        ##tab11 - Save CSV
+        #####################################################################
+        ##tab12 - Save CSV
         
         self.Label301 = tk.Label(self.TNotebook1_t10)
         self.Label301.place(relx=0.03, rely=0.034, height=21, width=250)
@@ -2626,7 +2717,8 @@ class Toplevel1:
         self.Button304.configure(command = save_CSV)
         self.Button304.configure(text='''Save as...''')
         
-        ##Tab12 - Info
+        ######################################################################
+        ##Tab13 - Info
         
         self.Scrolledtext3 = ScrolledText(self.TNotebook1_t11)
         self.Scrolledtext3.place(relx=0.012, rely=0.034, relheight=0.934
@@ -2645,7 +2737,7 @@ class Toplevel1:
 ########################################################################
     
 
-
+        #main tab with info text log informations
 
         self.Scrolledtext1 = ScrolledText(self.top)
         self.Scrolledtext1.place(relx=0.019, rely=0.494, relheight=0.467
@@ -2656,6 +2748,10 @@ class Toplevel1:
         self.Scrolledtext1.configure(selectbackground="blue")
         self.Scrolledtext1.configure(selectforeground="white")
         self.Scrolledtext1.configure(wrap="none")
+
+
+##############################################################################
+
 
 # The following code is added to facilitate the Scrolled widgets you specified.
 class AutoScroll(object):
