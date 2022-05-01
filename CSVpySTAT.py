@@ -653,6 +653,10 @@ class Toplevel1:
             print('Save File')
             
             filename = self.Entry1.get()
+            
+            if filename =='':
+                filename = 'new.csv'
+            
             global df
             
             liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
@@ -674,6 +678,12 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\nFilename: ' + str(filename))
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
+            
+            
+            self.Entry1.insert(1,filename)
+            self.TCombobox1.insert(1,';')
+            self.TCombobox2.insert(1,',')
+            self.TCombobox3.insert(1,'yes')
             
             read_csv()
         
