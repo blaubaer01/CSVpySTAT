@@ -643,8 +643,8 @@ class Toplevel1:
         
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
-            self.Scrolledtext1.insert(END, '\nSave Datafram')
-            self.Scrolledtext1.insert(END, '\nFilename: ' + filename)
+            self.Scrolledtext1.insert(END, '\nSave Dataframe')
+            self.Scrolledtext1.insert(END, '\nFilename: ' + str(filename))
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
         
@@ -671,7 +671,7 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             self.Scrolledtext1.insert(END, '\nSave Dataframe')
-            self.Scrolledtext1.insert(END, '\nFilename: ' + filename)
+            self.Scrolledtext1.insert(END, '\nFilename: ' + str(filename))
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             
@@ -1429,8 +1429,8 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             self.Scrolledtext1.insert(END, '\nCreate a new Dataframe:')
-            self.Scrolledtext1.insert(END, '\nNumbers of Columns' + str(col_anz))
-            self.Scrolledtext1.insert(END, '\nNumbers of Rows:' + str(row_anz))
+            self.Scrolledtext1.insert(END, '\nNumbers of Columns: ' + str(col_anz))
+            self.Scrolledtext1.insert(END, '\nNumbers of Rows: ' + str(row_anz))
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             
