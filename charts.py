@@ -964,6 +964,86 @@ def trend(df, messwert, lt, ut, spdt):
     
     #self.Scrolledtext1.insert(END, texteintrag)
 
+def trend1f(df, messwert, lt, ut, spdt, factorx):
+    print('Time Series Plot by group')
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    
+    
+    
+    y = messwert
+    x = spdt
+    #ut = 'UTG'
+    #ot = 'OTG'
+    z = factorx
+    yt = df[messwert]
+
+    mean_y = yt.mean()
+    
+    
+    
+    df[spdt] = df[spdt].astype('datetime64[ns]')
+    
+    df = df.sort_values(by=spdt, ascending=1)
+    
+    
+    
+    if tolerance == '':
+        sns.lineplot(data = df, x=x, y=y, hue=factorx, marker='o')
+        sns.lineplot(data = df, x=x, y=lt, color='r')
+        sns.lineplot(data = df, x=x, y=ut, color='r')
+        plt.axhline(y=mean_y,linewidth=2, color='g')
+        plt.xticks(rotation=25)
+        plt.title("Time Series Plot Column: "+ messwert)
+        plt.show()
+    elif tolerance == 'einseitig oben':
+        sns.lineplot(data = df, x=x, y=y, hue=factorx, marker='o')
+        
+        sns.lineplot(data = df, x=x, y=ut, color='r')
+        plt.axhline(y=mean_y,linewidth=2, color='g')
+        plt.xticks(rotation=25)
+        plt.title("Time Series Plot Column: "+ messwert)
+        plt.show()
+    
+    elif tolerance == 'einseitig unten':
+        sns.lineplot(data = df, x=x, y=y, hue=factorx, marker='o')
+        
+        sns.lineplot(data = df, x=x, y=lt, color='r')
+        plt.axhline(y=mean_y,linewidth=2, color='g')
+        plt.xticks(rotation=25)
+        plt.title("Time Series Plot Column: "+ messwert)
+        plt.show()
+        
+    elif tolerance =='ohne':
+        sns.lineplot(data = df, x=x, y=y, hue=factorx, marker='o')
+        
+        plt.axhline(y=mean_y,linewidth=2, color='g')
+        plt.xticks(rotation=25)
+        plt.title("Time Series Plot by Group: "+ messwert)
+        plt.show()
+    
+    #texteintrag = '\n' + '#'*30 + '\n' + 'Time Series Plot \nColumn:' + messwert + '\n' + 30*'#'
+    
+    
+    #self.Scrolledtext1.insert(END, texteintrag)
 
 def scatterplot(df,messwert, lt, ut, spdt):
     print('Scatterplot')
@@ -1016,6 +1096,65 @@ def scatterplot(df,messwert, lt, ut, spdt):
         
             
         df.plot.scatter(y,x)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
+
+def scatter1f(df,messwert, lt, ut, spdt, factorx):
+    
+    sns.set(color_codes=True)        
+    
+    print('Scatter Plot with Regression line linear \n')
+
+    y = messwert
+    x = spdt
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    if tolerance =='':
+        
+            
+        sns.scatterplot(x=x, y=y, hue=factorx, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+        sns.scatterplot(x=x, y=y, hue=factorx, data=df)    
+        
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.scatterplot(x=x, y=y, hue=factorx, data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.scatterplot(x=x, y=y, hue=factorx, data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
         plt.show()

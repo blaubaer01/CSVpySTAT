@@ -21,8 +21,8 @@ from scipy.stats import shapiro
 import numpy as np
 from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
-from charts import boxplot_single, trend, besch_stat, violin_single, stripplot_single, countplot, pieplot,pareto_one_column 
-from charts import boxplot1f, violin1f, strip1f, scatterplot, regression_single, barplot1f, barplot2f, pareto
+from charts import boxplot_single, trend, trend1f, besch_stat, violin_single, stripplot_single, countplot, pieplot,pareto_one_column 
+from charts import boxplot1f, violin1f, strip1f, scatterplot,scatter1f, regression_single, barplot1f, barplot2f, pareto
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f, scatter3d
 from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
 from stat_charts import contingency_table
@@ -811,7 +811,11 @@ class Toplevel1:
                     strip2f(df, messwert, lt, ut,spdt, factorx)
                 if plotfunction =='Barplot':
                     barplot2f(df, messwert, lt, ut,spdt, factorx)    
-                    
+                if plotfunction =='Scatterplot':
+                    scatter1f(df, messwert, lt, ut, spdt, factorx)
+                if plotfunction =='Time Series Plot':
+                    trend1f(df, messwert, lt, ut, spdt, factorx)
+            
             elif wert =='ac':
                 if plotfunction =='Scatterplot':
                     scatter3d(df,messwert, spdt, factorx, factorz)
@@ -1286,6 +1290,13 @@ class Toplevel1:
             elif current_format =='dd.mm.yyyy':
                 df[new_col_name] = pd.to_datetime(df[col_name], format='%d.%m.%Y')
                 df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            elif current_format =='dd-mm-yyyy':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%d-%m-%Y')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            elif current_format =='yyyy-mm-dd':
+                df[new_col_name] = pd.to_datetime(df[col_name], format='%Y-%m-%d')
+                df[new_col_name] = df[new_col_name].astype('datetime64[ns]')
+            
             
             
             self.Scrolledtext1.insert(END, '\n')
@@ -2617,7 +2628,7 @@ class Toplevel1:
         self.TCombobox402= ttk.Combobox(self.TNotebook1_t12)
         self.TCombobox402.place(relx=0.20, rely=0.45, relheight=0.072
                 , relwidth=0.200)
-        self.value_list402 = ['yyyy-mm-dd hh:mm:ss', 'yyyy/mm/dd hh:mm:ss','dd-mm-yyyy hh:mm:ss', 'yyyy-mm-ddThh:mm:ss', 'dd.mm.yyyy hh:mm:ss', 'dd.mm.yyyy hh:mm', 'dd.mm.yyyy hh', 'dd.mm.yyyy']
+        self.value_list402 = ['yyyy-mm-dd hh:mm:ss', 'yyyy/mm/dd hh:mm:ss','dd-mm-yyyy hh:mm:ss', 'yyyy-mm-ddThh:mm:ss', 'dd.mm.yyyy hh:mm:ss', 'dd.mm.yyyy hh:mm', 'dd.mm.yyyy hh', 'dd.mm.yyyy', 'dd-mm-yyyy', 'yyyy-mm-dd']
         self.TCombobox402.configure(values=self.value_list402)
         self.TCombobox402.configure(takefocus="")
         
