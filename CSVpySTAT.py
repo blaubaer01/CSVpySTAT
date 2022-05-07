@@ -1445,7 +1445,11 @@ class Toplevel1:
             
             
             df= pd.DataFrame(index=np.arange(int(row_anz)), columns=np.arange(int(col_anz)))
+            
+            
             print (df)
+            
+            self.TCombobox1306.configure(values=list(df.columns))
             
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
@@ -1468,7 +1472,48 @@ class Toplevel1:
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
+            
+            
             read_table()
+        
+        def create_CN():
+            global df
+            
+            print('Define Column Name')
+            
+            print (df)
+            current_C_name = int(self.TCombobox1306.get())
+            print('oldname', current_C_name)
+                       
+            new_col_name = self.Entry1307.get()
+            print('new name', new_col_name)
+            
+            #df = df.rename(columns={r_col:new_column_name})
+            df= df.rename(columns={current_C_name:new_col_name})
+            #df = df.list_columns(int(current_C_name)).column =[new_col_name]
+            
+            
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nDefine Column Name:')
+            self.Scrolledtext1.insert(END, '\nColumn Nr: ' + str(current_C_name))
+            self.Scrolledtext1.insert(END, '\nColumn Name: ' + str(new_col_name))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            print(df)
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
 
         
@@ -1722,8 +1767,43 @@ class Toplevel1:
         self.Button131.configure(compound='left')
         self.Button131.configure(command=create_df)
         self.Button131.configure(text='''create DF''')
-
         
+        #change Column Name
+        self.Label1305 = tk.Label(self.TNotebook1_t13)
+        self.Label1305.place(relx=0.35, rely=0.03, height=21, width=150)
+        self.Label1305.configure(anchor='w')
+        self.Label1305.configure(compound='left')
+        self.Label1305.configure(text='''Define Column Name:''')
+        
+        self.Label1306 = tk.Label(self.TNotebook1_t13)
+        self.Label1306.place(relx=0.35, rely=0.15, height=21, width=79)
+        self.Label1306.configure(anchor='w')
+        self.Label1306.configure(compound='left')
+        self.Label1306.configure(text='''Columns Nr:''')
+        
+        self.TCombobox1306 = ttk.Combobox(self.TNotebook1_t13)
+        self.TCombobox1306.place(relx=0.5, rely=0.15, relheight=0.08
+                , relwidth=0.1)
+        self.TCombobox1306.configure(takefocus="")
+
+        self.Label1307 = tk.Label(self.TNotebook1_t13)
+        self.Label1307.place(relx=0.35, rely=0.30, height=21, width=100)
+        self.Label1307.configure(anchor='w')
+        self.Label1307.configure(compound='left')
+        self.Label1307.configure(text='''Column Name:''')
+        
+        self.Entry1307 = tk.Entry(self.TNotebook1_t13)
+        self.Entry1307.place(relx=0.5, rely=0.3, height=23, relwidth=0.15)
+        self.Entry1307.configure(background="white")
+        self.Entry1307.configure(font="TkFixedFont")
+
+        self.Button1307 = tk.Button(self.TNotebook1_t13)
+        self.Button1307.place(relx=0.5, rely=0.45, height=23, width=100)
+        self.Button1307.configure(borderwidth="2")
+        self.Button1307.configure(compound='left')
+        self.Button1307.configure(command=create_CN)
+        self.Button1307.configure(text='''Define CN''')
+
         
         
         ##tab4- Format table
