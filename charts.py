@@ -1166,8 +1166,8 @@ def regression_single(df,messwert, lt, ut, spdt):
     
     print('Scatter Plot with Regression line linear \n')
 
-    x = messwert
-    y = spdt
+    y = messwert
+    x = spdt
     
     print('ut:',ut)
     print('lt:', lt)
@@ -1224,8 +1224,8 @@ def regression1f(df,messwert, lt, ut, spdt, factorx):
     
     print('Scatter Plot with Regression line linear \n')
 
-    x = messwert
-    y = spdt
+    y = messwert
+    x = spdt
     
     print('ut:',ut)
     print('lt:', lt)
