@@ -1206,6 +1206,10 @@ class Toplevel1:
             elif replace_option =='point to float comma':
                 df[replace_where]=df[replace_where].astype(str)
                 df[replace_where]=df[replace_where].str.replace('.',',', regex=True).astype(str)
+            elif replace_option =='Column Name':
+                df= df.rename(columns={replace_where:repl_with})
+            
+            
             
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
@@ -1488,9 +1492,7 @@ class Toplevel1:
             new_col_name = self.Entry1307.get()
             print('new name', new_col_name)
             
-            #df = df.rename(columns={r_col:new_column_name})
             df= df.rename(columns={current_C_name:new_col_name})
-            #df = df.list_columns(int(current_C_name)).column =[new_col_name]
             
             
             
@@ -2613,7 +2615,7 @@ class Toplevel1:
         self.TCombobox206= ttk.Combobox(self.TNotebook1_t9)
         self.TCombobox206.place(relx=0.7, rely=0.15, relheight=0.072
                 , relwidth=0.200)
-        self.value_list206 = ['value','character', 'float to point comma', 'point to float comma']
+        self.value_list206 = ['value','character', 'float to point comma', 'point to float comma','Column Name']
         self.TCombobox206.configure(values=self.value_list206)
         self.TCombobox206.configure(takefocus="")
         
