@@ -1,4 +1,4 @@
-CSVpySTAT V0.2 by Ricky Helfgen
+CSVpySTAT V0.3 by Ricky Helfgen
                                       
 Open, edit and analyze CSV-Data files with Python3 and the packages:
 
