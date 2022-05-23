@@ -679,10 +679,13 @@ class Toplevel1:
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             
-            
+            self.Entry1.delete(0, END)
             self.Entry1.insert(1,filename)
+            self.TCombobox1.set('')
             self.TCombobox1.insert(1,';')
+            self.TCombobox2.set('')
             self.TCombobox2.insert(1,',')
+            self.TCombobox3.set('')
             self.TCombobox3.insert(1,'yes')
             
             read_csv()
