@@ -1542,7 +1542,7 @@ class Toplevel1:
         top.minsize(1, 1)
         top.maxsize(1351, 738)
         top.resizable(1,  1)
-        top.title("CSVpySTAT v0.2")
+        top.title("CSVpySTAT v0.3")
         top.configure(highlightcolor="black")
 
         self.top = top
