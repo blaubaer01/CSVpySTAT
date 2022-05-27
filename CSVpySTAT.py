@@ -623,6 +623,7 @@ class Toplevel1:
             liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
             headercol = self.sheet.headers(newheaders = None, index = None, reset_col_positions = False, show_headers_if_not_sheet = True)
             
+            indexneed = var10.get()
             
             df2 = pd.DataFrame (liste)
             df2.columns = headercol
@@ -639,7 +640,10 @@ class Toplevel1:
                 filetypes=filetypes)
             
             
-            df2.to_csv(filename, sep=';', decimal=',', header =True)
+            if indexneed == 1:
+                df2.to_csv(filename, sep=';', decimal=',', header =True, index=True)
+            else:
+                df2.to_csv(filename, sep=';', decimal=',', header =True, index=False)
         
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
@@ -653,6 +657,10 @@ class Toplevel1:
             print('Save File')
             
             filename = self.Entry1.get()
+            indexneed = var10.get()
+            
+            
+            
             
             if filename =='':
                 filename = 'new.csv'
@@ -670,7 +678,13 @@ class Toplevel1:
             df2.columns = headercol
             
             
-            df2.to_csv(filename, sep=';', decimal=',', header =True)
+            
+            if indexneed == 1:
+                df2.to_csv(filename, sep=';', decimal=',', header =True, index=True)
+            else:
+                df2.to_csv(filename, sep=';', decimal=',', header =True, index=False)
+            
+            
             
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
@@ -2795,7 +2809,7 @@ class Toplevel1:
         self.Label301.place(relx=0.03, rely=0.034, height=21, width=250)
         self.Label301.configure(anchor='w')
         self.Label301.configure(compound='left')
-        self.Label301.configure(text='''Save CSV File''')
+        self.Label301.configure(text='''Save CSV Data File (With Header, Seperator =";", Delimeter ="," ''')
         
         self.Label302 = tk.Label(self.TNotebook1_t10)
         self.Label302.place(relx=0.03, rely=0.15, height=21, width=112)
@@ -2810,18 +2824,28 @@ class Toplevel1:
         self.Label302.configure(text='''no file loaded''')
 
         self.Button303 = tk.Button(self.TNotebook1_t10)
-        self.Button303.place(relx=0.12, rely=0.3, height=33, width=113)
+        self.Button303.place(relx=0.03, rely=0.45, height=33, width=113)
         self.Button303.configure(borderwidth="2")
         self.Button303.configure(compound='left')
         self.Button303.configure(command = save_current_CSV_name)
         self.Button303.configure(text='''Save''')
         
         self.Button304 = tk.Button(self.TNotebook1_t10)
-        self.Button304.place(relx=0.12, rely=0.45, height=33, width=113)
+        self.Button304.place(relx=0.03, rely=0.60, height=33, width=113)
         self.Button304.configure(borderwidth="2")
         self.Button304.configure(compound='left')
         self.Button304.configure(command = save_CSV)
         self.Button304.configure(text='''Save as...''')
+        
+        var10 = tk.IntVar()
+        self.Checkbutton305 = tk.Checkbutton(self.TNotebook1_t10)
+        self.Checkbutton305.place(relx=0.03, rely=0.3, relheight=0.047
+                , relwidth=0.165)
+        self.Checkbutton305.configure(activebackground="#f9f9f9")
+        self.Checkbutton305.configure(justify='left')
+        self.Checkbutton305.configure(text='''Index Column needed''')
+        self.Checkbutton305.configure(variable=var10, onvalue=1)
+        
         
         ######################################################################
         ##Tab13 - Info
