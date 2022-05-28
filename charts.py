@@ -1601,3 +1601,118 @@ def pareto_one_column(df, spdt):
     
     print(df2)
     pareto_plot(df2, x=x, y=y, title='Pareto Chart')
+
+
+
+
+def error_bar_dia_single(df, messwert, lt, ut):
+    print('Error bar diagram \n')
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    y = messwert
+        
+    
+    if tolerance =='':
+        
+        sns.pointplot(y=y, kind="line", ci="sd", data=df)    
+        
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+            
+        sns.pointplot(y=y, kind="line", ci="sd", data=df)
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.pointplot(y=y, kind="line", ci="sd", data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.pointplot(y=y, kind="line", ci="sd", data=df)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+
+
+def error_bar_dia_1f(df, messwert, lt, ut, spdt):
+    print('Error bar diagram with one factor \n')
+    
+    print('ut:',ut)
+    print('lt:', lt)
+    
+    if lt =='' + ut =='':
+        tolerance ='ohne'
+        print('erg:', tolerance)
+    elif lt !='' + ut =='':
+        tolerance ='einseitig unten'
+        lt = float(lt)
+        print('erg:', tolerance)
+    elif ut !='' + lt =='':
+        tolerance ='einseitig oben'
+        ut = float(ut)
+        print('erg:', tolerance)
+    elif lt !='' + ut !='':
+        tolerance =''
+        lt = float(lt)
+        ut = float(ut)
+        print('erg:', tolerance)
+    
+    y = messwert
+    x = spdt
+        
+    
+    if tolerance =='':
+        
+        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)    
+        
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()
+        
+    elif tolerance =='ohne':
+        
+            
+        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)
+        plt.show()
+    
+    elif tolerance =='einseitig oben':
+        
+            
+        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)
+        plt.axhline(y=ut,linewidth=2, color='red')
+        plt.show()
+    
+    elif tolerance =='einseitig unten':
+        
+            
+        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)
+        
+        plt.axhline(y=lt,linewidth=2, color='red')    
+        plt.show()

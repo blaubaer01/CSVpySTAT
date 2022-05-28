@@ -23,7 +23,8 @@ from outliers import smirnov_grubbs as grubbs
 from tableview import file_in_html
 from charts import boxplot_single, trend, trend1f, besch_stat, violin_single, stripplot_single, countplot, pieplot,pareto_one_column 
 from charts import boxplot1f, violin1f, strip1f, scatterplot,scatter1f, regression_single, barplot1f, barplot2f, pareto
-from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f, scatter3d
+from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f, scatter3d, error_bar_dia_single
+from charts import error_bar_dia_1f
 from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
 from stat_charts import contingency_table
 
@@ -786,6 +787,8 @@ class Toplevel1:
                     stripplot_single(df, messwert, lt, ut)
                 elif plotfunction =='Swarmplot':
                     swarmplot_single(df, messwert, lt, ut)
+                elif plotfunction =='Error Bar Plot':
+                    error_bar_dia_single(df, messwert, lt, ut)
                 
                 
             elif wert == 'a':
@@ -814,6 +817,8 @@ class Toplevel1:
                         pareto(df, messwert, spdt)
                     else:
                         pareto_one_column(df, spdt)
+                elif plotfunction == 'Error Bar Plot':
+                    error_bar_dia_1f(df, messwert, lt, ut, spdt)
             
             elif wert =='ab':
                 if plotfunction=='Regressionplot':
@@ -2040,7 +2045,7 @@ class Toplevel1:
         self.TCombobox7 = ttk.Combobox(self.TNotebook1_t3)
         self.TCombobox7.place(relx=0.13, rely=0.6, relheight=0.072
                 , relwidth=0.175)
-        self.value_list10 = ['Countplot', 'Barplot', 'Pieplot', 'Pareto', 'Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot', 'Scatterplot','Regressionplot']
+        self.value_list10 = ['Countplot', 'Barplot', 'Pieplot', 'Pareto', 'Time Series Plot', 'Boxplot', 'Violinplot', 'Stripplot', 'Swarmplot','Error Bar Plot' ,'Scatterplot','Regressionplot']
         self.TCombobox7.configure(values=self.value_list10)
         self.TCombobox7.configure(takefocus="")
 
