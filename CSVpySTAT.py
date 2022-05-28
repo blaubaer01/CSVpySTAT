@@ -24,7 +24,7 @@ from tableview import file_in_html
 from charts import boxplot_single, trend, trend1f, besch_stat, violin_single, stripplot_single, countplot, pieplot,pareto_one_column 
 from charts import boxplot1f, violin1f, strip1f, scatterplot,scatter1f, regression_single, barplot1f, barplot2f, pareto
 from charts import regression1f, boxplot2f, swarmplot_single, swarmplot1f, swarmplot2f, strip2f, violin2f, scatter3d, error_bar_dia_single
-from charts import error_bar_dia_1f
+from charts import error_bar_dia_1f, error_bar_dia_2f
 from stat_charts import qq_plot, histogram, normality_test, CPA, urwertkarte, xquer_s, LREG, outliert
 from stat_charts import contingency_table
 
@@ -837,6 +837,9 @@ class Toplevel1:
                     scatter1f(df, messwert, lt, ut, spdt, factorx)
                 if plotfunction =='Time Series Plot':
                     trend1f(df, messwert, lt, ut, spdt, factorx)
+                if plotfunction =='Error Bar Plot':
+                    error_bar_dia_2f(df, messwert, lt, ut, spdt, factorx)
+                    
             
             elif wert =='ac':
                 if plotfunction =='Scatterplot':
