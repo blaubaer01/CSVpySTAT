@@ -1151,7 +1151,7 @@ class Toplevel1:
                     df.replace('NA', np.nan, inplace=True)
                     df= df.dropna()
                 elif delete_option == 'zero rows':
-                    df.replace('0', np.nan, inplace=True)
+                    df.replace(0, np.nan, inplace=True)
                     df= df.dropna()
                     
                 elif delete_option =='rows with special characters':
@@ -1168,7 +1168,7 @@ class Toplevel1:
                     df[col_del].replace('NA', np.nan, inplace=True)
                     df= df.dropna(subset=[col_del])
                 elif delete_option == 'zero rows':
-                    df[col_del].replace('0', np.nan, inplace=True)
+                    df[col_del].replace(0, np.nan, inplace=True)
                     df= df.dropna(subset=[col_del])
                 elif delete_option =='rows with special characters':
                     df[col_del].replace(cont, np.nan, inplace=True)
