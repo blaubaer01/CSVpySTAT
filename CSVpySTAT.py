@@ -10,6 +10,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.constants import *
 from tkinter import filedialog as fd
+from tkinter import messagebox as msbox
 import pandas as pd
 from tabulate import tabulate
 from tksheet import Sheet
@@ -183,7 +184,7 @@ class Toplevel1:
             fn = self.Entry1.get()
             
             if fn == '':
-                tk.messagebox.showinfo(title='File is missing', message='No File chooesed')
+                msbox.showinfo(title='File is missing', message='No File chooesed')
             
             
             seperator = self.TCombobox1.get()
@@ -264,7 +265,9 @@ class Toplevel1:
             self.TCombobox72.configure(values=list(values.columns))
             values=df.select_dtypes(include=['float', 'int'])
             self.TCombobox73.configure(values=list(values.columns))
-            
+            self.TCombobox802.configure(values = list(values.columns))
+            self.TCombobox803.configure(values = list(values.columns))
+            self.TCombobox806.configure(values = list(values.columns))
                         
             tabi=df.select_dtypes(include=['object', 'datetime'])
             #self.TCombobox85.configure(values=list(tabi.columns))
@@ -1541,6 +1544,185 @@ class Toplevel1:
             self.sheet.enable_bindings()
             self.frame1.grid(row = 0, column = 0, sticky = "nswe")
             self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+        
+        
+        def calc2cols():
+            print('Calculation with 2 columns')
+            
+            col1 = self.TCombobox802.get()
+            col2 = self.TCombobox803.get()
+            calcfunction = self.TCombobox804.get()
+            newcolname = self.Entry804.get()
+            
+            
+            
+            if calcfunction =='+':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'SUM ' + col1 + ';' + col2
+                    
+                df[newcolname] = df[col1] + df[col2]
+            
+            
+            elif calcfunction =='-':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'DIV ' + col1 + ';' + col2
+                    
+                df[newcolname] = df[col1] - df[col2]
+            
+            
+            elif calcfunction =='*':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'PRODUCT ' + col1 + ';' + col2
+                    
+                df[newcolname] = df[col1] * df[col2]
+            
+            
+            elif calcfunction =='/':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'Quotient ' + col1 + ';' + col2
+                    
+                df[newcolname] = df[col1] / df[col2]
+            
+            
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nCalculation 2 Columns:')
+            self.Scrolledtext1.insert(END, '\nColumn 1: ' + str(col1))
+            self.Scrolledtext1.insert(END, '\nColumn 2: ' + str(col2))
+            self.Scrolledtext1.insert(END, '\nMath function: ' + str(calcfunction))
+            self.Scrolledtext1.insert(END, '\nNew columnname: ' + str(newcolname))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            print(df)
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
+        
+        def calccolvalue():
+            
+            print('Calculation column with value')
+            
+            col = self.TCombobox806.get()
+            val = self.Entry807.get()
+            calcfunction = self.TCombobox808.get()
+            newcolname = self.Entry809.get()
+            
+                
+            
+            
+            if calcfunction =='+':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'SUM ' + col + ';' + str(val)
+                
+                if val =='':
+                    msbox.showinfo(title='Value is missing', message='No value')    
+                
+                df[newcolname] = df[col] + float(val)
+                
+            
+            elif calcfunction =='-':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'DIV ' + col + ';' + str(val)
+                
+                if val =='':
+                    msbox.showinfo(title='Value is missing', message='No value')        
+                
+                
+                df[newcolname] = df[col] - float(val)
+            
+            
+            elif calcfunction =='*':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'PRODUCT ' + col + ';' + str(val)
+                
+                if val =='':
+                    msbox.showinfo(title='Value is missing', message='No value')        
+                
+                df[newcolname] = df[col] * float(val)
+            
+            
+            elif calcfunction =='/':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'Quotient ' + col + ';' + str(val)
+                
+                if val =='':
+                    msbox.showinfo(title='Value is missing', message='No value')    
+                
+                df[newcolname] = df[col] / float(val)
+            
+            elif calcfunction =='^':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'Power ' + col + ';' + str(val)
+                
+                if val =='':
+                    msbox.showinfo(title='Value is missing', message='No value')    
+                    
+                df[newcolname] = df[col] **float(val)
+            
+            
+            
+            elif calcfunction =='sqrt':
+                if newcolname !='':
+                    newcolname = newcolname
+                else:
+                    newcolname = 'Root ' + col + ';' + str(val)
+                    
+                df[newcolname] = df[col].apply(np.sqrt, axis=1)
+            
+            
+            
+            
+            
+                
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            self.Scrolledtext1.insert(END, '\nCalculation Columns with value:')
+            self.Scrolledtext1.insert(END, '\nColumn : ' + str(col))
+            self.Scrolledtext1.insert(END, '\nValue: ' + str(val))
+            self.Scrolledtext1.insert(END, '\nMath function: ' + str(calcfunction))
+            self.Scrolledtext1.insert(END, '\nNew columnname: ' + str(newcolname))
+            self.Scrolledtext1.insert(END, '\n')
+            self.Scrolledtext1.insert(END, 30*'#')
+            print(df)
+            
+            ##Tabelle darstellen            
+            self.frame1.grid_columnconfigure(0, weight = 1)
+            self.frame1.grid_rowconfigure(0, weight = 1)
+            self.sheet = Sheet(self.frame1,
+                               data=df.values.tolist())
+            
+            self.sheet.headers(df.columns)
+                
+            self.sheet.enable_bindings()
+            self.frame1.grid(row = 0, column = 0, sticky = "nswe")
+            self.sheet.grid(row = 0, column = 0, sticky = "nswe")
             
 
         
@@ -1627,15 +1809,19 @@ class Toplevel1:
         self.TNotebook1.tab(6, text='''Statistics''', compound="left"
                 ,underline='''-1''', )
         
-        self.TNotebook1_t7 = tk.Frame(self.TNotebook1)
-        self.TNotebook1.add(self.TNotebook1_t7, padding=4)
-        self.TNotebook1.tab(7, text='''Table Functions''', compound="left"
-                ,underline='''-1''', )
         
         self.TNotebook1_t8 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t8, padding=4)
-        self.TNotebook1.tab(8, text='''Crosstable''', compound="left"
+        self.TNotebook1.tab(7, text='''Simple Math''', compound="left"
                 ,underline='''-1''', )
+        
+        
+        self.TNotebook1_t7 = tk.Frame(self.TNotebook1)
+        self.TNotebook1.add(self.TNotebook1_t7, padding=4)
+        self.TNotebook1.tab(8, text='''Table Functions''', compound="left"
+                ,underline='''-1''', )
+        
+        
         
         self.TNotebook1_t9 = tk.Frame(self.TNotebook1)
         self.TNotebook1.add(self.TNotebook1_t9, padding=4)
@@ -1661,7 +1847,7 @@ class Toplevel1:
         
         
         ###############################################################
-        ##tab3 - Datatable (show the loaded dataframe into a grid)
+        ##tab2 - Datatable (show the loaded dataframe into a grid)
         
         self.frame1 = tk.Frame(self.TNotebook1_t5)
         self.frame1.place(relx=0.0, rely=0.06, height=23, width=79)
@@ -1669,7 +1855,7 @@ class Toplevel1:
         self.frame1.grid_rowconfigure(0, weight = 1)
         
         ##################################################################
-        ###tab2 -CSV Load
+        ###tab1 -CSV Load
         
         self.Entry1 = tk.Entry(self.TNotebook1_t1)
         self.Entry1.place(relx=0.133, rely=0.069, height=23, relwidth=0.182)
@@ -1758,7 +1944,7 @@ class Toplevel1:
         
         
         ##################################################################      
-        ###tab1 -New DF
+        ###tab0 -New DF
         
         self.Label1301 = tk.Label(self.TNotebook1_t13)
         self.Label1301.place(relx=0.02, rely=0.03, height=21, width=150)
@@ -1833,7 +2019,7 @@ class Toplevel1:
 
         
         
-        ##tab4- Format table
+        ##tab3- Format table
         ##change format
         self.Label110 = tk.Label(self.TNotebook1_t2)
         self.Label110.place(relx=0.02, rely=0.034, height=21, width=150)
@@ -1998,7 +2184,7 @@ class Toplevel1:
         
         ###################################################
         
-        ##Tab6 - Graph
+        ##Tab5 - Graph
         
         self.Label51 = tk.Label(self.TNotebook1_t3)
         self.Label51.place(relx=0.02, rely=0.034, height=21, width=150)
@@ -2109,7 +2295,7 @@ class Toplevel1:
         self.Entry55.configure(font="TkFixedFont")
         
         #############################################################
-        #Tab5 join/append
+        #Tab4 join/append
         
         self.Label1909 = tk.Label(self.TNotebook1_t4)
         self.Label1909.place(relx=0.02, rely=0.03, height=21, width=125)
@@ -2247,7 +2433,7 @@ class Toplevel1:
         self.Button12.configure(text='''save file''')
         
         ####################################################################
-        ##Tab7 - Statistics
+        ##Tab6 - Statistics
         
         self.Button3 = tk.Button(self.TNotebook1_t6)
         self.Button3.place(relx=0.70, rely=0.15, height=33, width=200)
@@ -2504,58 +2690,194 @@ class Toplevel1:
         self.Button92.configure(text='''Split Column''')
         
         ###################################################################
-        #tab 9 - Crosstable + Contingency Table
+        #tab 7 - Simple Math = Col Calculate + Crosstable + Contingency Table
+ 
+        # column math with 2 columns
+        self.Label801 = tk.Label(self.TNotebook1_t8)
+        self.Label801.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label801.configure(anchor='w')
+        self.Label801.configure(compound='left')
+        self.Label801.configure(text='''Calculate 2 Columns:''')
         
+        self.Label802 = tk.Label(self.TNotebook1_t8)
+        self.Label802.place(relx=0.03, rely=0.15, height=21, width=112)
+        self.Label802.configure(anchor='w')
+        self.Label802.configure(compound='left')
+        self.Label802.configure(text='''Column 1:''')
+
+        self.TCombobox802= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox802.place(relx=0.12, rely=0.15, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox802.configure(takefocus="")
+        
+        self.Label803 = tk.Label(self.TNotebook1_t8)
+        self.Label803.place(relx=0.03, rely=0.3, height=21, width=112)
+        self.Label803.configure(anchor='w')
+        self.Label803.configure(compound='left')
+        self.Label803.configure(text='''Column 2:''')
+
+        self.TCombobox803= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox803.place(relx=0.12, rely=0.3, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox803.configure(takefocus="")
+        
+        self.Label804 = tk.Label(self.TNotebook1_t8)
+        self.Label804.place(relx=0.03, rely=0.45, height=21, width=112)
+        self.Label804.configure(anchor='w')
+        self.Label804.configure(compound='left')
+        self.Label804.configure(text='''Math Function:''')
+
+        self.TCombobox804= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox804.place(relx=0.14, rely=0.45, relheight=0.072
+                , relwidth=0.05)
+        self.value_list804 = ['+', '-','*', '/']
+        self.TCombobox804.configure(values=self.value_list804)
+        self.TCombobox804.configure(takefocus="")
+
+        self.Label805 = tk.Label(self.TNotebook1_t8)
+        self.Label805.place(relx=0.03, rely=0.60, height=21, width=150)
+        self.Label805.configure(anchor='w')
+        self.Label805.configure(compound='left')
+        self.Label805.configure(text='''Column Name:''')
+
+
+
+        self.Entry804 = tk.Entry(self.TNotebook1_t8)
+        self.Entry804.place(relx=0.14, rely=0.60, height=23, relwidth=0.15)
+        self.Entry804.configure(background="white")
+        self.Entry804.configure(font="TkFixedFont")
+
+
+        self.Button800 = tk.Button(self.TNotebook1_t8)
+        self.Button800.place(relx=0.12, rely=0.75, height=33, width=113)
+        self.Button800.configure(borderwidth="2")
+        self.Button800.configure(compound='left')
+        self.Button800.configure(command = calc2cols)
+        self.Button800.configure(text='''Calculate''')
+        
+        
+        #Calculate Column with value
+        
+        self.Label805 = tk.Label(self.TNotebook1_t8)
+        self.Label805.place(relx=0.35, rely=0.034, height=21, width=250)
+        self.Label805.configure(anchor='w')
+        self.Label805.configure(compound='left')
+        self.Label805.configure(text='''Simple Calculation:''')
+        
+        self.Label806 = tk.Label(self.TNotebook1_t8)
+        self.Label806.place(relx=0.35, rely=0.15, height=21, width=112)
+        self.Label806.configure(anchor='w')
+        self.Label806.configure(compound='left')
+        self.Label806.configure(text='''Column :''')
+
+        self.TCombobox806= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox806.place(relx=0.47, rely=0.15, relheight=0.072
+                , relwidth=0.175)
+        self.TCombobox806.configure(takefocus="")
+        
+        self.Label807 = tk.Label(self.TNotebook1_t8)
+        self.Label807.place(relx=0.35, rely=0.3, height=21, width=112)
+        self.Label807.configure(anchor='w')
+        self.Label807.configure(compound='left')
+        self.Label807.configure(text='''Value:''')
+
+        self.Entry807 = tk.Entry(self.TNotebook1_t8)
+        self.Entry807.place(relx=0.47, rely=0.30, height=23, relwidth=0.10)
+        self.Entry807.configure(background="white")
+        self.Entry807.configure(font="TkFixedFont")        
+
+
+
+
+        self.Label808 = tk.Label(self.TNotebook1_t8)
+        self.Label808.place(relx=0.35, rely=0.45, height=21, width=112)
+        self.Label808.configure(anchor='w')
+        self.Label808.configure(compound='left')
+        self.Label808.configure(text='''Math Function:''')
+
+        self.TCombobox808= ttk.Combobox(self.TNotebook1_t8)
+        self.TCombobox808.place(relx=0.47, rely=0.45, relheight=0.072
+                , relwidth=0.05)
+        self.value_list808 = ['+', '-','*', '/', '^', 'sqrt']
+        self.TCombobox808.configure(values=self.value_list808)
+        self.TCombobox808.configure(takefocus="")
+
+        self.Label809 = tk.Label(self.TNotebook1_t8)
+        self.Label809.place(relx=0.35, rely=0.60, height=21, width=150)
+        self.Label809.configure(anchor='w')
+        self.Label809.configure(compound='left')
+        self.Label809.configure(text='''Column Name:''')
+
+
+
+        self.Entry809 = tk.Entry(self.TNotebook1_t8)
+        self.Entry809.place(relx=0.47, rely=0.60, height=23, relwidth=0.15)
+        self.Entry809.configure(background="white")
+        self.Entry809.configure(font="TkFixedFont")
+
+
+        self.Button801 = tk.Button(self.TNotebook1_t8)
+        self.Button801.place(relx=0.47, rely=0.75, height=33, width=113)
+        self.Button801.configure(borderwidth="2")
+        self.Button801.configure(compound='left')
+        self.Button801.configure(command = calccolvalue)
+        self.Button801.configure(text='''Calculate''')
+        
+        
+        
+        
+        
+        #Crosstable
         self.Label101 = tk.Label(self.TNotebook1_t8)
-        self.Label101.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label101.place(relx=0.7, rely=0.034, height=21, width=250)
         self.Label101.configure(anchor='w')
         self.Label101.configure(compound='left')
         self.Label101.configure(text='''crosstable:''')
         
         self.Label102 = tk.Label(self.TNotebook1_t8)
-        self.Label102.place(relx=0.03, rely=0.15, height=21, width=112)
+        self.Label102.place(relx=0.7, rely=0.15, height=21, width=112)
         self.Label102.configure(anchor='w')
         self.Label102.configure(compound='left')
         self.Label102.configure(text='''Column 1:''')
 
         self.TCombobox102= ttk.Combobox(self.TNotebook1_t8)
-        self.TCombobox102.place(relx=0.12, rely=0.15, relheight=0.072
+        self.TCombobox102.place(relx=0.82, rely=0.15, relheight=0.072
                 , relwidth=0.175)
         self.TCombobox102.configure(takefocus="")
         
         self.Label103 = tk.Label(self.TNotebook1_t8)
-        self.Label103.place(relx=0.03, rely=0.3, height=21, width=112)
+        self.Label103.place(relx=0.7, rely=0.3, height=21, width=112)
         self.Label103.configure(anchor='w')
         self.Label103.configure(compound='left')
         self.Label103.configure(text='''Column 2:''')
 
         self.TCombobox103= ttk.Combobox(self.TNotebook1_t8)
-        self.TCombobox103.place(relx=0.12, rely=0.3, relheight=0.072
+        self.TCombobox103.place(relx=0.82, rely=0.3, relheight=0.072
                 , relwidth=0.175)
         self.TCombobox103.configure(takefocus="")
         
         self.Label104 = tk.Label(self.TNotebook1_t8)
-        self.Label104.place(relx=0.03, rely=0.45, height=21, width=112)
+        self.Label104.place(relx=0.7, rely=0.45, height=21, width=112)
         self.Label104.configure(anchor='w')
         self.Label104.configure(compound='left')
         self.Label104.configure(text='''Option:''')
 
         self.TCombobox104= ttk.Combobox(self.TNotebook1_t8)
-        self.TCombobox104.place(relx=0.12, rely=0.45, relheight=0.072
+        self.TCombobox104.place(relx=0.82, rely=0.45, relheight=0.072
                 , relwidth=0.200)
         self.value_list104 = ['cross sum table', 'cross sum table with total','cross percent table', 'cross percent table with total', 'contingency table']
         self.TCombobox104.configure(values=self.value_list104)
         self.TCombobox104.configure(takefocus="")
 
         self.Button100 = tk.Button(self.TNotebook1_t8)
-        self.Button100.place(relx=0.12, rely=0.6, height=33, width=113)
+        self.Button100.place(relx=0.82, rely=0.6, height=33, width=113)
         self.Button100.configure(borderwidth="2")
         self.Button100.configure(compound='left')
         self.Button100.configure(command = crosstable)
         self.Button100.configure(text='''Build Crosstable''')
         
         ##################################################################
-        ##tab 10 Modify DF (dataframe)
+        ##tab 9 Modify DF (dataframe)
         
         #delete
         self.Label201 = tk.Label(self.TNotebook1_t9)
@@ -2688,7 +3010,7 @@ class Toplevel1:
         self.Button209.configure(text='''Replace''')
         
         ###################################################################
-        ##tab 11 - Modify date
+        ##tab 10 - Modify date
         
         self.Label401 = tk.Label(self.TNotebook1_t12)
         self.Label401.place(relx=0.03, rely=0.034, height=21, width=250)
@@ -2811,7 +3133,7 @@ class Toplevel1:
         
         
         #####################################################################
-        ##tab12 - Save CSV
+        ##tab11 - Save CSV
         
         self.Label301 = tk.Label(self.TNotebook1_t10)
         self.Label301.place(relx=0.03, rely=0.034, height=21, width=250)
@@ -2856,7 +3178,7 @@ class Toplevel1:
         
         
         ######################################################################
-        ##Tab13 - Info
+        ##Tab12 - Info
         
         self.Scrolledtext3 = ScrolledText(self.TNotebook1_t11)
         self.Scrolledtext3.place(relx=0.012, rely=0.034, relheight=0.934
