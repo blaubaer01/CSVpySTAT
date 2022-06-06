@@ -2863,7 +2863,7 @@ class Toplevel1:
         self.Label104.configure(text='''Option:''')
 
         self.TCombobox104= ttk.Combobox(self.TNotebook1_t8)
-        self.TCombobox104.place(relx=0.82, rely=0.45, relheight=0.072
+        self.TCombobox104.place(relx=0.79, rely=0.45, relheight=0.072
                 , relwidth=0.200)
         self.value_list104 = ['cross sum table', 'cross sum table with total','cross percent table', 'cross percent table with total', 'contingency table']
         self.TCombobox104.configure(values=self.value_list104)
