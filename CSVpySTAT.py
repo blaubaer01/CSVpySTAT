@@ -590,9 +590,9 @@ class Toplevel1:
             elif art_to_join =='inner':
                 df = pd.merge(df, df2, how='inner', on=column_T2)
             elif art_to_join =='left outer':
-                df = pd.merge(df, df2, how='outer', on=column_T2)
+                df = pd.merge(df, df2, how='left', on=column_T2)
             elif art_to_join =='right outer':
-                df = pd.merge(df, df2, how='outer', on=column_T2)
+                df = pd.merge(df, df2, how='right', on=column_T2)
             
             print(df)
             
