@@ -645,10 +645,10 @@ class Toplevel1:
             
             
             if indexneed == 1:
-                df2.to_csv(filename, sep=';', decimal=',', header =True, index=True)
+                df2.to_csv(filename.name, sep=';', decimal=',', header =True, index=True)
                 self.Label303.configure(text=filename.name)
             else:
-                df2.to_csv(filename, sep=';', decimal=',', header =True, index=False)
+                df2.to_csv(filename.name, sep=';', decimal=',', header =True, index=False)
                 self.Label303.configure(text=filename.name)
             
             self.Scrolledtext1.insert(END, '\n')
