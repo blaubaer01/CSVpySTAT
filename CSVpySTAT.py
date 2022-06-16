@@ -58,7 +58,7 @@ class Toplevel1:
         
         def file_open():
             filetypes = (
-                ('text files', '*.csv'),
+                ('CSV files', '*.csv'),
                 ('All files', '*.*')
             )
             
@@ -68,7 +68,7 @@ class Toplevel1:
         
             self.Entry1.delete(0, END)
             self.Entry1.insert(1,filename)
-            self.Label302.configure(text=filename)
+            self.Label303.configure(text=filename)
             
             f = open(filename, "r", errors='ignore')
     
@@ -136,7 +136,7 @@ class Toplevel1:
         
         def file2_open():
             filetypes = (
-                ('text files', '*.csv'),
+                ('CSV files', '*.csv'),
                 ('All files', '*.*')
             )
             
@@ -621,7 +621,7 @@ class Toplevel1:
             read_table()
         
         def save_CSV():
-            print('Save File')
+            print('Save as File')
             global df
             
             liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
@@ -635,7 +635,7 @@ class Toplevel1:
             
             
             filetypes = (
-                ('text files', '*.csv'),
+                ('CSV files', '*.csv'),
                 ('All files', '*.*')
             )
             
@@ -646,13 +646,15 @@ class Toplevel1:
             
             if indexneed == 1:
                 df2.to_csv(filename, sep=';', decimal=',', header =True, index=True)
+                self.Label303.configure(text=filename.name)
             else:
                 df2.to_csv(filename, sep=';', decimal=',', header =True, index=False)
-        
+                self.Label303.configure(text=filename.name)
+            
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
             self.Scrolledtext1.insert(END, '\nSave Dataframe')
-            self.Scrolledtext1.insert(END, '\nFilename: ' + str(filename))
+            self.Scrolledtext1.insert(END, '\nFilename: ' + str(filename.name))
             self.Scrolledtext1.insert(END, '\n')
             self.Scrolledtext1.insert(END, 30*'#')
         
@@ -685,9 +687,11 @@ class Toplevel1:
             
             if indexneed == 1:
                 df2.to_csv(filename, sep=';', decimal=',', header =True, index=True)
+                self.Label303.configure(text=filename)
+            
             else:
                 df2.to_csv(filename, sep=';', decimal=',', header =True, index=False)
-            
+                self.Label303.configure(text=filename)
             
             
             self.Scrolledtext1.insert(END, '\n')
@@ -3136,22 +3140,22 @@ class Toplevel1:
         ##tab11 - Save CSV
         
         self.Label301 = tk.Label(self.TNotebook1_t10)
-        self.Label301.place(relx=0.03, rely=0.034, height=21, width=250)
+        self.Label301.place(relx=0.03, rely=0.034, height=21, width=600)
         self.Label301.configure(anchor='w')
         self.Label301.configure(compound='left')
-        self.Label301.configure(text='''Save CSV Data File (With Header, Seperator =";", Delimeter ="," ''')
+        self.Label301.configure(text='''Save CSV Data File (With Header, Seperator =";" Delimeter =",") ''')
         
         self.Label302 = tk.Label(self.TNotebook1_t10)
-        self.Label302.place(relx=0.03, rely=0.15, height=21, width=112)
+        self.Label302.place(relx=0.03, rely=0.15, height=21, width=150)
         self.Label302.configure(anchor='w')
         self.Label302.configure(compound='left')
         self.Label302.configure(text='''Current File name:''')
         
-        self.Label302 = tk.Label(self.TNotebook1_t10)
-        self.Label302.place(relx=0.15, rely=0.15, height=21, width=450)
-        self.Label302.configure(anchor='w')
-        self.Label302.configure(compound='left')
-        self.Label302.configure(text='''no file loaded''')
+        self.Label303 = tk.Label(self.TNotebook1_t10)
+        self.Label303.place(relx=0.15, rely=0.15, height=21, width=600)
+        self.Label303.configure(anchor='w')
+        self.Label303.configure(compound='left')
+        self.Label303.configure(text='''no file loaded''')
 
         self.Button303 = tk.Button(self.TNotebook1_t10)
         self.Button303.place(relx=0.03, rely=0.45, height=33, width=113)
