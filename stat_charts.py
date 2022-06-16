@@ -407,7 +407,7 @@ def CPA(df, messwert, lt, ut):
                 plt.figure(figsize=(6, 4))
                 plt.subplot(221) # äquivalent zu: plt.subplot(2, 2, 1)
                 sns.histplot(x=y)
-                plt.title("Process Capability Analyse " + bauteilnummer + " " + iqs +"\nMerkmal: " + str(merkmal) + "\nMaschine: " + maschine)
+                plt.title("Process Capability Analyse ")
                 plt.axvline(x=ut,linewidth=2, color='r')
                 plt.subplot(222)
                 spy.stats.probplot(y, dist="norm", plot=plt)
