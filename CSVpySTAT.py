@@ -391,7 +391,7 @@ class Toplevel1:
             self.Label12.configure(text=format_col)    
             
             if format_col =='object':
-                self.value_list4 = ['object', 'datetime']
+                self.value_list4 = ['int', 'datetime']
                 self.TCombobox10.configure(values=self.value_list4)
             if format_col =='int':
                 self.value_list4 = ['float']
@@ -405,10 +405,17 @@ class Toplevel1:
             filtercolumn = self.TCombobox11.get()
             #df[filtercolumn] =(df[filtercolumn].astype(str))
             list_o_filtercrit = df[filtercolumn].tolist()
-            filtercontent = sorted(set(list_o_filtercrit))
-            self.TCombobox13.configure(values=filtercontent)
             
             fileformat = df[filtercolumn].dtypes
+            
+            if fileformat !='object':
+                
+                filtercontent = sorted(set(list_o_filtercrit))
+                self.TCombobox13.configure(values=filtercontent)
+            if fileformat =='object':
+                filtercontent = np.unique(list_o_filtercrit).tolist()
+                self.TCombobox13.configure(values=filtercontent)
+            
             
             if fileformat =='int':
                 self.value_list5 = ['==', '>=', '<=', '!=']
