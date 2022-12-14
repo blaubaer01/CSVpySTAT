@@ -23,7 +23,8 @@ Thanks to all this Programmers
 
 [More under: http://www.reh-webdesign.de/csvpystat/](http://www.reh-webdesign.de/csvpystat/)
 
-https://www.youtube.com/watch?v=A0sPcLresFU
+[Movie under: https://www.youtube.com/watch?v=A0sPcLresFU](https://www.youtube.com/watch?v=A0sPcLresFU)
 
+[Blog under: https://csvpystat.blogspot.com/](https://csvpystat.blogspot.com/)
 
 
