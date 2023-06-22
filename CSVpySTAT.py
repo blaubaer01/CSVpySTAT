@@ -227,8 +227,8 @@ class Toplevel1:
                 self.sheet = Sheet(self.frame1,
                                    data=df.values.tolist())
 
-                if head =='yes':
-                    self.sheet.headers(df.columns)
+                #if head =='yes':
+                self.sheet.headers(df.columns)
                 
                     
                 self.sheet.enable_bindings()
@@ -630,6 +630,8 @@ class Toplevel1:
         def save_CSV():
             print('Save as File')
             global df
+            
+            
             
             liste = self.sheet.get_sheet_data(return_copy = False, get_header = False, get_index = False)
             headercol = self.sheet.headers(newheaders = None, index = None, reset_col_positions = False, show_headers_if_not_sheet = True)

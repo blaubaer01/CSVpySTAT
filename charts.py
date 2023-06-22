@@ -1633,7 +1633,7 @@ def error_bar_dia_single(df, messwert, lt, ut):
     
     if tolerance =='':
         
-        sns.pointplot(y=y, kind="line", ci="sd", data=df)    
+        sns.pointplot(y=y, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)    
         
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
@@ -1642,20 +1642,20 @@ def error_bar_dia_single(df, messwert, lt, ut):
     elif tolerance =='ohne':
         
             
-        sns.pointplot(y=y, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         plt.show()
     
     elif tolerance =='einseitig oben':
         
             
-        sns.pointplot(y=y, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.show()
     
     elif tolerance =='einseitig unten':
         
             
-        sns.pointplot(y=y, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
         plt.show()
@@ -1690,7 +1690,7 @@ def error_bar_dia_1f(df, messwert, lt, ut, spdt):
     
     if tolerance =='':
         
-        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)    
+        sns.pointplot(y=y,x=x,errorbar=("pi", 100), capsize=.4, join=False, color=".5", data=df)    
         
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
@@ -1699,20 +1699,20 @@ def error_bar_dia_1f(df, messwert, lt, ut, spdt):
     elif tolerance =='ohne':
         
             
-        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y,x=x, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         plt.show()
     
     elif tolerance =='einseitig oben':
         
             
-        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y,x=spdt, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.show()
     
     elif tolerance =='einseitig unten':
         
             
-        sns.pointplot(y=y,x=spdt, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y,x=spdt,errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
         plt.show()
@@ -1748,7 +1748,7 @@ def error_bar_dia_2f(df, messwert, lt, ut, spdt, factorx):
     
     if tolerance =='':
         
-        sns.pointplot(y=y,x=spdt, hue=factorx, kind="line", ci="sd", data=df)    
+        sns.pointplot(y=y,x=x, hue=factorx, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)    
         
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.axhline(y=lt,linewidth=2, color='red')    
@@ -1757,20 +1757,20 @@ def error_bar_dia_2f(df, messwert, lt, ut, spdt, factorx):
     elif tolerance =='ohne':
         
             
-        sns.pointplot(y=y,x=spdt, hue=factorx, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y,x=x, hue=factorx, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         plt.show()
     
     elif tolerance =='einseitig oben':
         
             
-        sns.pointplot(y=y,x=spdt, hue=factorx, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y,x=x, hue=factorx, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         plt.axhline(y=ut,linewidth=2, color='red')
         plt.show()
     
     elif tolerance =='einseitig unten':
         
             
-        sns.pointplot(y=y,x=spdt, hue=factorx, kind="line", ci="sd", data=df)
+        sns.pointplot(y=y,x=x, hue=factorx, errorbar=("pi", 100), capsize=.1, join=False, color=".5", data=df)
         
         plt.axhline(y=lt,linewidth=2, color='red')    
         plt.show()
